@@ -20,7 +20,6 @@
       --accent: #d1e9ff;         /* subtle link hover */
       --header-blur: 8px;        /* backdrop blur for sticky header */
       --maxw: 1200px;
-      --fs: .75;                 /* global font scale */
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -31,7 +30,7 @@
     .logo{display:inline-flex; align-items:center; gap:.6rem; text-decoration:none; color:var(--brand); font-weight:900; letter-spacing:.02em; font-size:1.1rem}
     .logo-mark{width:30px; height:30px; border:2px solid var(--brand); border-radius:8px; display:grid; place-items:center; font-weight:900; font-size:.9rem; line-height:1}
     .logo-img{height:30px; width:auto; display:block; border-radius:0}
-    nav a{text-decoration:none; color:var(--brand); opacity:.92; font-weight:800; letter-spacing:.12em; font-size:calc(.78rem * var(--fs)); margin:0 12px; text-transform:uppercase; position:relative}
+    nav a{text-decoration:none; color:var(--brand); opacity:.92; font-weight:800; letter-spacing:.12em; font-size:.78rem; margin:0 12px; text-transform:uppercase; position:relative}
     nav a:after{content:""; position:absolute; left:0; right:0; bottom:-6px; height:1px; background:currentColor; opacity:0; transform:scaleX(.4); transition:opacity .25s, transform .25s}
     nav a:hover{opacity:1}
     nav a:hover:after{opacity:.6; transform:scaleX(1)}
@@ -42,38 +41,38 @@
     /* ======= Typographic manifesto (hero) ======= */
     .man-hero{display:grid; grid-template-columns:1fr 1fr; gap:36px; align-items:center}
     .man-title{font-weight:900; letter-spacing:-.01em; line-height:1.02}
-    .man-line{display:block; font-family:"Playfair Display", Georgia, serif; font-style:italic; font-weight:600; font-size:clamp(calc(38px*var(--fs)), calc(7vw*var(--fs)), calc(86px*var(--fs)))}
-    .man-line.small{font-size:clamp(calc(28px*var(--fs)), calc(4vw*var(--fs)), calc(48px*var(--fs))); opacity:.9; letter-spacing:.01em}
+    .man-line{display:block; font-family:"Playfair Display", Georgia, serif; font-style:italic; font-weight:600; font-size:clamp(38px, 7vw, 86px)}
+    .man-line.small{font-size:clamp(28px, 4vw, 48px); opacity:.9; letter-spacing:.01em}
     .man-echo{position:relative}
     .man-echo .echo{position:absolute; inset:0; transform:translate(0, .14em); opacity:.08}
 
-    .man-copy{color:var(--muted); font-size:clamp(calc(18px*var(--fs)), calc(1.8vw*var(--fs)), calc(22px*var(--fs))); line-height:1.65; font-family:"Playfair Display", Georgia, serif; font-style:italic}
+    .man-copy{color:var(--muted); font-size:clamp(13.5px, 1.35vw, 16.5px); line-height:1.65; font-family:"Playfair Display", Georgia, serif; font-style:italic}
     .man-photo{width:100%; max-width:520px; justify-self:end; border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,.06); box-shadow:0 10px 40px rgba(0,0,0,.4); position:relative}
     .man-photo img{display:block; width:100%; height:auto; filter:grayscale(100%) contrast(1.12) brightness(.96)}
 
     /* ======= Student profile (instead of services) ======= */
     .profile{padding-top:28px}
-    .profile h2{font-size:clamp(calc(28px*var(--fs)),calc(4.2vw*var(--fs)),calc(42px*var(--fs))); margin:0 0 6px}
+    .profile h2{font-size:clamp(28px,4.2vw,42px); margin:0 0 6px}
     .profile .subtitle{color:var(--muted); max-width:70ch}
     .info-grid{margin-top:22px; display:grid; gap:16px; grid-template-columns:repeat(3,1fr)}
     .info{background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.06); border-radius:16px; padding:18px}
-    .info h3{margin:0 0 10px; font-size:clamp(calc(18px*var(--fs)),calc(2.2vw*var(--fs)),calc(22px*var(--fs)))}
-    .info p{margin:0; color:var(--muted); font-size:calc(1rem * var(--fs))}
+    .info h3{margin:0 0 10px; font-size:clamp(18px,2.2vw,22px)}
+    .info p{margin:0; color:var(--muted)}
     .chips{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:8px}
-    .chip{padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); font-size:calc(.92rem * var(--fs)); color:#e5ebf1}
+    .chip{padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); font-size:.92rem; color:#e5ebf1}
     .cta{margin-top:16px; display:flex; gap:12px}
-    .btn-ghost{appearance:none; border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.06); color:#fff; padding:10px 14px; border-radius:999px; font-weight:700; letter-spacing:.02em; text-decoration:none; font-size:calc(1rem * var(--fs))}
+    .btn-ghost{appearance:none; border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.06); color:#fff; padding:10px 14px; border-radius:999px; font-weight:700; letter-spacing:.02em; text-decoration:none}
 
     /* ======= Toolbox (logos -> tools) ======= */
     .toolbox{padding-top:12px}
-    .toolbox h2{font-size:clamp(calc(28px*var(--fs)),calc(4.2vw*var(--fs)),calc(42px*var(--fs))); margin:0 0 12px}
+    .toolbox h2{font-size:clamp(28px,4.2vw,42px); margin:0 0 12px}
     .tool-grid{display:flex; flex-wrap:wrap; gap:10px}
-    .tool{padding:8px 12px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius:12px; color:#cfd6dd; font-weight:700; letter-spacing:.02em; font-size:calc(1rem * var(--fs))}
+    .tool{padding:8px 12px; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius:12px; color:#cfd6dd; font-weight:700; letter-spacing:.02em}
     
     .logos{padding-top:16px}
-    .logos h2{font-size:clamp(calc(28px*var(--fs)),calc(4.2vw*var(--fs)),calc(42px*var(--fs))); margin:0 0 18px}
+    .logos h2{font-size:clamp(28px,4.2vw,42px); margin:0 0 18px}
     .logo-grid{display:grid; grid-template-columns:repeat(6,1fr); gap:14px; align-items:center}
-    .logo-card{height:72px; border-radius:12px; background:rgba(255,255,255,.035); border:1px solid rgba(255,255,255,.06); display:grid; place-items:center; color:#9aa3ab; font-weight:800; letter-spacing:.08em; font-size:calc(.82rem * var(--fs))}
+    .logo-card{height:72px; border-radius:12px; background:rgba(255,255,255,.035); border:1px solid rgba(255,255,255,.06); display:grid; place-items:center; color:#9aa3ab; font-weight:800; letter-spacing:.08em; font-size:.82rem}
 
     /* ======= Footer (same as landing) ======= */
     .site-footer{margin-top:84px; background:#0b0d0f; border-top:1px solid rgba(255,255,255,.08); position:relative}
@@ -91,7 +90,7 @@
     .col ul{list-style:none; margin:0; padding:0; display:grid; gap:8px}
     .col a{color:var(--text); text-decoration:none}
     .col a:hover{text-decoration:underline}
-    .legal{max-width:var(--maxw); margin:0 auto; padding:0 24px 24px; font-size:calc(.85rem * var(--fs)); color:var(--muted)}
+    .legal{max-width:var(--maxw); margin:0 auto; padding:0 24px 24px; font-size:.85rem; color:var(--muted)}
 
     @media (max-width:1100px){
       /* keep two columns on medium screens */
@@ -125,11 +124,7 @@
   <!-- ======= Typographic manifesto ======= -->
   <section class="section man-hero" aria-label="Manifesto">
     <div>
-      <h1 class="man-title">
-        <span class="man-line">I don't design</span>
-        <span class="man-line man-echo"><span class="echo">— I listen.</span>— I listen.</span>
-        <span class="man-line small">The rest is just hard work.</span>
-      </h1>
+      
       <div class="man-copy">
         <p>Evan Xiao is a researcher and media practitioner whose work lies at the intersection of human-computer interaction, robotics, and sensory interface design. His practice explores how emerging technologies can mediate trust, affect, and embodied communication between humans and machines.</p>
         <p>Looking forward, his research interests include emotional and tactile interaction design, trust mechanisms in HCI, and assistive tools for vulnerable populations. Potential areas of inquiry span from haptic interfaces for remote collaboration and smart home environments, to language-model-based support systems for autism caregivers, as well as tactile navigation and music perception systems for people with visual or hearing impairments.</p>
