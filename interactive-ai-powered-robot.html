@@ -16,6 +16,7 @@
       --bg:#0b0e11; --text:#e8ecef; --muted:#c8ced4; --brand:#fff;
       --glass:rgba(10,12,15,.55); --hairline:rgba(255,255,255,.08);
       --g:28px; --header-h:72px; --header-blur:10px; --maxw:1200px;
+      --fs: .75; /* global font scale */
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -26,28 +27,28 @@
     .site-header.transparent{ background:transparent; box-shadow:none; backdrop-filter:none; }
     .logo{display:inline-flex; align-items:center; text-decoration:none}
     .logo-img{height:30px; width:auto; display:block}
-    nav a{color:#fff;text-decoration:none;opacity:.92;font-weight:800;letter-spacing:.12em;font-size:.78rem;margin:0 12px;text-transform:uppercase}
+    nav a{color:#fff;text-decoration:none;opacity:.92;font-weight:800;letter-spacing:.12em;font-size:calc(.78rem * var(--fs));margin:0 12px;text-transform:uppercase}
     nav a:hover{opacity:1}
-    .btn{appearance:none;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);color:#fff;padding:10px 14px;border-radius:999px;font-weight:700;letter-spacing:.02em;text-decoration:none}
+    .btn{appearance:none;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);color:#fff;padding:10px 14px;border-radius:999px;font-weight:700;letter-spacing:.02em;text-decoration:none;font-size:calc(1rem * var(--fs))}
 
     .section{padding:120px 0}
     .pad-top{padding-top:calc(var(--header-h) + 32px)}
 
     /* Hero video */
     .hero-video{position:relative; height:100vh; width:100vw; overflow:hidden}
-    .hero-video video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center;}
+    .hero-video iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
     .hero-video::after{content:""; position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,.15) 0%, rgba(0,0,0,.35) 60%, rgba(11,14,17,1) 100%); pointer-events:none;}
 
     /* Mast */
     .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
     .mast-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
-    .mast h1{margin:0 0 10px;font-weight:900;letter-spacing:-.01em;font-size:clamp(30px,5vw,58px)}
-    .mast p.sub{margin:0;color:#e9eff6;font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:clamp(16px,1.6vw,22px)}
+    .mast h1{margin:0 0 10px;font-weight:900;letter-spacing:-.01em;font-size:clamp(calc(30px*var(--fs)),calc(5vw*var(--fs)),calc(58px*var(--fs)))}
+    .mast p.sub{margin:0;color:#e9eff6;font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:clamp(calc(16px*var(--fs)),calc(1.6vw*var(--fs)),calc(22px*var(--fs)))}
     .facts{margin-top:18px;border-top:1px solid var(--hairline);padding-top:14px}
     .facts dl{margin:0;display:grid;grid-template-columns:120px 1fr;row-gap:10px;column-gap:12px}
     .facts dt{opacity:.75;font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:.78rem}
     .facts dd{margin:0}
-    .col h3{margin:0 0 10px;font-weight:900;letter-spacing:-.01em;font-size:clamp(18px,2.4vw,24px)}
+    .col h3{margin:0 0 10px;font-weight:900;letter-spacing:-.01em;font-size:clamp(calc(18px*var(--fs)),calc(2.4vw*var(--fs)),calc(24px*var(--fs)))}
     .col p{margin:0 0 14px}
 
     /* Rails */
@@ -55,8 +56,8 @@
     .stage{ grid-column:2; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:var(--g); align-items:center; margin:56px 0; }
     .stage > .text, .stage > .media{ align-self:center; }
 
-    .text h2{margin:0 0 8px;font-weight:900;letter-spacing:-.01em;font-size:clamp(20px,3vw,34px)}
-    .text p{margin:0 0 12px}
+    .text h2{margin:0 0 8px;font-weight:900;letter-spacing:-.01em;font-size:clamp(calc(20px*var(--fs)),calc(3vw*var(--fs)),calc(34px*var(--fs)))}
+    .text p{margin:0 0 12px; font-size:calc(1rem * var(--fs))}
     .text ul{margin:.2rem 0 0 1.2rem;line-height:1.6}
     .muted{color:var(--muted)}
 
@@ -64,7 +65,7 @@
     figure.media{margin:0}
     .media img{display:block;width:100%;max-width:100%;height:auto;border-radius:14px}
     .media-vertical{display:grid;grid-template-columns:1fr;gap:12px}
-    figcaption{font-size:.9rem;color:var(--muted);margin-top:6px}
+    figcaption{font-size:calc(.9rem * var(--fs));color:var(--muted);margin-top:6px}
 
     /* Reveal (slow & lift) */
     .reveal{opacity:0; transform:translateY(40px); filter:blur(6px);
@@ -82,7 +83,7 @@
     .site-footer .logo-img{height:44px; width:auto; display:block}
     .site-footer .logo span{display:none}
     .cols{display:flex; gap:64px; grid-column:9 / span 4; justify-self:start; align-items:center;}
-    .col-title{font-size:.85rem; font-weight:900; letter-spacing:.08em; text-transform:uppercase; opacity:.8; margin-bottom:10px}
+    .col-title{font-size:calc(.85rem * var(--fs)); font-weight:900; letter-spacing:.08em; text-transform:uppercase; opacity:.8; margin-bottom:10px}
     .col ul{list-style:none; margin:0; padding:0; display:grid; gap:8px}
     .col a{color:var(--text); text-decoration:none}
     .col a:hover{text-decoration:underline}
@@ -90,26 +91,9 @@
     .icon-link{display:inline-block}
     .icon-img{width:40px;height:40px;display:block;opacity:.92}
     .icon-link:hover .icon-img{opacity:1}
-    .legal{max-width:var(--maxw); margin:0 auto; padding:0 24px 24px; font-size:.85rem; color:var(--muted)}
+    .legal{max-width:var(--maxw); margin:0 auto; padding:0 24px 24px; font-size:calc(.85rem * var(--fs)); color:var(--muted)}
 
-    /* Right-bottom audio toggle */
-    .audio-toggle{
-      position:fixed;
-      right:calc(24px + env(safe-area-inset-right));
-      bottom:calc(24px + env(safe-area-inset-bottom));
-      width:56px; height:56px; z-index:60;
-      display:grid; place-items:center;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(255,255,255,.06);
-      backdrop-filter:blur(10px) saturate(130%);
-      box-shadow:0 8px 24px rgba(0,0,0,.35);
-      cursor:pointer;
-    }
-    .audio-toggle:hover{ background:rgba(255,255,255,.1) }
-    .audio-toggle:active{ transform:translateY(1px) }
-    .audio-toggle img{ width:26px; height:26px; display:block }
-    .audio-toggle[aria-pressed="true"]{ border-color:rgba(255,255,255,.32) }
+    /* removed audio toggle */
 
     @media (max-width:1100px){ .mast-grid{grid-template-columns:1fr} }
     @media (max-width:900px){
@@ -134,20 +118,17 @@
     </nav>
   </header>
 
-  <!-- Hero video (初始静音) -->
+  <!-- Hero media: Google Drive embed -->
   <section class="hero-video" aria-label="Intro video">
-    <video
-      id="heroVideo"
-      src="assets/images/projects/interactive-ai-powered-robot/ai-robot.mp4"
-      autoplay muted playsinline loop
-      poster="assets/images/projects/interactive-ai-powered-robot/ima-bot-blue.jpg">
-    </video>
+    <iframe
+      src="https://drive.google.com/file/d/1vCFZ-ex17Ji9p8gfBTzzlEgBe_bUxhq0/preview"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+      title="Interactive AI-powered Robot video">
+    </iframe>
   </section>
 
-  <!-- 右下角声音开关（PNG） -->
-  <button class="audio-toggle" id="audioToggle" aria-label="Sound off" aria-pressed="false" title="Sound">
-    <img id="audioIcon" src="https://img.icons8.com/ios-glyphs/60/ffffff/mute.png" alt="Sound off">
-  </button>
+  
 
   <!-- Mast -->
   <section class="section pad-top mast">
