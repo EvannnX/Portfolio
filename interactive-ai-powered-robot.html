@@ -97,7 +97,7 @@
       position:fixed;
       right:calc(24px + env(safe-area-inset-right));
       bottom:calc(24px + env(safe-area-inset-bottom));
-      width:56px; height:56px; z-index:60;
+      width:56px; height:56px; z-index:1000;
       display:grid; place-items:center;
       border-radius:999px;
       border:1px solid rgba(255,255,255,.18);
@@ -139,7 +139,7 @@
     <video
       id="heroVideo"
       src="https://drive.google.com/uc?export=download&id=1vCFZ-ex17Ji9p8gfBTzzlEgBe_bUxhq0"
-      autoplay muted playsinline loop
+      autoplay muted playsinline webkit-playsinline preload="auto" loop
       poster="assets/images/projects/interactive-ai-powered-robot/ima-bot-blue.jpg">
     </video>
   </section>
@@ -333,12 +333,16 @@
     }
 
     // 初始化：保持静音状态（与 <video muted> 一致），并设置 UI
+    function tryAutoPlay(){ video && video.play().catch(()=>{}); }
+
     document.addEventListener('DOMContentLoaded', ()=>{
       if (video){
         video.muted = true;
         video.defaultMuted = true;
-        // 自动播放静音以便首屏有画面
-        video.play().catch(()=>{});
+        // 自动播放静音以便首屏有画面（多路触发，提升成功率）
+        tryAutoPlay();
+        video.addEventListener('canplay', tryAutoPlay, {once:true});
+        video.addEventListener('loadeddata', tryAutoPlay, {once:true});
         updateAudioUI();
       }
       if (btn){
@@ -354,6 +358,9 @@
       video.addEventListener('volumechange', updateAudioUI);
       video.addEventListener('pause', updateAudioUI);
       video.addEventListener('play', updateAudioUI);
+      // iOS: 首次触摸后再尝试自动播放
+      window.addEventListener('touchstart', tryAutoPlay, {once:true, passive:true});
+      document.addEventListener('visibilitychange', ()=>{ if (!document.hidden) tryAutoPlay(); });
     }
   </script>
 </body>
