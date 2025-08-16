@@ -1,0 +1,42 @@
+:root{
+  /* 色彩 */
+  --bg:#0d0d0d;
+  --panel:#151515;
+  --text:#e7e7e7;
+  --muted:#bcbcbc;
+  --hairline:rgba(255,255,255,.08);
+  --glass:rgba(13,13,13,.42);
+  /* 新增：品牌与强调色 */
+  --brand:#ffffff;
+  --accent:#d1e9ff;
+
+  /* 字体 */
+  --sans:"Inter", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  --serif:"Spectral", "Georgia", serif;
+  /* 新增：与规范一致的别名 */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-serif: "Playfair Display", Georgia, serif;
+
+  /* 排版 */
+  --h1: clamp(36px, 6vw, 76px);
+  --h2: clamp(28px, 4.2vw, 48px);
+  --lead: clamp(18px, 2vw, 22px);
+
+  /* 间距 */
+  --gutter: 24px;
+  --radius: 14px;
+  --shadow: 0 12px 30px rgba(0,0,0,.35);
+
+  /* 栅格 */
+  --maxw: 1320px;
+  --bp-lg: 1280px;
+  --bp-md: 1024px;
+  --bp-sm: 820px;
+
+  /* 新增：字重令牌 */
+  --w-light: 300;
+  --w-reg: 400;
+  --w-bold: 700;
+  --w-xbold: 800;
+  --w-black: 900;
+} 

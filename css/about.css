@@ -1,0 +1,15 @@
+.man-hero{display:grid;grid-template-columns:1fr 1fr;gap: clamp(28px, 4vw, 48px);align-items:center}
+.man-hero .left h1{font-family:var(--serif);font-size:var(--h1);line-height:1.05;color:var(--text);margin:0}
+.man-hero .left h1 i{font-style:italic}
+.man-hero .left h1 strong{font-family:var(--sans);font-weight:800}
+.man-hero .left .lead{font-size: var(--lead); font-family: var(--serif); font-style:italic; opacity:.9; margin-top:28px}
+/* 新增：可选的分行标题/叙述样式 */
+.man-title{font-weight:var(--w-black);letter-spacing:-.01em;line-height:1.02}
+.man-line{display:block;font-family:var(--font-serif);font-style:italic;font-weight:600;font-size:clamp(38px,7vw,86px)}
+.man-line.small{font-size:clamp(28px,4vw,48px);letter-spacing:.01em;opacity:.9}
+.man-copy{font-family:var(--font-serif);font-style:italic;font-size:clamp(18px,1.8vw,22px);line-height:1.65;color:var(--muted)}
+.man-hero .right img{width:100%; max-width:520px; border-radius: var(--radius); filter: grayscale(1) contrast(1.05)}
+@media (max-width: 820px){
+  .man-hero{grid-template-columns:1fr}
+  .man-hero .right{order:2; justify-self:start}
+} 

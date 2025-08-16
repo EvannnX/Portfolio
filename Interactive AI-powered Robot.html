@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Interactive AI-Powered Robot · Evan Xiao</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Interactive AI robot with ESP32 + Qwen API: real-time voice + motion." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0e11; --text:#e8ecef; --muted:#c8ced4; --brand:#fff;
+      --glass:rgba(10,12,15,.55); --hairline:rgba(255,255,255,.08);
+      --g:28px; --header-h:72px; --header-blur:10px; --maxw:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{ margin:0; background:var(--bg); color:var(--text); font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; -webkit-font-smoothing:antialiased; line-height:1.35; }
+
+    /* Header */
+    .site-header{position:fixed; inset:0 0 auto 0; height:var(--header-h); z-index:50; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:0 24px; background:var(--glass); backdrop-filter:saturate(130%) blur(var(--header-blur)); box-shadow:0 1px 0 rgba(255,255,255,.06) inset; transition:background .25s, box-shadow .25s, backdrop-filter .25s;}
+    .site-header.transparent{ background:transparent; box-shadow:none; backdrop-filter:none; }
+    .logo{display:inline-flex; align-items:center; text-decoration:none}
+    .logo-img{height:30px; width:auto; display:block}
+    nav a{color:#fff;text-decoration:none;opacity:.92;font-weight:800;letter-spacing:.12em;font-size:.78rem;margin:0 12px;text-transform:uppercase}
+    nav a:hover{opacity:1}
+    .btn{appearance:none;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);color:#fff;padding:10px 14px;border-radius:999px;font-weight:700;letter-spacing:.02em;text-decoration:none}
+
+    .section{padding:120px 0}
+    .pad-top{padding-top:calc(var(--header-h) + 32px)}
+
+    /* Hero video */
+    .hero-video{position:relative; height:100vh; width:100vw; overflow:hidden}
+    .hero-video video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center;}
+    .hero-video::after{content:""; position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,.15) 0%, rgba(0,0,0,.35) 60%, rgba(11,14,17,1) 100%); pointer-events:none;}
+
+    /* Mast */
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+    .mast-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+    .mast h1{margin:0 0 10px;font-weight:900;letter-spacing:-.01em;font-size:clamp(30px,5vw,58px)}
+    .mast p.sub{margin:0;color:#e9eff6;font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:clamp(16px,1.6vw,22px)}
+    .facts{margin-top:18px;border-top:1px solid var(--hairline);padding-top:14px}
+    .facts dl{margin:0;display:grid;grid-template-columns:120px 1fr;row-gap:10px;column-gap:12px}
+    .facts dt{opacity:.75;font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:.78rem}
+    .facts dd{margin:0}
+    .col h3{margin:0 0 10px;font-weight:900;letter-spacing:-.01em;font-size:clamp(18px,2.4vw,24px)}
+    .col p{margin:0 0 14px}
+
+    /* Rails */
+    .rails{ display:grid; grid-template-columns:1fr 4fr 1fr; width:100vw; }
+    .stage{ grid-column:2; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:var(--g); align-items:center; margin:56px 0; }
+    .stage > .text, .stage > .media{ align-self:center; }
+
+    .text h2{margin:0 0 8px;font-weight:900;letter-spacing:-.01em;font-size:clamp(20px,3vw,34px)}
+    .text p{margin:0 0 12px}
+    .text ul{margin:.2rem 0 0 1.2rem;line-height:1.6}
+    .muted{color:var(--muted)}
+
+    .media{display:block;width:100%}
+    figure.media{margin:0}
+    .media img{display:block;width:100%;max-width:100%;height:auto;border-radius:14px}
+    .media-vertical{display:grid;grid-template-columns:1fr;gap:12px}
+    figcaption{font-size:.9rem;color:var(--muted);margin-top:6px}
+
+    /* Reveal (slow & lift) */
+    .reveal{opacity:0; transform:translateY(40px); filter:blur(6px);
+      transition:opacity 1.2s ease, transform 1.2s cubic-bezier(0.2,0.7,0,1), filter 1.2s ease; will-change:opacity,transform,filter;}
+    .reveal.in{opacity:1; transform:none; filter:none;}
+    .reveal.in .text > *{transition:opacity 1.2s ease .15s, transform 1.2s cubic-bezier(0.2,0.7,0,1) .15s;}
+    .reveal.in .media{transition:opacity 1.2s ease .30s, transform 1.2s cubic-bezier(0.2,0.7,0,1) .30s;}
+    @media (prefers-reduced-motion: reduce){ .reveal, .reveal.in{opacity:1;transform:none;filter:none;transition:none} }
+
+    /* Footer (home style) */
+    .site-footer{margin-top:96px;background:#0b0d0f;border-top:1px solid var(--hairline);position:relative}
+    .site-footer::before{content:""; position:absolute; inset:0 0 auto 0; height:80px; background:radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,.06), rgba(255,255,255,0))}
+    .footer-inner{max-width:var(--maxw); margin:0 auto; padding:36px 24px; display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); align-items:start; gap:36px}
+    .site-footer .logo{color:#fff; gap:.4rem}
+    .site-footer .logo-img{height:44px; width:auto; display:block}
+    .site-footer .logo span{display:none}
+    .cols{display:flex; gap:64px; grid-column:9 / span 4; justify-self:start; align-items:center;}
+    .col-title{font-size:.85rem; font-weight:900; letter-spacing:.08em; text-transform:uppercase; opacity:.8; margin-bottom:10px}
+    .col ul{list-style:none; margin:0; padding:0; display:grid; gap:8px}
+    .col a{color:var(--text); text-decoration:none}
+    .col a:hover{text-decoration:underline}
+    .icons-vert{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+    .icon-link{display:inline-block}
+    .icon-img{width:40px;height:40px;display:block;opacity:.92}
+    .icon-link:hover .icon-img{opacity:1}
+    .legal{max-width:var(--maxw); margin:0 auto; padding:0 24px 24px; font-size:.85rem; color:var(--muted)}
+
+    /* Right-bottom audio toggle */
+    .audio-toggle{
+      position:fixed;
+      right:calc(24px + env(safe-area-inset-right));
+      bottom:calc(24px + env(safe-area-inset-bottom));
+      width:56px; height:56px; z-index:60;
+      display:grid; place-items:center;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.06);
+      backdrop-filter:blur(10px) saturate(130%);
+      box-shadow:0 8px 24px rgba(0,0,0,.35);
+      cursor:pointer;
+    }
+    .audio-toggle:hover{ background:rgba(255,255,255,.1) }
+    .audio-toggle:active{ transform:translateY(1px) }
+    .audio-toggle img{ width:26px; height:26px; display:block }
+    .audio-toggle[aria-pressed="true"]{ border-color:rgba(255,255,255,.32) }
+
+    @media (max-width:1100px){ .mast-grid{grid-template-columns:1fr} }
+    @media (max-width:900px){
+      nav{display:none}
+      .rails{grid-template-columns:12px 1fr 12px}
+      .stage{grid-template-columns:1fr; align-items:start;}
+      .cols{grid-column:1 / -1; justify-self:start; gap:32px}
+      .audio-toggle{ width:52px;height:52px } .audio-toggle img{ width:24px;height:24px }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header transparent" aria-label="Primary">
+    <a class="logo" href="../index.html#top" aria-label="Home">
+      <img class="logo-img" src="../assets/images/general/logo.png" alt="Logo" />
+    </a>
+    <nav aria-label="Main">
+      <a href="../projects.html">Projects</a>
+      <a href="../about.html">About</a>
+      <a class="btn" href="mailto:hello@example.com">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero video (初始静音) -->
+  <section class="hero-video" aria-label="Intro video">
+    <video
+      id="heroVideo"
+      src="../assets/images/projects/Interactive%20AI-powered%20Robot/ai-robot.mp4"
+      autoplay muted playsinline loop
+      poster="../assets/images/projects/Interactive%20AI-powered%20Robot/ima-bot-blue.jpg">
+    </video>
+  </section>
+
+  <!-- 右下角声音开关（PNG） -->
+  <button class="audio-toggle" id="audioToggle" aria-label="Sound off" aria-pressed="false" title="Sound">
+    <img id="audioIcon" src="https://img.icons8.com/ios-glyphs/60/ffffff/mute.png" alt="Sound off">
+  </button>
+
+  <!-- Mast -->
+  <section class="section pad-top mast">
+    <div class="wrap mast-grid reveal">
+      <div>
+        <h1>Interactive AI-Powered Robot</h1>
+        <p class="sub">Real-time voice + expressive motion on an open-source, low-cost chassis (ESP32 + Qwen API).</p>
+        <div class="facts">
+          <dl>
+            <dt>Context</dt><dd>NYU Shanghai · IMA</dd>
+            <dt>Focus</dt><dd>HCI · Product Design · Prototyping</dd>
+            <dt>Stack</dt><dd>ESP32, Qwen API, Servos, 3D-printed parts</dd>
+            <dt>Year</dt><dd>2025</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Case</h3>
+        <p>Move beyond pre-recorded toys by enabling unscripted speech and expressive motion. The robot listens, speaks, and gestures—making interactions feel alive.</p>
+        <h3 style="margin-top:18px">Task</h3>
+        <p>Design the behavior model and motion language; implement the voice pipeline (capture → Qwen API → TTS) on ESP32; integrate servos and a 3D-printed body; iterate through user tests.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <main class="rails">
+    <section class="stage reveal">
+      <div class="text">
+        <h2>Abstract &amp; Project Description</h2>
+        <p>The Interactive AI Robot is a smart plush toy enhanced with real-time voice interaction and basic motion capabilities. Unlike traditional toys that rely on pre-programmed responses, this robot utilizes an ESP32 microcontroller combined with the Qwen API to perform dynamic speech generation and real-time audio processing. It aims to simulate natural human-robot interaction by providing unscripted verbal replies and expressive physical feedback.</p>
+        <p>This project explores the potential of combining natural language processing with physical motion to deliver a more engaging and emotional user experience. By transforming passive responses into active conversations and motions, the robot bridges the gap between artificial intelligence and emotional companionship in toys.</p>
+      </div>
+      <figure class="media">
+        <img loading="lazy" src="../assets/images/projects/Interactive%20AI-powered%20Robot/ima-bot-blue.jpg" alt="Robot render on blue background" />
+      </figure>
+    </section>
+
+    <section class="stage reveal">
+      <div class="text">
+        <h2>Background, Industry Context &amp; Market Potential</h2>
+        <p>The rise of AI-integrated consumer products—particularly in the toy industry—reflects a larger shift toward immersive, interactive experiences. Open Securities projects the AI-powered plush toy market in China to reach <strong>32.3B RMB</strong> by 2027 (neutral scenario).</p>
+        <p>Globally, the companion robot market was about <strong>75B RMB</strong> in 2023 and is expected to grow to <strong>304.3B RMB</strong> by 2029 (CAGR <strong>25.6%</strong>). This highlights both economic viability and the growing social demand for emotionally intelligent, responsive robotic companions.</p>
+        <p>As AI becomes more accessible, toys can increasingly support communication, learning, and emotional development—especially for children and older adults who benefit from frequent engagement.</p>
+      </div>
+      <div class="media">
+        <div class="media-vertical">
+          <figure style="margin:0">
+            <img loading="lazy" src="../assets/images/projects/Interactive%20AI-powered%20Robot/market-forecast-1.jpg" alt="Companion robot market size forecast (2023A→2029E, 25.6% CAGR)" />
+            <figcaption>Market size forecast — 25.6% CAGR (2023A→2029E)</figcaption>
+          </figure>
+          <figure style="margin:0">
+            <img loading="lazy" src="../assets/images/projects/Interactive%20AI-powered%20Robot/market-forecast-2.jpg" alt="Companion robot market growth (2023A vs 2029E)" />
+            <figcaption>Growth outlook: 2023A vs 2029E (Open Securities / 贝哲斯咨询)</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="stage reveal">
+      <div class="text">
+        <h2>Similar Projects: Market Comparison</h2>
+        <p><strong>显眼包 (ByteDance)</strong> — a trendy AI-themed wearable emphasizing emotional interaction via facial display and limited audio; not commercially available and lacks motion or active speech generation. <span class="muted">Static emoji-based responses only.</span></p>
+        <p><strong>Talking Tom (Plush)</strong> — ≈ €19.99 (≈ ¥158). Mimics voice and plays pre-recorded phrases; no smart AI processing or physical interaction.</p>
+        <p><strong>Interactive AI Robot (this project)</strong> — estimated ¥200–¥300; combines live voice recognition, AI-generated speech, and basic motion for a more responsive, lifelike companion.</p>
+      </div>
+      <figure class="media">
+        <img loading="lazy" src="../assets/images/projects/Interactive%20AI-powered%20Robot/similar-projects.jpg" alt="Similar projects comparison" />
+      </figure>
+    </section>
+
+    <section class="stage reveal">
+      <div class="text">
+        <h2>Design Concept &amp; Motion System</h2>
+        <p>The mechanical design builds on open-source contributions (OTTO Robot platform), offering a flexible, affordable base for humanoid-style motion.</p>
+        <p>Servo motors (ESP32 control) synchronize gestures—nod, wave, head-turn—with speech events generated through the Qwen API (capture → NLU → TTS). The result is a dual-modality interaction—voice + motion—that pushes beyond static AI toys.</p>
+      </div>
+      <figure class="media">
+        <img loading="lazy" src="../assets/images/projects/Interactive%20AI-powered%20Robot/ai-motion-flow.jpg" alt="AI-driven motion control flow" />
+      </figure>
+    </section>
+
+    <section class="stage reveal">
+      <div class="text">
+        <h2>Credits &amp; Acknowledgments</h2>
+        <p>Thanks to the OTTO DIY Robot community for open-source inspiration.</p>
+        <p><strong>Tech stack:</strong> ESP32, Qwen API, servo drivers, and 3D-printed casing.</p>
+        <ul>
+          <li>🧠 Notion: <a href="#" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline">Interactive AI Robot Documentation</a></li>
+          <li>🧰 GitHub: <a href="https://github.com/EvannnX/JARVIS" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline">github.com/EvannnX/JARVIS</a></li>
+        </ul>
+      </div>
+      <figure class="media">
+        <img loading="lazy" src="../assets/images/projects/Interactive%20AI-powered%20Robot/ima-bot-white.jpg" alt="Final look — robot render on white background" />
+      </figure>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" aria-label="Footer">
+    <div class="footer-inner">
+      <a class="logo" href="../index.html#top" aria-label="Home">
+        <img class="logo-img" src="../assets/images/general/logo.png" alt="Logo" />
+      </a>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">Sitemap</div>
+          <ul>
+            <li><a href="../index.html#top">Home</a></li>
+            <li><a href="../projects.html">Projects</a></li>
+            <li><a href="../about.html">About</a></li>
+            <li><a href="mailto:hello@example.com">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col social-col">
+          <div class="icons-vert">
+            <a class="icon-link" href="#" aria-label="LinkedIn">
+              <img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/linkedin.png" alt="LinkedIn">
+            </a>
+            <a class="icon-link" href="#" aria-label="Instagram">
+              <img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/instagram-new.png" alt="Instagram">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="legal">© <span id="year"></span> Evan Xiao</div>
+  </footer>
+
+  <script>
+    // Year
+    const y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
+
+    // Reveal on scroll
+    const reveals=[...document.querySelectorAll('.reveal')];
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    reveals.forEach(el=>io.observe(el));
+
+    // Header transparency by hero visibility
+    const header=document.querySelector('.site-header');
+    const hero=document.querySelector('.hero-video');
+    if(header && hero){
+      const heroIO=new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ header.classList.add('transparent'); } else { header.classList.remove('transparent'); } });
+      }, {threshold:0.35});
+      heroIO.observe(hero);
+    }
+
+    // ===== Audio toggle: 初始静音；点击后取消静音并播放 ai-robot.mp4 的声音，同时切换 PNG 图标 =====
+    const video = document.getElementById('heroVideo');
+    const btn   = document.getElementById('audioToggle');
+    const icon  = document.getElementById('audioIcon');
+    const ICON_MUTE = "https://img.icons8.com/ios-glyphs/60/ffffff/mute.png";
+    const ICON_ON   = "https://img.icons8.com/ios-glyphs/60/ffffff/high-volume.png";
+
+    function updateAudioUI(){
+      const unmuted = !video.muted && video.volume > 0;
+      btn.setAttribute('aria-pressed', unmuted.toString());
+      btn.setAttribute('aria-label', unmuted ? 'Sound on' : 'Sound off');
+      btn.title = unmuted ? 'Sound on' : 'Sound off';
+      icon.src = unmuted ? ICON_ON : ICON_MUTE;
+      icon.alt = unmuted ? 'Sound on' : 'Sound off';
+    }
+
+    function setMuted(m){
+      // 同时更新属性与默认属性，兼容 iOS/Safari
+      video.muted = m;
+      video.defaultMuted = m;
+      if (!m){
+        // 确保音量非零并尝试播放（用户手势触发）
+        if (video.volume === 0) video.volume = 1.0;
+        video.play().catch(()=>{});
+      }
+      updateAudioUI();
+    }
+
+    function toggleSound(){
+      setMuted(!video.muted);
+    }
+
+    // 初始化：保持静音状态（与 <video muted> 一致），并设置 UI
+    document.addEventListener('DOMContentLoaded', ()=>{
+      if (video){
+        video.muted = true;
+        video.defaultMuted = true;
+        // 自动播放静音以便首屏有画面
+        video.play().catch(()=>{});
+        updateAudioUI();
+      }
+      if (btn){
+        btn.addEventListener('click', toggleSound);
+        btn.addEventListener('keydown', (e)=>{
+          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleSound(); }
+        });
+      }
+    });
+
+    // 如果用户改了系统/页面音量，保持图标同步
+    if (video){
+      video.addEventListener('volumechange', updateAudioUI);
+      video.addEventListener('pause', updateAudioUI);
+      video.addEventListener('play', updateAudioUI);
+    }
+  </script>
+</body>
+</html>

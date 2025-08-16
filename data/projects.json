@@ -1,0 +1,17 @@
+[
+  {
+    "slug": "hi-ai",
+    "title": "Hi AI",
+    "org": "Experiment",
+    "cover": "/assets/images/projects/p01.jpg",
+    "url": "/projects/hi-ai",
+    "ratio": "4x3"
+  },
+  {
+    "slug": "notification-center",
+    "title": "Notification Center",
+    "org": "Porsche",
+    "cover": "/assets/images/projects/p02.jpg",
+    "url": "/projects/notification-center"
+  }
+] 

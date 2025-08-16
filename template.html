@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Notification Center — Evan Xiao</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Concept and design for a central communication channel with customers — project detail by Evan Xiao." />
+
+  <!-- Fonts (同站点) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#080b0e; --panel:#0b0d10; --text:#e8ecef; --muted:#c8ced4; --brand:#fff;
+      --hairline:rgba(255,255,255,.08); --glass:rgba(9,12,15,.55);
+      --maxw:1200px; --g:16px; --radius:18px; --shadow:0 10px 40px rgba(0,0,0,.4);
+      --header-blur:8px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.25;-webkit-font-smoothing:antialiased}
+
+    /* ===== Header（详情页从进入就半透明毛玻璃） ===== */
+    .site-header{position:fixed;inset:0 0 auto 0;display:flex;align-items:center;justify-content:space-between;padding:18px 24px;z-index:50;background:var(--glass);backdrop-filter:saturate(130%) blur(var(--header-blur));box-shadow:0 1px 0 rgba(255,255,255,.06) inset}
+    .logo{display:inline-flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--brand);font-weight:900;letter-spacing:.02em;font-size:1.1rem}
+    .logo-mark{width:30px;height:30px;border:2px solid var(--brand);border-radius:8px;display:grid;place-items:center;font-weight:900;font-size:.9rem;line-height:1}
+    nav a{text-decoration:none;color:var(--brand);opacity:.92;font-weight:800;letter-spacing:.12em;font-size:.78rem;margin:0 12px;text-transform:uppercase}
+    nav a:hover{opacity:1}
+    .btn{appearance:none;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);color:var(--brand);padding:10px 14px;border-radius:999px;font-weight:700;letter-spacing:.02em;text-decoration:none}
+
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+    .section{padding:120px 0}
+
+    /* ===== Mast（标题区：左文字/右说明，两列） ===== */
+    .mast{padding-top:96px}
+    .mast-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+    .mast h1{margin:0 0 14px;font-weight:900;letter-spacing:-.01em;font-size:clamp(32px,5vw,60px)}
+    .sub{margin:0 0 20px;color:#e9eff6;font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:clamp(18px,2vw,28px);line-height:1.3}
+    .facts{margin-top:24px;border-top:1px solid var(--hairline);padding-top:16px}
+    .facts dl{margin:0;display:grid;grid-template-columns:120px 1fr;row-gap:10px;column-gap:12px}
+    .facts dt{opacity:.75;font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:.78rem}
+    .facts dd{margin:0;color:var(--text)}
+    .col h3{margin:0 0 10px;font-weight:900;letter-spacing:-.01em;font-size:clamp(18px,2.4vw,24px)}
+    .col p{margin:0 0 16px;color:var(--text);opacity:.95;line-height:1.65}
+
+    /* ===== 下方可视化/画面分区（与首页一致） ===== */
+    .rows{display:grid;gap:var(--g);margin-top:10px}
+    .row{display:grid;gap:var(--g);--row-h:clamp(300px, 30vw, 520px)}
+    .row-3{grid-template-columns:repeat(3,1fr)}
+    .row-2{grid-template-columns:repeat(2,1fr)}
+    .row-2.wide-left{grid-template-columns:2fr 1fr}
+    .row-2.wide-right{grid-template-columns:1fr 2fr}
+    .card{position:relative;display:block;height:var(--row-h);border-radius:var(--radius);overflow:hidden;background:#111;border:1px solid var(--hairline);box-shadow:0 6px 28px rgba(0,0,0,.35)}
+    .card img,.card video{width:100%;height:100%;object-fit:cover;display:block}
+    .full{border-radius:var(--radius);overflow:hidden;border:1px solid var(--hairline);box-shadow:var(--shadow)}
+    .full img,.full video{width:100%;display:block}
+
+    /* ===== 滚动显现（只在进入视口时淡入） ===== */
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease, transform .6s ease}
+    .reveal.in{opacity:1;transform:none}
+    [data-stagger] > *{opacity:0;transform:translateY(18px)}
+    [data-stagger].in > *{opacity:1;transform:none;transition:opacity .5s ease, transform .5s ease}
+    [data-stagger].in > *:nth-child(1){transition-delay:.05s}
+    [data-stagger].in > *:nth-child(2){transition-delay:.12s}
+    [data-stagger].in > *:nth-child(3){transition-delay:.18s}
+    [data-stagger].in > *:nth-child(4){transition-delay:.24s}
+    [data-stagger].in > *:nth-child(5){transition-delay:.30s}
+    @media (prefers-reduced-motion: reduce){
+      .reveal,.reveal.in,[data-stagger] > *{opacity:1;transform:none;transition:none}
+    }
+
+    /* ===== Footer（简版，与站点一致） ===== */
+    .site-footer{margin-top:84px;background:#0b0d0f;border-top:1px solid var(--hairline)}
+    .footer-inner{max-width:var(--maxw);margin:0 auto;padding:36px 24px;display:flex;align-items:flex-start;justify-content:space-between;gap:36px}
+    .legal{max-width:var(--maxw);margin:0 auto;padding:0 24px 24px;font-size:.85rem;color:var(--muted)}
+
+    /* ===== Responsive ===== */
+    @media (max-width:1100px){
+      .mast-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:820px){
+      nav{display:none}
+      .row-3{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:640px){
+      .row-3,.row-2,.row-2.wide-left,.row-2.wide-right{grid-template-columns:1fr}
+      .row{--row-h:clamp(220px,56vw,420px)}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" aria-label="Primary">
+    <a class="logo" href="../index.html#top" aria-label="Home">
+      <span class="logo-mark">EX</span><span>Portfolio</span>
+    </a>
+    <nav aria-label="Main">
+      <a href="../projects.html" aria-current="page">Projects</a>
+      <a href="../about.html">About</a>
+      <a class="btn" href="mailto:hello@example.com">Contact</a>
+    </nav>
+  </header>
+
+  <!-- 顶部标题区（两列） -->
+  <section class="section mast">
+    <div class="wrap mast-grid reveal">
+      <!-- 左列：标题、副标、项目信息 -->
+      <div>
+        <h1>Notification Center</h1>
+        <p class="sub">Concept and design for the central communication channel with customers within the My Porsche App</p>
+
+        <div class="facts">
+          <dl>
+            <dt>Client</dt><dd>Porsche</dd>
+            <dt>Industry</dt><dd>Automotive</dd>
+            <dt>Services</dt><dd>Product Design, UX/UI Design, Testing</dd>
+            <dt>Year</dt><dd>2025</dd>
+          </dl>
+        </div>
+      </div>
+
+      <!-- 右列：Case / Task -->
+      <div class="col">
+        <h3>Case</h3>
+        <p>Porsche made the strategic decision to replace the email-style inbox in its My Porsche app with a newly developed Notification Center, aiming to enhance the overall user experience and increase the service’s appeal.</p>
+        <p>Beyond the existing internal communications — invoices, bookings, purchases, and general updates — the new center also supports direct notifications from the vehicles themselves. Long-form emails were replaced by short, clear, and actionable messages.</p>
+
+        <h3 style="margin-top:18px">Task</h3>
+        <p>Define the concept and design, present a clear direction to engineering, and prepare a strategy for seamless integration into existing systems. I also helped teams previously relying on email communication transition to the new notification format.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 全宽首屏视觉（滚动后显现） -->
+  <section class="wrap reveal">
+    <figure class="full">
+      <img loading="lazy" src="https://picsum.photos/seed/nc-hero/2400/1200" alt="Notification Center — overview visual">
+    </figure>
+  </section>
+
+  <!-- 关键画面（2+4、3列、4+2）：滚动显现 + 子项交错显现 -->
+  <section class="section">
+    <div class="wrap">
+      <h2 class="reveal" style="margin:0 0 10px;font-weight:900;letter-spacing:-.01em;font-size:clamp(22px,3vw,36px)">Key Screens</h2>
+
+      <div class="rows">
+        <div class="row row-2 wide-right reveal" data-stagger style="--row-h:clamp(320px,34vw,520px)">
+          <a class="card"><img loading="lazy" src="https://picsum.photos/seed/nc-s1/1200/1600" alt="Lock screen glance"></a>
+          <a class="card"><img loading="lazy" src="https://picsum.photos/seed/nc-s2/2000/1200" alt="Detail panel"></a>
+        </div>
+
+        <div class="row row-3 reveal" data-stagger style="--row-h:clamp(300px,30vw,460px)">
+          <a class="card"><img loading="lazy" src="https://picsum.photos/seed/nc-s3/1600/1200" alt="Cluster view"></a>
+          <a class="card"><img loading="lazy" src="https://picsum.photos/seed/nc-s4/1200/1600" alt="Settings"></a>
+          <a class="card"><img loading="lazy" src="https://picsum.photos/seed/nc-s5/1600/1200" alt="History"></a>
+        </div>
+
+        <div class="row row-2 wide-left reveal" data-stagger style="--row-h:clamp(320px,34vw,520px)">
+          <a class="card"><img loading="lazy" src="https://picsum.photos/seed/nc-s6/2000/900" alt="AR overlay mock"></a>
+          <a class="card"><img loading="lazy" src="https://picsum.photos/seed/nc-s7/1200/1600" alt="Critical alert"></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 过程与组件（两列面板，滚动显现） -->
+  <section class="section">
+    <div class="wrap reveal">
+      <h2 style="margin:0 0 10px;font-weight:900;letter-spacing:-.01em;font-size:clamp(22px,3vw,36px)">Process & Components</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--g)">
+        <div class="card" style="height:auto;padding:18px;background:rgba(255,255,255,.03);border:1px solid var(--hairline)">
+          <h3 style="margin:0 0 8px;font-weight:800;font-size:clamp(18px,2vw,22px)">Information Architecture</h3>
+          <p style="margin:0 0 12px;color:var(--muted);line-height:1.6">Prioritization distinguishes critical, actionable, and FYI signals. Clustering reduces noise while keeping pathways to detail.</p>
+          <div class="full"><img loading="lazy" src="https://picsum.photos/seed/nc-ia/1400/900" alt="IA map"></div>
+        </div>
+        <div class="card" style="height:auto;padding:18px;background:rgba(255,255,255,.03);border:1px solid var(--hairline)">
+          <h3 style="margin:0 0 8px;font-weight:800;font-size:clamp(18px,2vw,22px)">Design System</h3>
+          <p style="margin:0 0 12px;color:var(--muted);line-height:1.6">Components with clear states (idle, pending, critical) and tokenized color roles ensure consistency across contexts.</p>
+          <div class="full"><img loading="lazy" src="https://picsum.photos/seed/nc-ds/1400/900" alt="Component board"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 结果（滚动显现） -->
+  <section class="section">
+    <div class="wrap reveal">
+      <h2 style="margin:0 0 10px;font-weight:900;letter-spacing:-.01em;font-size:clamp(22px,3vw,36px)">Outcome</h2>
+      <ul style="margin:0;padding-left:1.2em;color:var(--muted);line-height:1.6">
+        <li>Decreased visual noise via contextual grouping and progressive detail.</li>
+        <li>Improved glanceability through type scale and contrast choices.</li>
+        <li>Systematic motion specs that communicate urgency without distraction.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 上一/下一项目 -->
+  <section class="wrap reveal" style="padding-bottom:80px">
+    <div style="display:flex;gap:16px;justify-content:space-between">
+      <a href="./watch-collection.html" style="flex:1;border:1px solid var(--hairline);border-radius:14px;padding:16px;background:rgba(255,255,255,.03);color:var(--text);text-decoration:none">
+        <small style="display:block;opacity:.8;text-transform:uppercase;letter-spacing:.08em;font-weight:800;margin-bottom:6px">Previous</small>
+        <strong>Chrono24 — Watch Collection</strong>
+      </a>
+      <a href="./race-game-intro.html" style="flex:1;text-align:right;border:1px solid var(--hairline);border-radius:14px;padding:16px;background:rgba(255,255,255,.03);color:var(--text);text-decoration:none">
+        <small style="display:block;opacity:.8;text-transform:uppercase;letter-spacing:.08em;font-weight:800;margin-bottom:6px">Next</small>
+        <strong>Porsche — Race Game Intro</strong>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer" aria-label="Footer">
+    <div class="footer-inner">
+      <a class="logo" href="../index.html#top" aria-label="Home"><span class="logo-mark">EX</span><span>Portfolio</span></a>
+      <div class="legal">© <span id="year"></span> Evan Xiao</div>
+    </div>
+  </footer>
+
+  <script>
+    // 年份
+    const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
+
+    // 滚动显现：进入视口才淡入
+    const revealEls = Array.from(document.querySelectorAll('.reveal, [data-stagger]'));
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold: .14, rootMargin: '0px 0px -10% 0px'});
+    revealEls.forEach(el=>io.observe(el));
+  </script>
+</body>
+</html>
