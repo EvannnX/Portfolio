@@ -35,7 +35,7 @@
 
     /* Hero video */
     .hero-video{position:relative; height:100vh; width:100vw; overflow:hidden}
-    .hero-video iframe{position:absolute; inset:0; width:100%; height:100%; border:0}
+    .hero-video video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center;}
     .hero-video::after{content:""; position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,.15) 0%, rgba(0,0,0,.35) 60%, rgba(11,14,17,1) 100%); pointer-events:none;}
 
     /* Mast */
@@ -92,7 +92,24 @@
     .icon-link:hover .icon-img{opacity:1}
     .legal{max-width:var(--maxw); margin:0 auto; padding:0 24px 24px; font-size:.85rem; color:var(--muted)}
 
-    /* removed audio toggle */
+    /* Right-bottom audio toggle */
+    .audio-toggle{
+      position:fixed;
+      right:calc(24px + env(safe-area-inset-right));
+      bottom:calc(24px + env(safe-area-inset-bottom));
+      width:56px; height:56px; z-index:60;
+      display:grid; place-items:center;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.06);
+      backdrop-filter:blur(10px) saturate(130%);
+      box-shadow:0 8px 24px rgba(0,0,0,.35);
+      cursor:pointer;
+    }
+    .audio-toggle:hover{ background:rgba(255,255,255,.1) }
+    .audio-toggle:active{ transform:translateY(1px) }
+    .audio-toggle img{ width:26px; height:26px; display:block }
+    .audio-toggle[aria-pressed="true"]{ border-color:rgba(255,255,255,.32) }
 
     @media (max-width:1100px){ .mast-grid{grid-template-columns:1fr} }
     @media (max-width:900px){
@@ -117,15 +134,20 @@
     </nav>
   </header>
 
-  <!-- Hero media: Google Drive embed -->
+  <!-- Hero video (自动播放，初始静音) -->
   <section class="hero-video" aria-label="Intro video">
-    <iframe
-      src="https://drive.google.com/file/d/1vCFZ-ex17Ji9p8gfBTzzlEgBe_bUxhq0/preview"
-      allow="autoplay; encrypted-media"
-      allowfullscreen
-      title="Interactive AI-powered Robot video">
-    </iframe>
+    <video
+      id="heroVideo"
+      src="https://drive.google.com/uc?export=download&id=1vCFZ-ex17Ji9p8gfBTzzlEgBe_bUxhq0"
+      autoplay muted playsinline loop
+      poster="assets/images/projects/interactive-ai-powered-robot/ima-bot-blue.jpg">
+    </video>
   </section>
+
+  <!-- 右下角声音开关（PNG） -->
+  <button class="audio-toggle" id="audioToggle" aria-label="Sound off" aria-pressed="false" title="Sound">
+    <img id="audioIcon" src="https://img.icons8.com/ios-glyphs/60/ffffff/mute.png" alt="Sound off">
+  </button>
 
   
 
@@ -278,7 +300,7 @@
       heroIO.observe(hero);
     }
 
-    // ===== Audio toggle: 初始静音；点击后取消静音并播放 ai-robot.mp4 的声音，同时切换 PNG 图标 =====
+    // ===== Audio toggle: 初始静音；点击后取消静音并播放声音，同时切换 PNG 图标 =====
     const video = document.getElementById('heroVideo');
     const btn   = document.getElementById('audioToggle');
     const icon  = document.getElementById('audioIcon');
