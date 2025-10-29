@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>2024-2025 VEX High Stakes · Evan Xiao</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="NYU Shanghai Robotics Club participation in the 8th China University Intelligent Robot Creative Competition." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0e11; --text:#e8ecef; --muted:#c8ced4; --brand:#fff;
+      --glass:rgba(10,12,15,.55); --hairline:rgba(255,255,255,.08);
+      --g:28px; --header-h:72px; --header-blur:10px; --maxw:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{ margin:0; background:var(--bg); color:var(--text); font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; -webkit-font-smoothing:antialiased; line-height:1.35; }
+
+    /* Header */
+    .site-header{position:fixed; inset:0 0 auto 0; height:var(--header-h); z-index:50; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:0 24px; background:var(--glass); backdrop-filter:saturate(130%) blur(var(--header-blur)); box-shadow:0 1px 0 rgba(255,255,255,.06) inset; transition:background .25s, box-shadow .25s, backdrop-filter .25s;}
+    .site-header.transparent{ background:transparent; box-shadow:none; backdrop-filter:none; }
+    .logo{display:inline-flex; align-items:center; text-decoration:none}
+    .logo-img{height:30px; width:auto; display:block}
+    nav a{color:#fff;text-decoration:none;opacity:.92;font-weight:800;letter-spacing:.12em;font-size:.78rem;margin:0 12px;text-transform:uppercase}
+    nav a:hover{opacity:1}
+    .btn{appearance:none;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);color:#fff;padding:10px 14px;border-radius:999px;font-weight:700;letter-spacing:.02em;text-decoration:none;font-size:calc(1rem * var(--fs))}
+
+    .section{padding:120px 0}
+    .pad-top{padding-top:calc(var(--header-h) + 32px)}
+
+    /* Hero video */
+    .hero-video{position:relative; height:100vh; width:100vw; overflow:hidden}
+    .hero-video img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center;}
+    .hero-video::after{content:""; position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,.15) 0%, rgba(0,0,0,.35) 60%, rgba(11,14,17,1) 100%); pointer-events:none;}
+
+    /* Mast */
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+    .mast-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+    .mast h1{margin:0 0 10px;font-weight:900;letter-spacing:-.01em;font-size:clamp(30px,5vw,58px)}
+    .mast p.sub{margin:0;color:#e9eff6;font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:clamp(16px,1.6vw,22px)}
+    .facts{margin-top:18px;border-top:1px solid var(--hairline);padding-top:14px}
+    .facts dl{margin:0;display:grid;grid-template-columns:120px 1fr;row-gap:10px;column-gap:12px}
+    .facts dt{opacity:.75;font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:.78rem}
+    .facts dd{margin:0}
+    .col h3{margin:0 0 10px;font-weight:900;letter-spacing:-.01em;font-size:clamp(18px,2.4vw,24px)}
+    .col p{margin:0 0 14px}
+
+    /* Rails */
+    .rails{ display:grid; grid-template-columns:1fr 4fr 1fr; width:100vw; }
+    .stage{ grid-column:2; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:var(--g); align-items:center; margin:56px 0; }
+    .stage > .text, .stage > .media{ align-self:center; }
+
+    .text h2{margin:0 0 8px;font-weight:900;letter-spacing:-.01em;font-size:clamp(20px,3vw,34px)}
+    .text p{margin:0 0 12px}
+    .text ul{margin:.2rem 0 0 1.2rem;line-height:1.6}
+    .muted{color:var(--muted)}
+
+    .media{display:block;width:100%}
+    figure.media{margin:0}
+    .media img{display:block;width:100%;max-width:100%;height:auto;border-radius:14px}
+    .media-vertical{display:grid;grid-template-columns:1fr;gap:12px}
+    .media-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .media-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+    .media-grid-4{display:grid;grid-template-columns:1fr 1fr;gap:12px;grid-template-rows:1fr 1fr}
+    .media-item{position:relative;overflow:hidden;border-radius:14px}
+    .media-item img{width:100%;height:100%;object-fit:cover;display:block}
+    .media-item.tall{aspect-ratio:2/3}
+    .media-item.wide{aspect-ratio:3/2}
+    .media-item.square{aspect-ratio:1/1}
+    figcaption{font-size:.9rem;color:var(--muted);margin-top:6px}
+
+    /* Reveal (slow & lift) */
+    .reveal{opacity:0; transform:translateY(40px); filter:blur(6px);
+      transition:opacity 1.2s ease, transform 1.2s cubic-bezier(0.2,0.7,0,1), filter 1.2s ease; will-change:opacity,transform,filter;}
+    .reveal.in{opacity:1; transform:none; filter:none;}
+    .reveal.in .text > *{transition:opacity 1.2s ease .15s, transform 1.2s cubic-bezier(0.2,0.7,0,1) .15s;}
+    .reveal.in .media{transition:opacity 1.2s ease .30s, transform 1.2s cubic-bezier(0.2,0.7,0,1) .30s;}
+    @media (prefers-reduced-motion: reduce){ .reveal, .reveal.in{opacity:1;transform:none;filter:none;transition:none} }
+
+    /* Footer (home style) */
+    .site-footer{margin-top:96px;background:#0b0d0f;border-top:1px solid var(--hairline);position:relative}
+    .site-footer::before{content:""; position:absolute; inset:0 0 auto 0; height:80px; background:radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,.06), rgba(255,255,255,0))}
+    .footer-inner{max-width:var(--maxw); margin:0 auto; padding:36px 24px; display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); align-items:start; gap:36px}
+    .site-footer .logo{color:#fff; gap:.4rem}
+    .site-footer .logo-img{height:44px; width:auto; display:block}
+    .site-footer .logo span{display:none}
+    .cols{display:flex; gap:64px; grid-column:9 / span 4; justify-self:start; align-items:center;}
+    .col-title{font-size:.85rem; font-weight:900; letter-spacing:.08em; text-transform:uppercase; opacity:.8; margin-bottom:10px}
+    .col ul{list-style:none; margin:0; padding:0; display:grid; gap:8px}
+    .col a{color:var(--text); text-decoration:none}
+    .col a:hover{text-decoration:underline}
+    .icons-vert{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+    .icon-link{display:inline-block}
+    .icon-img{width:40px;height:40px;display:block;opacity:.92}
+    .icon-link:hover .icon-img{opacity:1}
+    .legal{max-width:var(--maxw); margin:0 auto; padding:0 24px 24px; font-size:.85rem; color:var(--muted)}
+
+    @media (max-width:1100px){ .mast-grid{grid-template-columns:1fr} }
+    @media (max-width:900px){
+      nav{display:none}
+      .rails{grid-template-columns:12px 1fr 12px}
+      .stage{grid-template-columns:1fr; align-items:start;}
+      .cols{grid-column:1 / -1; justify-self:start; gap:32px}
+      .media-grid{grid-template-columns:1fr}
+      .media-grid-3{grid-template-columns:1fr}
+      .media-grid-4{grid-template-columns:1fr}
+      .media-item{aspect-ratio:16/9}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header transparent" aria-label="Primary">
+    <a class="logo" href="index.html#top" aria-label="Home">
+      <img class="logo-img" src="assets/images/general/logo.png" alt="Logo" />
+    </a>
+    <nav aria-label="Main">
+      <a href="projects.html">Projects</a>
+      <a href="about.html">About</a>
+      <a class="btn" href="mailto:hello@example.com">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero image -->
+  <section class="hero-video" aria-label="Intro image">
+    <img
+      loading="eager"
+      src="assets/images/projects/2024-2025-VEX-High-Stakes/ccabd7bfb0c7a66e9d214da30a217ee2.jpg"
+      alt="VEX High Stakes robot competition" />
+  </section>
+
+  <!-- Mast -->
+  <section class="section pad-top mast">
+    <div class="wrap mast-grid reveal">
+      <div>
+        <h1>2024-2025 VEX High Stakes</h1>
+        <p class="sub">NYU Shanghai Robotics Club participation in the 8th China University Intelligent Robot Creative Competition.</p>
+        <div class="facts">
+          <dl>
+            <dt>Context</dt><dd>NYU Shanghai · Robotics Club</dd>
+            <dt>Focus</dt><dd>VEX Robotics · Competition · Engineering</dd>
+            <dt>Stack</dt><dd>VEX V5, RobotC, Mechanical Design</dd>
+            <dt>Year</dt><dd>2024-2025</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Case</h3>
+        <p>Participating in the prestigious 8th China University Intelligent Robot Creative Competition (第八届中国高校智能机器人创意大赛) as part of NYU Shanghai Robotics Club.</p>
+        <h3 style="margin-top:18px">Task</h3>
+        <p>Design, build, and program VEX robots for the High Stakes competition challenge, focusing on autonomous and driver-controlled performance in complex game scenarios.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <main class="rails">
+    <section class="stage reveal">
+      <div class="text">
+        <h2>Competition Overview</h2>
+        <p>The 8th China University Intelligent Robot Creative Competition (第八届中国高校智能机器人创意大赛) is one of China's most prestigious robotics competitions for university students. This year's VEX High Stakes challenge presents teams with complex autonomous and driver-controlled tasks that test both engineering design and programming capabilities.</p>
+        <p>NYU Shanghai Robotics Club is proud to participate in this national-level competition, representing our institution alongside top universities from across China. The competition provides an excellent platform for students to showcase their robotics skills and innovative thinking.</p>
+      </div>
+      <div class="media">
+        <div class="media-grid">
+          <div class="media-item square">
+            <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9254.JPG" alt="VEX robot design overview" />
+          </div>
+          <div class="media-item square">
+            <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9255.JPG" alt="Robot mechanical components" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stage reveal">
+      <div class="text">
+        <h2>NYU Shanghai Robotics Club</h2>
+        <p>As an active member of NYU Shanghai Robotics Club, our team brings together students from diverse academic backgrounds—engineering, computer science, mathematics, and design—to tackle complex robotics challenges.</p>
+        <p>The club emphasizes collaborative learning, hands-on experience, and innovation in robotics technology. Our participation in the VEX High Stakes competition demonstrates our commitment to excellence in robotics education and competition.</p>
+        <p><strong>Key Focus Areas:</strong></p>
+        <ul>
+          <li>Autonomous robot programming and sensor integration</li>
+          <li>Mechanical design optimization for competition performance</li>
+          <li>Team collaboration and project management</li>
+          <li>Strategic game analysis and robot adaptation</li>
+        </ul>
+      </div>
+      <div class="media">
+        <div class="media-grid">
+          <div class="media-item square">
+            <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9256.JPG" alt="Robot assembly process" />
+          </div>
+          <div class="media-item square">
+            <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9257.JPG" alt="Robot control system" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stage reveal">
+      <div class="text">
+        <h2>Technical Implementation</h2>
+        <p>Our VEX High Stakes robot utilizes the VEX V5 platform, featuring advanced sensors, motors, and control systems. The robot is designed to handle multiple game elements efficiently while maintaining reliability under competition pressure.</p>
+        <p><strong>Technical Specifications:</strong></p>
+        <ul>
+          <li>VEX V5 Brain for autonomous and driver control</li>
+          <li>High-torque motors for precise movement and manipulation</li>
+          <li>Advanced sensor suite including encoders, gyroscope, and vision sensors</li>
+          <li>Modular design allowing for quick modifications between matches</li>
+        </ul>
+      </div>
+      <div class="media">
+        <div class="media-vertical">
+          <figure style="margin:0">
+            <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9274.jpeg" alt="Robot in action during competition" />
+          </figure>
+          <figure style="margin:0">
+            <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9312.JPG" alt="Team collaboration and testing" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="stage reveal">
+      <div class="text">
+        <h2>Competition Strategy & Performance</h2>
+        <p>The VEX High Stakes game requires robots to perform complex tasks including object manipulation, navigation, and strategic positioning. Our team has developed both autonomous and driver-controlled strategies to maximize scoring potential.</p>
+        <p>Through extensive testing and iteration, we've optimized our robot's performance for various game scenarios, ensuring consistent and reliable operation during competition matches.</p>
+      </div>
+      <div class="media">
+        <div class="media-grid">
+          <div class="media-item square">
+            <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9334.JPG" alt="Final robot design" />
+          </div>
+          <div class="media-item square">
+            <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9335.JPG" alt="Competition preparation" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stage reveal">
+      <div class="text">
+        <h2>Team Collaboration & Learning</h2>
+        <p>This project represents the culmination of months of collaborative work within NYU Shanghai Robotics Club. Team members contributed expertise in mechanical design, programming, strategy development, and project management.</p>
+        <p><strong>Key Learning Outcomes:</strong></p>
+        <ul>
+          <li>Advanced robotics programming and control systems</li>
+          <li>Mechanical design principles and optimization techniques</li>
+          <li>Competition strategy development and adaptation</li>
+          <li>Team collaboration and project management skills</li>
+        </ul>
+        <p>Our participation in the 8th China University Intelligent Robot Creative Competition has been an invaluable learning experience, pushing our technical capabilities and fostering innovation in robotics education.</p>
+      </div>
+      <div class="media">
+        <figure class="media">
+          <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/ccabd7bfb0c7a66e9d214da30a217ee2.jpg" alt="Team collaboration and final project showcase" />
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" aria-label="Footer">
+    <div class="footer-inner">
+      <a class="logo" href="index.html#top" aria-label="Home">
+        <img class="logo-img" src="assets/images/general/logo.png" alt="Logo" />
+      </a>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">Sitemap</div>
+          <ul>
+            <li><a href="index.html#top">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="mailto:hello@example.com">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col social-col">
+          <div class="icons-vert">
+            <a class="icon-link" href="#" aria-label="LinkedIn">
+              <img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/linkedin.png" alt="LinkedIn">
+            </a>
+            <a class="icon-link" href="#" aria-label="Instagram">
+              <img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/instagram-new.png" alt="Instagram">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="legal">© <span id="year"></span> Evan Xiao</div>
+  </footer>
+
+  <script>
+    // Year
+    const y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
+
+    // Reveal on scroll
+    const reveals=[...document.querySelectorAll('.reveal')];
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    reveals.forEach(el=>io.observe(el));
+
+    // Header transparency by hero visibility
+    const header=document.querySelector('.site-header');
+    const hero=document.querySelector('.hero-video');
+    if(header && hero){
+      const heroIO=new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ header.classList.add('transparent'); } else { header.classList.remove('transparent'); } });
+      }, {threshold:0.35});
+      heroIO.observe(hero);
+    }
+  </script>
+</body>
+</html>

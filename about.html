@@ -47,8 +47,8 @@
     .man-echo .echo{position:absolute; inset:0; transform:translate(0, .14em); opacity:.08}
 
     .man-copy{color:var(--muted); font-size:clamp(13.5px, 1.35vw, 16.5px); line-height:1.65; font-family:"Playfair Display", Georgia, serif; font-style:italic}
-    .man-photo{width:100%; max-width:520px; justify-self:end; border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,.06); box-shadow:0 10px 40px rgba(0,0,0,.4); position:relative}
-    .man-photo img{display:block; width:100%; height:auto; filter:grayscale(100%) contrast(1.12) brightness(.96)}
+    .man-photo{width:100%; max-width:400px; justify-self:end; border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,.06); box-shadow:0 10px 40px rgba(0,0,0,.4); position:relative}
+    .man-photo img{display:block; width:100%; height:auto; max-height:600px; object-fit:cover; object-position:top center; filter:contrast(1.12) brightness(.96)}
 
     /* ======= Student profile (instead of services) ======= */
     .profile{padding-top:28px}
@@ -127,13 +127,12 @@
       
       <div class="man-copy">
         <p>Evan Xiao is a researcher and media practitioner whose work lies at the intersection of human-computer interaction, robotics, and sensory interface design. His practice explores how emerging technologies can mediate trust, affect, and embodied communication between humans and machines.</p>
-        <p>Looking forward, his research interests include emotional and tactile interaction design, trust mechanisms in HCI, and assistive tools for vulnerable populations. Potential areas of inquiry span from haptic interfaces for remote collaboration and smart home environments, to language-model-based support systems for autism caregivers, as well as tactile navigation and music perception systems for people with visual or hearing impairments.</p>
-        <p>Through prototyping, design research, and cultural analysis, his goal is to develop interaction models and tools that bridge technological infrastructures with human-centered values of care, empathy, and accessibility.</p>
+        <p>Looking forward, his research interests include emotional and tactile interaction design, trust mechanisms in HCI, and assistive tools for vulnerable populations.</p>
       </div>
       
     </div>
     <figure class="man-photo">
-      <img src="https://picsum.photos/seed/portraitEX/1400/1600" alt="Portrait / work scene" />
+      <img src="assets/images/about/Photo.jpg" alt="Portrait / work scene" />
       <span aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;opacity:.25;background:repeating-linear-gradient(45deg, rgba(255,255,255,.12) 0 1px, rgba(255,255,255,0) 1px 3px)"></span>
     </figure>
   </section>
@@ -146,7 +145,9 @@
     <div class="info-grid">
       <div class="info">
         <h3>Currently</h3>
-        <p>NYU Shanghai junior · Interactive Media Arts (major) · Computer Science (minor)</p>
+        <p>NYU Shanghai junior <p>
+        <p>Interactive Media Arts (major)<p>
+        <p> Computer Science (minor)</p>
       </div>
       <div class="info">
         <h3>Focus</h3>
