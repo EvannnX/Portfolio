@@ -39,7 +39,8 @@
 
     /* ===== Hero ===== */
     .hero{position:relative;height:100vh;min-height:560px;overflow:hidden}
-    .hero video,.hero .poster{position:absolute;inset:-10% -10% -10% -10%;width:120%;height:120%;object-fit:cover;filter:saturate(.9) contrast(1.1) brightness(.86);transform:translateZ(0)}
+    .hero .video-container{position:absolute;inset:-10% -10% -10% -10%;overflow:hidden;z-index:0}
+    .hero .video-container video{display:block;width:120%;height:120%;object-fit:cover;filter:saturate(.9) contrast(1.1) brightness(.86);transform:translateZ(0);pointer-events:none}
     .hero .shade{position:absolute;inset:0;background:radial-gradient(60% 70% at 70% 50%, rgba(0,0,0,.05) 0%, rgba(0,0,0,.55) 80%), linear-gradient(180deg, rgba(0,0,0,.40) 0%, rgba(0,0,0,.55) 100%);mix-blend-mode:multiply}
     .hero .halftone{position:absolute;inset:0;pointer-events:none;opacity:.25;background:radial-gradient(circle at 1px 1px, rgba(255,255,255,.08) 1px, rgba(255,255,255,0) 1px) 0 0/3px 3px, radial-gradient(circle at 0 0, rgba(0,0,0,.25) 0, rgba(0,0,0,0) 60%)}
     .hero-inner{position:relative;z-index:1;height:100%;display:grid;grid-template-columns:1fr}
@@ -128,13 +129,23 @@
 
   <!-- ======= HERO / LANDING ======= -->
   <main id="top" class="hero" aria-label="Landing section">
-    <!-- Replace the video sources with the ones you have permission to use -->
-    <video id="bgVideo" class="bg" autoplay muted loop playsinline aria-hidden="true">
-      <!-- MP4 first; add WebM for modern browsers if you have it -->
-              <source src="assets/images/projects/interactive-ai-powered-robot/ai-robot-final.mp4" type="video/mp4" />
-      <!-- <source src="media/hero.webm" type="video/webm" /> -->
-    </video>
-    <div class="poster" aria-hidden="true" style="background:url('media/hero-poster.jpg') center/cover no-repeat"></div>
+    <div class="video-container" aria-hidden="true">
+      <video
+        id="bgVideo"
+        class="bg"
+        autoplay
+        muted
+        loop
+        playsinline
+        webkit-playsinline
+        preload="auto"
+        aria-hidden="true"
+      >
+        <source src="assets/images/projects/interactive-ai-powered-robot/ai-robot-final.mp4" type="video/mp4" />
+        <source src="assets/images/projects/interactive-ai-powered-robot/ai-robot.hero.mp4" type="video/mp4" />
+        Your browser does not support the background video.
+      </video>
+    </div>
     <div class="shade" aria-hidden="true"></div>
     <div class="halftone" aria-hidden="true"></div>
 
