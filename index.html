@@ -39,7 +39,7 @@
 
     /* ===== Hero ===== */
     .hero{position:relative;height:100vh;min-height:560px;overflow:hidden}
-    .hero .video-container{position:absolute;inset:-10% -10% -10% -10%;overflow:hidden;z-index:0}
+    .hero .video-container{position:absolute;inset:-10% -10% -10% -10%;overflow:hidden;z-index:0;background:url('assets/images/projects/interactive-ai-powered-robot/ima-bot-blue.jpg') center/cover no-repeat}
     .hero .video-container video{display:block;width:120%;height:120%;object-fit:cover;filter:saturate(.9) contrast(1.1) brightness(.86);transform:translateZ(0);pointer-events:none}
     .hero .shade{position:absolute;inset:0;background:radial-gradient(60% 70% at 70% 50%, rgba(0,0,0,.05) 0%, rgba(0,0,0,.55) 80%), linear-gradient(180deg, rgba(0,0,0,.40) 0%, rgba(0,0,0,.55) 100%);mix-blend-mode:multiply}
     .hero .halftone{position:absolute;inset:0;pointer-events:none;opacity:.25;background:radial-gradient(circle at 1px 1px, rgba(255,255,255,.08) 1px, rgba(255,255,255,0) 1px) 0 0/3px 3px, radial-gradient(circle at 0 0, rgba(0,0,0,.25) 0, rgba(0,0,0,0) 60%)}
@@ -138,11 +138,12 @@
         loop
         playsinline
         webkit-playsinline
-        preload="auto"
+        preload="metadata"
+        poster="assets/images/projects/interactive-ai-powered-robot/ima-bot-blue.jpg"
         aria-hidden="true"
       >
-        <source src="assets/images/projects/interactive-ai-powered-robot/ai-robot-final.mp4" type="video/mp4" />
         <source src="assets/images/projects/interactive-ai-powered-robot/ai-robot.hero.mp4" type="video/mp4" />
+        <source src="assets/images/projects/interactive-ai-powered-robot/ai-robot-2025-08-16.mp4" type="video/mp4" />
         Your browser does not support the background video.
       </video>
     </div>
@@ -188,8 +189,9 @@
         <!-- ====== 替换后的右侧卡片：Interactive AI-Powered Robot（视频、静音自动播放） ====== -->
         <a href="interactive-ai-powered-robot.html" class="card"
    aria-label="Interactive AI-Powered Robot project">
-  <video autoplay muted loop playsinline webkit-playsinline preload="auto" poster="assets/images/projects/interactive-ai-powered-robot/ima-bot-blue.jpg">
-    <source src="assets/images/projects/interactive-ai-powered-robot/ai-robot-final.mp4" type="video/mp4">
+  <video autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/images/projects/interactive-ai-powered-robot/ima-bot-blue.jpg">
+    <source src="assets/images/projects/interactive-ai-powered-robot/ai-robot.hero.mp4" type="video/mp4">
+    <source src="assets/images/projects/interactive-ai-powered-robot/ai-robot-2025-08-16.mp4" type="video/mp4">
   </video>
   <div class="label">
     <span class="client">NYU Shanghai · Interactive Media Arts</span>
