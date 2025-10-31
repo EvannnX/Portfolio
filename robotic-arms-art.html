@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Robotic Arms in Art · Evan Xiao</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Franka Research 3 collaboration exploring contemplative sand art, gesture-driven painting, and reinforcement learning choreography." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0e11; --text:#e8ecef; --muted:#c8ced4; --brand:#fff;
+      --glass:rgba(10,12,15,.55); --hairline:rgba(255,255,255,.08);
+      --g:28px; --header-h:72px; --header-blur:10px; --maxw:1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;-webkit-font-smoothing:antialiased;line-height:1.35}
+
+    /* Header */
+    .site-header{position:fixed;inset:0 0 auto 0;height:var(--header-h);z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 24px;background:var(--glass);backdrop-filter:saturate(130%) blur(var(--header-blur));box-shadow:0 1px 0 rgba(255,255,255,.06) inset;transition:background .25s,box-shadow .25s,backdrop-filter .25s}
+    .site-header.transparent{background:transparent;box-shadow:none;backdrop-filter:none}
+    .logo{display:inline-flex;align-items:center;text-decoration:none}
+    .logo-img{height:30px;width:auto;display:block}
+    nav a{color:#fff;text-decoration:none;opacity:.92;font-weight:800;letter-spacing:.12em;font-size:.78rem;margin:0 12px;text-transform:uppercase}
+    nav a:hover{opacity:1}
+    .btn{appearance:none;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);color:#fff;padding:10px 14px;border-radius:999px;font-weight:700;letter-spacing:.02em;text-decoration:none}
+
+    .section{padding:120px 0}
+    .pad-top{padding-top:calc(var(--header-h) + 32px)}
+
+    /* Hero */
+    .hero{position:relative;height:100vh;max-height:820px;width:100vw;overflow:hidden}
+    .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+    .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,rgba(9,11,18,.12) 0,rgba(9,11,18,.5) 70%,rgba(9,11,18,1) 100%);pointer-events:none}
+
+    /* Mast */
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+    .mast-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+    .mast h1{margin:0 0 10px;font-weight:900;letter-spacing:-.01em;font-size:clamp(30px,5vw,58px)}
+    .mast p.sub{margin:0;color:#e9eff6;font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:clamp(16px,1.6vw,22px)}
+    .facts{margin-top:18px;border-top:1px solid var(--hairline);padding-top:14px}
+    .facts dl{margin:0;display:grid;grid-template-columns:120px 1fr;row-gap:10px;column-gap:12px}
+    .facts dt{opacity:.75;font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:.78rem}
+    .facts dd{margin:0}
+    .col h3{margin:0 0 12px;font-weight:900;letter-spacing:-.01em;font-size:clamp(18px,2.4vw,24px)}
+    .col p{margin:0 0 14px}
+
+    /* Narrative sections */
+    .rails{display:grid;grid-template-columns:1fr 4fr 1fr;width:100vw}
+    .stage{grid-column:2;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--g);align-items:center;margin:56px 0}
+    .stage.swap{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+    .stage.swap .media{order:-1}
+    .text h2{margin:0 0 8px;font-weight:900;letter-spacing:-.01em;font-size:clamp(22px,3vw,36px)}
+    .text h3{margin:14px 0 6px;font-weight:800;letter-spacing:-.01em;font-size:clamp(18px,2.2vw,24px)}
+    .text p{margin:0 0 12px}
+    .text ul{margin:.2rem 0 0 1.2rem;line-height:1.6}
+    .muted{color:var(--muted)}
+
+    .media{display:block;width:100%}
+    figure.media{margin:0}
+    .media video,.media img{width:100%;height:auto;display:block;border-radius:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    figcaption{font-size:.9rem;color:var(--muted);margin-top:8px}
+
+    .media-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
+    .media-grid img{width:100%;height:100%;object-fit:cover;border-radius:14px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+
+    /* Quote band */
+    .quote-band{grid-column:2;margin:120px 0;background:linear-gradient(135deg,rgba(83,104,255,.18),rgba(86,208,255,.05));border:1px solid rgba(255,255,255,.06);border-radius:20px;padding:48px;box-shadow:0 14px 40px rgba(0,0,0,.32);max-width:var(--maxw);width:100%}
+    .quote-band blockquote{margin:0;font-family:"Playfair Display",Georgia,serif;font-size:clamp(24px,3.2vw,36px);line-height:1.35;color:#f3f6ff}
+    .quote-band footer{margin-top:18px;font-size:.95rem;color:var(--muted);text-transform:uppercase;letter-spacing:.16em;font-weight:800}
+
+    /* Footer */
+    .site-footer{margin-top:96px;background:#0b0d0f;border-top:1px solid var(--hairline);position:relative}
+    .site-footer::before{content:"";position:absolute;inset:0 0 auto 0;height:80px;background:radial-gradient(60% 100% at 50% 0%,rgba(255,255,255,.06),rgba(255,255,255,0))}
+    .footer-inner{max-width:var(--maxw);margin:0 auto;padding:36px 24px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));align-items:start;gap:36px}
+    .site-footer .logo{color:#fff;gap:.4rem}
+    .site-footer .logo-img{height:44px;width:auto;display:block}
+    .site-footer .logo span{display:none}
+    .cols{display:flex;gap:64px;grid-column:9 / span 4;justify-self:start;align-items:center}
+    .col-title{font-size:.85rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;opacity:.8;margin-bottom:10px}
+    .col ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+    .col a{color:var(--text);text-decoration:none}
+    .col a:hover{text-decoration:underline}
+    .icons-vert{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+    .icon-link{display:inline-block}
+    .icon-img{width:40px;height:40px;display:block;opacity:.92}
+    .icon-link:hover .icon-img{opacity:1}
+    .legal{max-width:var(--maxw);margin:0 auto;padding:0 24px 24px;font-size:.85rem;color:var(--muted)}
+
+    @media (max-width:1100px){
+      .mast-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:900px){
+      nav{display:none}
+      .rails{grid-template-columns:12px 1fr 12px}
+      .stage{grid-template-columns:1fr;align-items:start}
+      .stage.swap .media{order:0}
+      .quote-band{grid-column:1 / -1;padding:36px}
+      .cols{grid-column:1 / -1;justify-self:start;gap:32px}
+    }
+    @media (prefers-reduced-motion:reduce){
+      .reveal,.reveal.in{opacity:1;transform:none;filter:none;transition:none}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header transparent" aria-label="Primary">
+    <a class="logo" href="index.html#top" aria-label="Home">
+      <img class="logo-img" src="assets/images/general/logo.png" alt="Logo" />
+    </a>
+    <nav aria-label="Main">
+      <a href="projects.html">Projects</a>
+      <a href="about.html">About</a>
+      <a class="btn" href="mailto:hello@example.com">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" aria-label="Robotic arms collaboration cover">
+    <img src="assets/images/projects/robotic-arms-art/cover.svg" alt="Gradient cover art for Robotic Arms in Art" loading="eager" />
+  </section>
+
+  <!-- Mast -->
+  <section class="section pad-top mast">
+    <div class="wrap mast-grid reveal">
+      <div>
+        <h1>Robotic Arms in Art</h1>
+        <p class="sub">Exploring the creative potential of the Franka Research&nbsp;3 arm through contemplative motion, interactive painting, and emergent choreography.</p>
+        <div class="facts">
+          <dl>
+            <dt>Context</dt><dd>NYU Shanghai · Interactive Media Arts × Franka Robotics</dd>
+            <dt>Role</dt><dd>Research Assistant · Prototyping · Interaction Design</dd>
+            <dt>Focus</dt><dd>Robotic Expression · Computer Vision · Reinforcement Learning</dd>
+            <dt>Timeline</dt><dd>Spring 2025</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Mandate</h3>
+        <p>Collaborate with Assistant Arts Professor Andy Garcia to investigate how industrial-grade robotics can support artistic practice. The team comprised Professor Garcia, research assistants Taojie Zhang and Evan Xiao, and the Franka Robotics support crew.</p>
+        <h3 style="margin-top:20px">Approach</h3>
+        <p>We began with off-the-shelf Desk tooling to understand motion planning fundamentals, then moved into <code>franky-control</code> Python workflows to gain full access to the robot’s seven-axis kinematics. Each prototype deepened our technical skillset while prompting questions about authorship, embodiment, and agency.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Narrative -->
+  <section class="section rails" aria-label="Project details">
+    <div class="stage reveal">
+      <div class="text">
+        <h2>Project 1 · Contemplation</h2>
+        <p>Our first exploration focused on meditative repetition. The Franka Research&nbsp;3 arm drags combs, stones, and brushes through fine sand, erases the pattern, and begins again. The slow cadence invites viewers to breathe with the machine—no narrative, just an endless act of attention.</p>
+        <h3>What we learned</h3>
+        <ul>
+          <li>Used Desk UI to choreograph precise Cartesian trajectories while monitoring joint torque limits.</li>
+          <li>Captured the relationship between sand texture, end-effector speed, and perceived calm.</li>
+          <li>Developed safe-reset routines so the arm could loop indefinitely for exhibition hours.</li>
+        </ul>
+      </div>
+      <figure class="media">
+        <video controls playsinline preload="metadata" poster="assets/images/projects/robotic-arms-art/contemplation%202.jpg">
+          <source src="assets/images/projects/robotic-arms-art/contemplation.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <figcaption>Contemplative sand patterns generated by the Franka arm.</figcaption>
+      </figure>
+      <div class="media-grid">
+        <img src="assets/images/projects/robotic-arms-art/contemplation%202.jpg" alt="Franka arm smoothing sand during the Contemplation piece" loading="lazy">
+        <img src="assets/images/projects/robotic-arms-art/contemplation%203.jpg" alt="Zen garden patterns created by the robotic arm" loading="lazy">
+      </div>
+    </div>
+
+    <div class="stage reveal swap">
+      <div class="text">
+        <h2>Project 2 · The Mimic Brush</h2>
+        <p>Next, we transformed the robot into a collaborative painter. Using TensorFlow.js hand pose detection, visitors could guide the brush by simply moving their hands. Forward, backward, up, and down gestures mapped to Franka’s Cartesian commands, turning the piece into a responsive, shared performance.</p>
+        <h3>Exhibition insights</h3>
+        <ul>
+          <li>Balanced responsiveness and safety by smoothing gesture noise before sending velocity commands.</li>
+          <li>Designed UI prompts and pacing to help newcomers adapt to the robot’s deliberate tempo.</li>
+          <li>Observed families and children using the system, validating the accessible design goal.</li>
+        </ul>
+      </div>
+      <figure class="media">
+        <video controls playsinline preload="metadata" poster="assets/images/projects/robotic-arms-art/brush%201.jpg">
+          <source src="assets/images/projects/robotic-arms-art/the-mimic-brush.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <figcaption>Visitors guiding live watercolor strokes via hand pose detection.</figcaption>
+      </figure>
+      <div class="media-grid">
+        <img src="assets/images/projects/robotic-arms-art/brush%201.jpg" alt="Preparing the Franka arm with a watercolor brush attachment" loading="lazy">
+        <img src="assets/images/projects/robotic-arms-art/brush%202.jpg" alt="Participant leading the robotic brush with hand gestures" loading="lazy">
+        <img src="assets/images/projects/robotic-arms-art/brush%203.jpg" alt="Close-up of brush strokes created with human-robot collaboration" loading="lazy">
+        <img src="assets/images/projects/robotic-arms-art/brush%204.jpg" alt="Visitors interacting with the Mimic Brush installation" loading="lazy">
+      </div>
+    </div>
+
+    <div class="stage reveal">
+      <div class="text">
+        <h2>Project 3 · Signals of the Void</h2>
+        <p>In the final study we explored emergent behavior. Three speakers around the robot pulse audio cues. Reinforcement learning rewards the arm for discovering joint configurations that move toward louder signals, prompting an ambient search across space—a kinetic listening exercise rather than a scripted routine.</p>
+        <h3>System architecture</h3>
+        <ul>
+          <li>SAC-inspired policy adjusts all seven joints, sampling microphone input at the gripper.</li>
+          <li>Reward function encourages both exploitation of strong signals and constant exploration.</li>
+          <li>Audio origin shifts every 30&nbsp;minutes, prompting new “choreography” across the gallery.</li>
+        </ul>
+      </div>
+      <figure class="media">
+        <video controls playsinline preload="metadata" poster="assets/images/projects/robotic-arms-art/signal%203.jpg">
+          <source src="assets/images/projects/robotic-arms-art/signals-of-the-void.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <figcaption>Ambient reinforcement learning routine seeking the loudest signal.</figcaption>
+      </figure>
+      <div class="media-grid">
+        <img src="assets/images/projects/robotic-arms-art/signal%202.jpg" alt="Franka arm listening for the strongest audio signal in a darkened gallery" loading="lazy">
+        <img src="assets/images/projects/robotic-arms-art/signal%203.jpg" alt="Long exposure showing the arm's exploratory motion path" loading="lazy">
+        <img src="assets/images/projects/robotic-arms-art/signal%204.jpg" alt="Visitors observing the reinforcement learning choreography" loading="lazy">
+      </div>
+    </div>
+
+    <div class="wrap quote-band reveal">
+      <blockquote>
+        “The Franka arm became a co-performer. Each iteration altered our sense of where authorship lives—sometimes in the code, sometimes in the machine, sometimes in the audience response.”
+        <footer>Andy Garcia · Assistant Arts Professor, NYU Shanghai</footer>
+      </blockquote>
+    </div>
+
+    <div class="stage reveal">
+      <div class="text">
+        <h2>Outcomes</h2>
+        <p>Across the semester we developed three working installations, an internal toolkit for choreographing responsive motion, and practical guidelines for staging robotic art in gallery settings. The work continues as we refine the RL pipelines and explore collaborative performances with dancers and musicians.</p>
+        <p class="muted">Thanks to Franka Robotics for equipment support and technical guidance throughout the residency.</p>
+      </div>
+      <div class="media-grid">
+        <img src="assets/images/projects/robotic-arms-art/ag_1.jpg" alt="Andy Garcia discussing the residency outcomes with the team" loading="lazy">
+        <img src="assets/images/projects/robotic-arms-art/ag_2.jpg" alt="Research assistants Taojie Zhang and Evan Xiao prototyping motion paths" loading="lazy">
+        <img src="assets/images/projects/robotic-arms-art/ag_3.jpg" alt="Franka arm workshop session during the residency" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer" aria-label="Footer">
+    <div class="footer-inner">
+      <a class="logo" href="index.html#top" aria-label="Home"><img class="logo-img" src="assets/images/general/logo.png" alt="Logo" /></a>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">Sitemap</div>
+          <ul>
+            <li><a href="index.html#top">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="mailto:hello@example.com">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col social-col">
+          <div class="icons-vert">
+            <a class="icon-link" href="#" aria-label="LinkedIn"><img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/linkedin.png" alt="LinkedIn"></a>
+            <a class="icon-link" href="#" aria-label="Instagram"><img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/instagram-new.png" alt="Instagram"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="legal">© <span id="year"></span> Evan Xiao</div>
+  </footer>
+
+  <script>
+    // Footer year
+    const y = document.getElementById('year');
+    if (y) y.textContent = new Date().getFullYear();
+
+    // Reveal on scroll
+    const reveals = Array.from(document.querySelectorAll('.reveal'));
+    if ('IntersectionObserver' in window){
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting){
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, {threshold:0.2});
+      reveals.forEach(el => io.observe(el));
+    } else {
+      reveals.forEach(el => el.classList.add('in'));
+    }
+
+    // Header transparency toggle
+    const header = document.querySelector('.site-header');
+    const hero = document.querySelector('.hero');
+    if (header && hero && 'IntersectionObserver' in window){
+      const headerObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          header.classList.toggle('transparent', entry.isIntersecting);
+        });
+      }, {threshold:0.6});
+      headerObs.observe(hero);
+    }
+  </script>
+</body>
+</html>
