@@ -51,28 +51,26 @@
     .col p{margin:0 0 14px}
 
     /* Narrative sections */
-    .rails{display:grid;grid-template-columns:1fr 4fr 1fr;width:100vw}
-    .stage{grid-column:2;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--g);align-items:center;margin:56px 0}
-    .stage.swap{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-    .stage.swap .media{order:-1}
-    .text h2{margin:0 0 8px;font-weight:900;letter-spacing:-.01em;font-size:clamp(22px,3vw,36px)}
-    .text h3{margin:14px 0 6px;font-weight:800;letter-spacing:-.01em;font-size:clamp(18px,2.2vw,24px)}
-    .text p{margin:0 0 12px}
-    .text ul{margin:.2rem 0 0 1.2rem;line-height:1.6}
+    .case-feed{padding:80px 24px 160px}
+    .case-body{max-width:940px;margin:0 auto;display:grid;gap:60px}
+    .slice{background:rgba(11,14,17,.82);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:42px 44px;box-shadow:0 26px 68px rgba(0,0,0,.35)}
+    .slice h2{margin:0 0 18px;font-weight:900;letter-spacing:-.01em;font-size:clamp(22px,3.2vw,38px)}
+    .slice h3{margin:28px 0 12px;font-weight:800;letter-spacing:-.01em;font-size:clamp(18px,2.2vw,24px)}
+    .slice p{margin:0 0 18px}
+    .slice ul{margin:0 0 18px 1.2rem;padding:0;line-height:1.6}
+    .slice ul li{margin:6px 0}
     .muted{color:var(--muted)}
 
-    .media{display:block;width:100%}
-    figure.media{margin:0}
-    .media video,.media img{width:100%;height:auto;display:block;border-radius:14px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);box-shadow:0 10px 30px rgba(0,0,0,.35)}
-    figcaption{font-size:.9rem;color:var(--muted);margin-top:8px}
+    .media-block{margin:28px 0 0}
+    .media-block video,.media-block img{width:100%;height:auto;display:block;border-radius:16px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 54px rgba(0,0,0,.32)}
+    figcaption{font-size:.9rem;color:var(--muted);margin-top:10px}
 
-    .media-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
-    .media-grid img{width:100%;height:100%;object-fit:cover;border-radius:14px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+    .media-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:24px}
+    .media-grid img{width:100%;height:100%;object-fit:cover;border-radius:16px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);box-shadow:0 12px 32px rgba(0,0,0,.28)}
 
-    /* Quote band */
-    .quote-band{grid-column:2;margin:120px 0;background:linear-gradient(135deg,rgba(83,104,255,.18),rgba(86,208,255,.05));border:1px solid rgba(255,255,255,.06);border-radius:20px;padding:48px;box-shadow:0 14px 40px rgba(0,0,0,.32);max-width:var(--maxw);width:100%}
-    .quote-band blockquote{margin:0;font-family:"Playfair Display",Georgia,serif;font-size:clamp(24px,3.2vw,36px);line-height:1.35;color:#f3f6ff}
-    .quote-band footer{margin-top:18px;font-size:.95rem;color:var(--muted);text-transform:uppercase;letter-spacing:.16em;font-weight:800}
+    .slice.quote{background:linear-gradient(135deg,rgba(83,104,255,.22),rgba(86,208,255,.07));border:1px solid rgba(255,255,255,.09)}
+    .slice.quote blockquote{margin:0;font-family:"Playfair Display",Georgia,serif;font-size:clamp(24px,3.2vw,36px);line-height:1.35;color:#f3f6ff}
+    .slice.quote footer{margin-top:18px;font-size:.95rem;color:var(--muted);text-transform:uppercase;letter-spacing:.16em;font-weight:800}
 
     /* Footer */
     .site-footer{margin-top:96px;background:#0b0d0f;border-top:1px solid var(--hairline);position:relative}
@@ -97,10 +95,9 @@
     }
     @media (max-width:900px){
       nav{display:none}
-      .rails{grid-template-columns:12px 1fr 12px}
-      .stage{grid-template-columns:1fr;align-items:start}
-      .stage.swap .media{order:0}
-      .quote-band{grid-column:1 / -1;padding:36px}
+      .case-feed{padding:60px 18px 120px}
+      .slice{padding:32px 28px}
+      .media-grid{grid-template-columns:1fr}
       .cols{grid-column:1 / -1;justify-self:start;gap:32px}
     }
     @media (prefers-reduced-motion:reduce){
@@ -154,9 +151,9 @@
   </section>
 
   <!-- Narrative -->
-  <section class="section rails" aria-label="Project details">
-    <div class="stage reveal">
-      <div class="text">
+  <section class="section case-feed" aria-label="Project details">
+    <div class="case-body">
+      <div class="slice reveal">
         <h2>Project 1 · Contemplation</h2>
         <p>Our first exploration focused on meditative repetition. The Franka Research&nbsp;3 arm drags combs, stones, and brushes through fine sand, erases the pattern, and begins again. The slow cadence invites viewers to breathe with the machine—no narrative, just an endless act of attention.</p>
         <h3>What we learned</h3>
@@ -165,22 +162,20 @@
           <li>Captured the relationship between sand texture, end-effector speed, and perceived calm.</li>
           <li>Developed safe-reset routines so the arm could loop indefinitely for exhibition hours.</li>
         </ul>
+        <figure class="media-block">
+          <video controls playsinline preload="metadata" poster="assets/images/projects/robotic-arms-art/contemplation%202.jpg">
+            <source src="assets/images/projects/robotic-arms-art/contemplation.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <figcaption>Contemplative sand patterns generated by the Franka arm.</figcaption>
+        </figure>
+        <div class="media-grid">
+          <img src="assets/images/projects/robotic-arms-art/contemplation%202.jpg" alt="Franka arm smoothing sand during the Contemplation piece" loading="lazy">
+          <img src="assets/images/projects/robotic-arms-art/contemplation%203.jpg" alt="Zen garden patterns created by the robotic arm" loading="lazy">
+        </div>
       </div>
-      <figure class="media">
-        <video controls playsinline preload="metadata" poster="assets/images/projects/robotic-arms-art/contemplation%202.jpg">
-          <source src="assets/images/projects/robotic-arms-art/contemplation.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <figcaption>Contemplative sand patterns generated by the Franka arm.</figcaption>
-      </figure>
-      <div class="media-grid">
-        <img src="assets/images/projects/robotic-arms-art/contemplation%202.jpg" alt="Franka arm smoothing sand during the Contemplation piece" loading="lazy">
-        <img src="assets/images/projects/robotic-arms-art/contemplation%203.jpg" alt="Zen garden patterns created by the robotic arm" loading="lazy">
-      </div>
-    </div>
 
-    <div class="stage reveal swap">
-      <div class="text">
+      <div class="slice reveal">
         <h2>Project 2 · The Mimic Brush</h2>
         <p>Next, we transformed the robot into a collaborative painter. Using TensorFlow.js hand pose detection, visitors could guide the brush by simply moving their hands. Forward, backward, up, and down gestures mapped to Franka’s Cartesian commands, turning the piece into a responsive, shared performance.</p>
         <h3>Exhibition insights</h3>
@@ -189,24 +184,22 @@
           <li>Designed UI prompts and pacing to help newcomers adapt to the robot’s deliberate tempo.</li>
           <li>Observed families and children using the system, validating the accessible design goal.</li>
         </ul>
+        <figure class="media-block">
+          <video controls playsinline preload="metadata" poster="assets/images/projects/robotic-arms-art/brush%201.jpg">
+            <source src="assets/images/projects/robotic-arms-art/the-mimic-brush.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <figcaption>Visitors guiding live watercolor strokes via hand pose detection.</figcaption>
+        </figure>
+        <div class="media-grid">
+          <img src="assets/images/projects/robotic-arms-art/brush%201.jpg" alt="Preparing the Franka arm with a watercolor brush attachment" loading="lazy">
+          <img src="assets/images/projects/robotic-arms-art/brush%202.jpg" alt="Participant leading the robotic brush with hand gestures" loading="lazy">
+          <img src="assets/images/projects/robotic-arms-art/brush%203.jpg" alt="Close-up of brush strokes created with human-robot collaboration" loading="lazy">
+          <img src="assets/images/projects/robotic-arms-art/brush%204.jpg" alt="Visitors interacting with the Mimic Brush installation" loading="lazy">
+        </div>
       </div>
-      <figure class="media">
-        <video controls playsinline preload="metadata" poster="assets/images/projects/robotic-arms-art/brush%201.jpg">
-          <source src="assets/images/projects/robotic-arms-art/the-mimic-brush.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <figcaption>Visitors guiding live watercolor strokes via hand pose detection.</figcaption>
-      </figure>
-      <div class="media-grid">
-        <img src="assets/images/projects/robotic-arms-art/brush%201.jpg" alt="Preparing the Franka arm with a watercolor brush attachment" loading="lazy">
-        <img src="assets/images/projects/robotic-arms-art/brush%202.jpg" alt="Participant leading the robotic brush with hand gestures" loading="lazy">
-        <img src="assets/images/projects/robotic-arms-art/brush%203.jpg" alt="Close-up of brush strokes created with human-robot collaboration" loading="lazy">
-        <img src="assets/images/projects/robotic-arms-art/brush%204.jpg" alt="Visitors interacting with the Mimic Brush installation" loading="lazy">
-      </div>
-    </div>
 
-    <div class="stage reveal">
-      <div class="text">
+      <div class="slice reveal">
         <h2>Project 3 · Signals of the Void</h2>
         <p>In the final study we explored emergent behavior. Three speakers around the robot pulse audio cues. Reinforcement learning rewards the arm for discovering joint configurations that move toward louder signals, prompting an ambient search across space—a kinetic listening exercise rather than a scripted routine.</p>
         <h3>System architecture</h3>
@@ -215,38 +208,36 @@
           <li>Reward function encourages both exploitation of strong signals and constant exploration.</li>
           <li>Audio origin shifts every 30&nbsp;minutes, prompting new “choreography” across the gallery.</li>
         </ul>
+        <figure class="media-block">
+          <video controls playsinline preload="metadata" poster="assets/images/projects/robotic-arms-art/signal%203.jpg">
+            <source src="assets/images/projects/robotic-arms-art/signals-of-the-void.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <figcaption>Ambient reinforcement learning routine seeking the loudest signal.</figcaption>
+        </figure>
+        <div class="media-grid">
+          <img src="assets/images/projects/robotic-arms-art/signal%202.jpg" alt="Franka arm listening for the strongest audio signal in a darkened gallery" loading="lazy">
+          <img src="assets/images/projects/robotic-arms-art/signal%203.jpg" alt="Long exposure showing the arm's exploratory motion path" loading="lazy">
+          <img src="assets/images/projects/robotic-arms-art/signal%204.jpg" alt="Visitors observing the reinforcement learning choreography" loading="lazy">
+        </div>
       </div>
-      <figure class="media">
-        <video controls playsinline preload="metadata" poster="assets/images/projects/robotic-arms-art/signal%203.jpg">
-          <source src="assets/images/projects/robotic-arms-art/signals-of-the-void.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <figcaption>Ambient reinforcement learning routine seeking the loudest signal.</figcaption>
-      </figure>
-      <div class="media-grid">
-        <img src="assets/images/projects/robotic-arms-art/signal%202.jpg" alt="Franka arm listening for the strongest audio signal in a darkened gallery" loading="lazy">
-        <img src="assets/images/projects/robotic-arms-art/signal%203.jpg" alt="Long exposure showing the arm's exploratory motion path" loading="lazy">
-        <img src="assets/images/projects/robotic-arms-art/signal%204.jpg" alt="Visitors observing the reinforcement learning choreography" loading="lazy">
+
+      <div class="slice quote reveal">
+        <blockquote>
+          “The Franka arm became a co-performer. Each iteration altered our sense of where authorship lives—sometimes in the code, sometimes in the machine, sometimes in the audience response.”
+          <footer>Andy Garcia · Assistant Arts Professor, NYU Shanghai</footer>
+        </blockquote>
       </div>
-    </div>
 
-    <div class="wrap quote-band reveal">
-      <blockquote>
-        “The Franka arm became a co-performer. Each iteration altered our sense of where authorship lives—sometimes in the code, sometimes in the machine, sometimes in the audience response.”
-        <footer>Andy Garcia · Assistant Arts Professor, NYU Shanghai</footer>
-      </blockquote>
-    </div>
-
-    <div class="stage reveal">
-      <div class="text">
+      <div class="slice reveal">
         <h2>Outcomes</h2>
         <p>Across the semester we developed three working installations, an internal toolkit for choreographing responsive motion, and practical guidelines for staging robotic art in gallery settings. The work continues as we refine the RL pipelines and explore collaborative performances with dancers and musicians.</p>
         <p class="muted">Thanks to Franka Robotics for equipment support and technical guidance throughout the residency.</p>
-      </div>
-      <div class="media-grid">
-        <img src="assets/images/projects/robotic-arms-art/ag_1.jpg" alt="Andy Garcia discussing the residency outcomes with the team" loading="lazy">
-        <img src="assets/images/projects/robotic-arms-art/ag_2.jpg" alt="Research assistants Taojie Zhang and Evan Xiao prototyping motion paths" loading="lazy">
-        <img src="assets/images/projects/robotic-arms-art/ag_3.jpg" alt="Franka arm workshop session during the residency" loading="lazy">
+        <div class="media-grid">
+          <img src="assets/images/projects/robotic-arms-art/ag_1.jpg" alt="Andy Garcia discussing the residency outcomes with the team" loading="lazy">
+          <img src="assets/images/projects/robotic-arms-art/ag_2.jpg" alt="Research assistants Taojie Zhang and Evan Xiao prototyping motion paths" loading="lazy">
+          <img src="assets/images/projects/robotic-arms-art/ag_3.jpg" alt="Franka arm workshop session during the residency" loading="lazy">
+        </div>
       </div>
     </div>
   </section>
