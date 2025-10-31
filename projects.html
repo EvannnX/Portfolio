@@ -50,8 +50,11 @@
 
     /* Card */
     .card{position:relative;display:block;height:var(--row-h);border-radius:18px;overflow:hidden;background:#111;border:1px solid rgba(255,255,255,.06);box-shadow:0 6px 28px rgba(0,0,0,.35);isolation:isolate;text-decoration:none;color:inherit}
-    .card img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02);transition:transform .5s ease,filter .5s ease}
-    .card:hover img{transform:scale(1.06);filter:saturate(1.05) brightness(1.02)}
+    .card img,
+    .card video{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02);transition:transform .5s ease,filter .5s ease}
+    .card video{object-position:center}
+    .card:hover img,
+    .card:hover video{transform:scale(1.06);filter:saturate(1.05) brightness(1.02)}
     .card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.55) 100%);z-index:1}
     .meta{position:absolute;left:16px;right:16px;bottom:14px;z-index:2;color:#fff;text-shadow:0 2px 16px rgba(0,0,0,.65)}
     .meta .org{display:block;font-size:.85rem;opacity:.9}
@@ -133,7 +136,10 @@
     <a class="card" data-tags="hci proto" href="Spiral-Genesis.html"><img src="assets/images/projects/Spiral-Genesis/DSC04515.JPG" alt="Spiral Genesis"><div class="meta"><span class="org">NYU Shanghai · IMA</span><h3>Spiral Genesis</h3></div></a>
     <a class="card" data-tags="hci proto" href="2024-2025-VEX-High-Stakes.html"><img src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9272.jpeg" alt="VEX High Stakes"><div class="meta"><span class="org">NYU Shanghai · Robotics Club</span><h3>2024-2025 VEX High Stakes</h3></div></a>
     <a class="card" data-tags="hci robotics" href="robotic-arms-art.html">
-      <img src="assets/images/projects/robotic-arms-art/cover.svg" alt="Robotic Arms in Art cover" loading="lazy">
+      <video autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/images/projects/robotic-arms-art/signal%202.jpg">
+        <source src="assets/images/projects/robotic-arms-art/signals-of-the-void.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
       <div class="meta"><span class="org">IMA × Franka Robotics</span><h3>Robotic Arms in Art</h3></div>
     </a>
     <a class="card" data-tags="ux proto" data-layout="wide-right" href="#"><img src="https://picsum.photos/seed/p02/2000/1200" alt=""><div class="meta"><span class="org">Porsche</span><h3>Notification Center</h3></div></a>
