@@ -111,8 +111,10 @@
     .icons-vert{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
 
     /* === (仅新增) 让视频在卡片里像图片一样铺满并有同样的 hover 动效 === */
-    .row .card video{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transform:scale(1.8);transform-origin:center;transition:transform .5s ease,filter .5s ease}
-    .row .card:hover video{transform:scale(1.86);filter:saturate(1.05) brightness(1.02)}
+    .row .card video{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transform:scale(1.02);transform-origin:center;transition:transform .5s ease,filter .5s ease}
+    .row .card.card-video-robotic video{transform:scale(1.8)}
+    .row .card:hover video{transform:scale(1.06);filter:saturate(1.05) brightness(1.02)}
+    .row .card.card-video-robotic:hover video{transform:scale(1.86)}
   </style>
 </head>
 <body>
@@ -211,7 +213,7 @@
           <img src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9334.JPG" alt="VEX High Stakes Robot" loading="lazy" />
           <div class="label"><span class="client">NYU Shanghai · Robotics Club</span><h3>2024-2025 VEX High Stakes</h3></div>
         </a>
-        <a href="robotic-arms-art.html" class="card">
+        <a href="robotic-arms-art.html" class="card card-video-robotic">
           <video autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/images/projects/robotic-arms-art/signal%202.jpg">
             <source src="assets/images/projects/robotic-arms-art/signals-of-the-void.mp4" type="video/mp4" />
             Your browser does not support the video tag.
