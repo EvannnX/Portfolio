@@ -1,101 +1,399 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Projects — Evan Xiao</title>
-  <meta name="description" content="Selected projects by Evan Xiao (HCI / UX/UI / Product & Code). Two/three-up rows, equal heights, with smart packing and filters." />
+  <meta name="description"
+    content="Selected projects by Evan Xiao (HCI / UX/UI / Product & Code). Two/three-up rows, equal heights, with smart packing and filters." />
   <link rel="icon" type="image/png" href="assets/images/general/logo.png" />
 
 
   <!-- Fonts (same as home/about) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&family=Playfair+Display:ital,wght@1,400;1,600&display=swap"
+    rel="stylesheet">
 
   <style>
-    :root{
-      --bg:#080b0e; --text:#e8ecef; --muted:#c8ced4; --brand:#fff;
-      --hairline:rgba(255,255,255,.08);
-      --maxw:1320px; --g:16px; --header-blur:8px;
+    :root {
+      --bg: #080b0e;
+      --text: #e8ecef;
+      --muted: #c8ced4;
+      --brand: #fff;
+      --hairline: rgba(255, 255, 255, .08);
+      --maxw: 1320px;
+      --g: 16px;
+      --header-blur: 8px;
     }
-    *{box-sizing:border-box} html,body{height:100%}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.25;-webkit-font-smoothing:antialiased}
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      line-height: 1.25;
+      -webkit-font-smoothing: antialiased
+    }
 
     /* Header: Projects页从加载起就是半透明毛玻璃 */
-    .site-header{position:fixed;inset:0 0 auto 0;display:flex;align-items:center;justify-content:space-between;padding:18px 24px;z-index:50;background:rgba(9,12,15,.55);backdrop-filter:saturate(130%) blur(var(--header-blur));box-shadow:0 1px 0 rgba(255,255,255,.06) inset}
-    .logo{display:inline-flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--brand);font-weight:900;letter-spacing:.02em;font-size:1.1rem}
-    .logo-mark{width:30px;height:30px;border:2px solid var(--brand);border-radius:8px;display:grid;place-items:center;font-weight:900;font-size:.9rem;line-height:1}
-    .logo-img{height:30px;width:auto;display:block;border-radius:0}
-    nav a{text-decoration:none;color:var(--brand);opacity:.92;font-weight:800;letter-spacing:.12em;font-size:.78rem;margin:0 12px;text-transform:uppercase;position:relative}
-    nav a:hover{opacity:1}
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      z-index: 50;
+      background: rgba(9, 12, 15, .55);
+      backdrop-filter: saturate(130%) blur(var(--header-blur));
+      box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      text-decoration: none;
+      color: var(--brand);
+      font-weight: 900;
+      letter-spacing: .02em;
+      font-size: 1.1rem
+    }
+
+    .logo-mark {
+      width: 30px;
+      height: 30px;
+      border: 2px solid var(--brand);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: .9rem;
+      line-height: 1
+    }
+
+    .logo-img {
+      height: 30px;
+      width: auto;
+      display: block;
+      border-radius: 0
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--brand);
+      opacity: .92;
+      font-weight: 800;
+      letter-spacing: .12em;
+      font-size: .78rem;
+      margin: 0 12px;
+      text-transform: uppercase;
+      position: relative
+    }
+
+    nav a:hover {
+      opacity: 1
+    }
 
     /* Page mast */
-    .mast{padding:120px 24px 18px;max-width:var(--maxw);margin:0 auto}
-    .mast h1{margin:0 0 10px;font-weight:900;letter-spacing:-.01em;font-size:clamp(30px,4.8vw,56px)}
-    .mast p{margin:0;color:var(--muted);max-width:70ch}
+    .mast {
+      padding: 120px 24px 18px;
+      max-width: var(--maxw);
+      margin: 0 auto
+    }
+
+    .mast h1 {
+      margin: 0 0 10px;
+      font-weight: 900;
+      letter-spacing: -.01em;
+      font-size: clamp(30px, 4.8vw, 56px)
+    }
+
+    .mast p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 70ch
+    }
 
     /* Filters */
-    .filters{max-width:var(--maxw);margin:10px auto 0;padding:0 24px;display:flex;flex-wrap:wrap;gap:10px}
-    .chip{appearance:none;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff;border-radius:999px;padding:8px 12px;font-weight:800;letter-spacing:.04em;cursor:pointer}
-    .chip[aria-pressed="true"]{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.35)}
+    .filters {
+      max-width: var(--maxw);
+      margin: 10px auto 0;
+      padding: 0 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px
+    }
+
+    .chip {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, .16);
+      background: rgba(255, 255, 255, .06);
+      color: #fff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      cursor: pointer
+    }
+
+    .chip[aria-pressed="true"] {
+      background: rgba(255, 255, 255, .18);
+      border-color: rgba(255, 255, 255, .35)
+    }
 
     /* Grid wrapper */
-    .wrap{max-width:var(--maxw);margin:0 auto;padding:12px 24px 80px}
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 12px 24px 80px
+    }
 
     /* Rows: 只允许 3列 或 2列（含 wide 变体）；行高用 --row-h 控制 */
-    .row{display:grid;gap:var(--g);margin-top:var(--g);--row-h:clamp(300px, 30vw, 520px)}
-    .row-3{grid-template-columns:repeat(3,1fr)}
-    .row-2{grid-template-columns:repeat(2,1fr)}
-    .row-2.wide-left{grid-template-columns:2fr 1fr}
-    .row-2.wide-right{grid-template-columns:1fr 2fr}
+    .row {
+      display: grid;
+      gap: var(--g);
+      margin-top: var(--g);
+      --row-h: clamp(300px, 30vw, 520px)
+    }
+
+    .row-3 {
+      grid-template-columns: repeat(3, 1fr)
+    }
+
+    .row-2 {
+      grid-template-columns: repeat(2, 1fr)
+    }
+
+    .row-2.wide-left {
+      grid-template-columns: 2fr 1fr
+    }
+
+    .row-2.wide-right {
+      grid-template-columns: 1fr 2fr
+    }
 
     /* Card */
-    .card{position:relative;display:block;height:var(--row-h);border-radius:18px;overflow:hidden;background:#111;border:1px solid rgba(255,255,255,.06);box-shadow:0 6px 28px rgba(0,0,0,.35);isolation:isolate;text-decoration:none;color:inherit}
+    .card {
+      position: relative;
+      display: block;
+      height: var(--row-h);
+      border-radius: 18px;
+      overflow: hidden;
+      background: #111;
+      border: 1px solid rgba(255, 255, 255, .06);
+      box-shadow: 0 6px 28px rgba(0, 0, 0, .35);
+      isolation: isolate;
+      text-decoration: none;
+      color: inherit
+    }
+
     .card img,
-    .card video{width:100%;height:100%;object-fit:cover;display:block;transform-origin:center;transition:transform .5s ease,filter .5s ease}
-    .card img{transform:scale(1.02)}
-    .card video{transform:scale(1.02)}
+    .card video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform-origin: center;
+      transition: transform .5s ease, filter .5s ease
+    }
+
+    .card img {
+      transform: scale(1.02)
+    }
+
+    .card video {
+      transform: scale(1.02)
+    }
+
     .card:hover img,
-    .card:hover video{transform:scale(1.06);filter:saturate(1.05) brightness(1.02)}
-    .card.video-robotic video{transform:scale(1.8)}
-    .card.video-robotic:hover video{transform:scale(1.86)}
-    .card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.55) 100%);z-index:1}
-    .meta{position:absolute;left:16px;right:16px;bottom:14px;z-index:2;color:#fff;text-shadow:0 2px 16px rgba(0,0,0,.65)}
-    .meta .org{display:block;font-size:.85rem;opacity:.9}
-    .meta h3{margin:4px 0 0;font-size:clamp(18px,2.2vw,26px);font-weight:800;letter-spacing:-.01em}
+    .card:hover video {
+      transform: scale(1.06);
+      filter: saturate(1.05) brightness(1.02)
+    }
+
+    .card.video-robotic video {
+      transform: scale(1.8)
+    }
+
+    .card.video-robotic:hover video {
+      transform: scale(1.86)
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, .55) 100%);
+      z-index: 1
+    }
+
+    .meta {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 14px;
+      z-index: 2;
+      color: #fff;
+      text-shadow: 0 2px 16px rgba(0, 0, 0, .65)
+    }
+
+    .meta .org {
+      display: block;
+      font-size: .85rem;
+      opacity: .9
+    }
+
+    .meta h3 {
+      margin: 4px 0 0;
+      font-size: clamp(18px, 2.2vw, 26px);
+      font-weight: 800;
+      letter-spacing: -.01em
+    }
 
     /* Placeholder（用于避免最后一行单卡；不可见但占位） */
-    .placeholder{visibility:hidden}
+    .placeholder {
+      visibility: hidden
+    }
 
     /* Footer（与首页一致） */
-    .site-footer{margin-top:84px;background:#0b0d0f;border-top:1px solid var(--hairline);position:relative}
-    .site-footer::before{content:"";position:absolute;inset:0 0 auto 0;height:80px;background:radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,.06), rgba(255,255,255,0))}
-    .footer-inner{max-width:var(--maxw);margin:0 auto;padding:36px 24px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));align-items:start;gap:36px}
-    .site-footer .logo{color:#fff;gap:.4rem}
-    .site-footer .logo .logo-img{height:44px;width:auto;border-radius:0}
-    .cols{display:flex;gap:64px;grid-column:9 / span 4;justify-self:start}
-    .col-title{font-size:.85rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;opacity:.8;margin-bottom:10px}
-    .col ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-    .col a{color:var(--text);text-decoration:none}
-    .col a:hover{text-decoration:underline}
-    .icons-vert{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
-    .col a.icon-link{display:inline-block}
-    .col .icon-img{width:40px;height:40px;display:block;opacity:.92}
-    .col a.icon-link:hover .icon-img{opacity:1}
-    .legal{max-width:var(--maxw);margin:0 auto;padding:0 24px 24px;font-size:.85rem;color:var(--muted)}
+    .site-footer {
+      margin-top: 84px;
+      background: #0b0d0f;
+      border-top: 1px solid var(--hairline);
+      position: relative
+    }
+
+    .site-footer::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 80px;
+      background: radial-gradient(60% 100% at 50% 0%, rgba(255, 255, 255, .06), rgba(255, 255, 255, 0))
+    }
+
+    .footer-inner {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 36px 24px;
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      align-items: start;
+      gap: 36px
+    }
+
+    .site-footer .logo {
+      color: #fff;
+      gap: .4rem
+    }
+
+    .site-footer .logo .logo-img {
+      height: 44px;
+      width: auto;
+      border-radius: 0
+    }
+
+    .cols {
+      display: flex;
+      gap: 64px;
+      grid-column: 9 / span 4;
+      justify-self: start
+    }
+
+    .col-title {
+      font-size: .85rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      opacity: .8;
+      margin-bottom: 10px
+    }
+
+    .col ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px
+    }
+
+    .col a {
+      color: var(--text);
+      text-decoration: none
+    }
+
+    .col a:hover {
+      text-decoration: underline
+    }
+
+    .icons-vert {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: flex-start
+    }
+
+    .col a.icon-link {
+      display: inline-block
+    }
+
+    .col .icon-img {
+      width: 40px;
+      height: 40px;
+      display: block;
+      opacity: .92
+    }
+
+    .col a.icon-link:hover .icon-img {
+      opacity: 1
+    }
+
+    .legal {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 24px 24px;
+      font-size: .85rem;
+      color: var(--muted)
+    }
 
     /* Responsive */
-    @media (max-width:1024px){
-      .row-3{grid-template-columns:repeat(2,1fr)}
+    @media (max-width:1024px) {
+      .row-3 {
+        grid-template-columns: repeat(2, 1fr)
+      }
     }
-    @media (max-width:820px){
-      .row{--row-h:clamp(220px, 56vw, 420px)}
-      .row-3,.row-2,.row-2.wide-left,.row-2.wide-right{grid-template-columns:1fr}
-      nav{display:none}
+
+    @media (max-width:820px) {
+      .row {
+        --row-h: clamp(220px, 56vw, 420px)
+      }
+
+      .row-3,
+      .row-2,
+      .row-2.wide-left,
+      .row-2.wide-right {
+        grid-template-columns: 1fr
+      }
+
+      nav {
+        display: none
+      }
     }
   </style>
 </head>
+
 <body>
   <!-- Header（Projects页默认半透明） -->
   <header class="site-header" aria-label="Primary">
@@ -131,47 +429,66 @@
     <!-- 例：普通卡（默认 1fr 宽） -->
     <a class="card" data-tags="ux" href="#">
       <img loading="lazy" src="https://picsum.photos/seed/p01/1600/1200" alt="Project cover">
-      <div class="meta"><span class="org">Experiment</span><h3>Hi AI</h3></div>
+      <div class="meta"><span class="org">Experiment</span>
+        <h3>Hi AI</h3>
+      </div>
     </a>
   </template>
 
   <div id="cardsSource" hidden>
     <!-- 你可以自由增删这些卡片；用 data-tags 标注分类（空格分隔），可选 data-layout：wide-left / wide-right -->
-    <a class="card" data-tags="hci proto" href="interactive-ai-powered-robot.html"><img src="assets/images/projects/interactive-ai-powered-robot/ima-bot-blue.jpg" alt="Interactive AI-Powered Robot"><div class="meta"><span class="org">NYU Shanghai · IMA</span><h3>Interactive AI-Powered Robot</h3></div></a>
-    <a class="card" data-tags="hci proto" href="Spiral-Genesis.html"><img src="assets/images/projects/Spiral-Genesis/DSC04515.JPG" alt="Spiral Genesis"><div class="meta"><span class="org">NYU Shanghai · IMA</span><h3>Spiral Genesis</h3></div></a>
-    <a class="card" data-tags="hci proto" href="2024-2025-VEX-High-Stakes.html"><img src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9272.jpeg" alt="VEX High Stakes"><div class="meta"><span class="org">NYU Shanghai · Robotics Club</span><h3>2024-2025 VEX High Stakes</h3></div></a>
+    <a class="card" data-tags="hci proto" href="interactive-ai-powered-robot.html"><img
+        src="assets/images/projects/interactive-ai-powered-robot/ima-bot-blue.jpg" alt="Interactive AI-Powered Robot">
+      <div class="meta"><span class="org">NYU Shanghai · IMA</span>
+        <h3>Interactive AI-Powered Robot</h3>
+      </div>
+    </a>
+    <a class="card" data-tags="hci proto" href="Spiral-Genesis.html"><img
+        src="assets/images/projects/Spiral-Genesis/DSC04515.JPG" alt="Spiral Genesis">
+      <div class="meta"><span class="org">NYU Shanghai · IMA</span>
+        <h3>Spiral Genesis</h3>
+      </div>
+    </a>
+    <a class="card" data-tags="hci proto" href="2024-2025-VEX-High-Stakes.html"><img
+        src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9272.jpeg" alt="VEX High Stakes">
+      <div class="meta"><span class="org">NYU Shanghai · Robotics Club</span>
+        <h3>2024-2025 VEX High Stakes</h3>
+      </div>
+    </a>
     <a class="card video-robotic" data-tags="hci robotics" href="robotic-arms-art.html">
-      <video autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/images/projects/robotic-arms-art/signal%202.jpg">
+      <video autoplay muted loop playsinline webkit-playsinline preload="metadata"
+        poster="assets/images/projects/robotic-arms-art/signal%202.jpg">
         <source src="assets/images/projects/robotic-arms-art/signals-of-the-void.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
-      <div class="meta"><span class="org">IMA × Franka Robotics</span><h3>Robotic Arms in Art</h3></div>
+      <div class="meta"><span class="org">IMA × Franka Robotics</span>
+        <h3>Robotic Arms in Art</h3>
+      </div>
     </a>
     <a class="card" data-tags="hci light" data-layout="wide-left" href="Pulse.html">
-      <video autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/images/projects/Pulse/截屏2025-03-24-17.19.13.png">
+      <video autoplay muted loop playsinline webkit-playsinline preload="metadata"
+        poster="assets/images/projects/Pulse/截屏2025-03-24-17.19.13.png">
         <source src="assets/images/projects/Pulse/Pulse-loop.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
-      <div class="meta"><span class="org">Light Installation · NYU Shanghai</span><h3>Pulse — Refracted Light Score</h3></div>
+      <div class="meta"><span class="org">Light Installation · NYU Shanghai</span>
+        <h3>Pulse — Refracted Light Score</h3>
+      </div>
     </a>
-    <a class="card" data-tags="ux proto" data-layout="wide-right" href="#"><img src="https://picsum.photos/seed/p02/2000/1200" alt=""><div class="meta"><span class="org">Porsche</span><h3>Notification Center</h3></div></a>
-    <a class="card" data-tags="hci ux" href="#"><img src="https://picsum.photos/seed/p03/1200/1600" alt=""><div class="meta"><span class="org">DHL</span><h3>Accessibility Profiles</h3></div></a>
-    <a class="card" data-tags="ux visual" href="#"><img src="https://picsum.photos/seed/p04/1600/1200" alt=""><div class="meta"><span class="org">Porsche</span><h3>App Start Page</h3></div></a>
-    <a class="card" data-tags="proto ux" href="#"><img src="https://picsum.photos/seed/p05/1600/1200" alt=""><div class="meta"><span class="org">DHL</span><h3>Terminal Interface</h3></div></a>
-    <a class="card" data-tags="visual ux" href="#"><img src="https://picsum.photos/seed/p07/1200/1600" alt=""><div class="meta"><span class="org">FLB</span><h3>Branding</h3></div></a>
-    <a class="card" data-tags="proto hci" href="#"><img src="https://picsum.photos/seed/p08/1000/1400" alt=""><div class="meta"><span class="org">MB Bank</span><h3>Calculation Tool</h3></div></a>
-    <a class="card" data-tags="ux" href="#"><img src="https://picsum.photos/seed/p09/1600/1200" alt=""><div class="meta"><span class="org">Chrono24</span><h3>Watch Collection</h3></div></a>
-    <a class="card" data-tags="proto" href="#"><img src="https://picsum.photos/seed/p10/1600/1200" alt=""><div class="meta"><span class="org">DB</span><h3>InnoApp Enhancement</h3></div></a>
-    <a class="card" data-tags="visual" href="#"><img src="https://picsum.photos/seed/p11/1200/1600" alt=""><div class="meta"><span class="org">Ikar</span><h3>Magazine Branding</h3></div></a>
-    <a class="card" data-tags="ux proto" data-layout="wide-right" href="#"><img src="https://picsum.photos/seed/p12/2000/1200" alt=""><div class="meta"><span class="org">DB</span><h3>Local Transport Network</h3></div></a>
-    <a class="card" data-tags="visual" href="#"><img src="https://picsum.photos/seed/p13/1200/1600" alt=""><div class="meta"><span class="org">Veriox</span><h3>Illustration</h3></div></a>
-    <a class="card" data-tags="visual" data-layout="wide-left" href="#"><img src="https://picsum.photos/seed/p14/2000/900" alt=""><div class="meta"><span class="org">Mercedes-Benz</span><h3>Unimog Emblem</h3></div></a>
+    <a class="card" data-tags="hci ux proto" data-layout="wide-right" href="Echoes.html" style="background:#0d1117">
+      <img src="assets/images/projects/Echoes/lQDPJwlkjTu0obfNB9DNB9CwFndFp3RXG3gI-HpUjz4-AA_2000_2000_1200x1200@2x.jpg"
+        alt="Echoes - Gaze-Driven AR Heritage" style="object-fit:cover;transform:scale(1.05);transform-origin:center">
+      <div class="meta"><span class="org">AR · AI · Cultural Heritage</span>
+        <h3>Echoes — Gaze-Driven Heritage AI</h3>
+      </div>
+    </a>
   </div>
 
   <!-- Footer（与首页一致） -->
   <footer class="site-footer" aria-label="Footer">
     <div class="footer-inner">
-      <a class="logo" href="index.html#top" aria-label="Home"><img class="logo-img" src="assets/images/general/logo.png" alt="Logo" /></a>
+      <a class="logo" href="index.html#top" aria-label="Home"><img class="logo-img" src="assets/images/general/logo.png"
+          alt="Logo" /></a>
       <div class="cols">
         <div class="col">
           <div class="col-title">Sitemap</div>
@@ -184,8 +501,10 @@
         </div>
         <div class="col social-col">
           <div class="icons-vert">
-            <a class="icon-link" href="https://www.linkedin.com/in/evan-xiao-4a6060309/" aria-label="LinkedIn"><img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/linkedin.png" alt="LinkedIn"></a>
-            <a class="icon-link" href="https://www.instagram.com/evan_nn__" aria-label="Instagram"><img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/instagram-new.png" alt="Instagram"></a>
+            <a class="icon-link" href="https://www.linkedin.com/in/evan-xiao-4a6060309/" aria-label="LinkedIn"><img
+                class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/linkedin.png" alt="LinkedIn"></a>
+            <a class="icon-link" href="https://www.instagram.com/evan_nn__" aria-label="Instagram"><img class="icon-img"
+                src="https://img.icons8.com/ios-glyphs/60/ffffff/instagram-new.png" alt="Instagram"></a>
           </div>
         </div>
       </div>
@@ -202,43 +521,43 @@
     const grid = document.getElementById('grid');
     const chips = Array.from(document.querySelectorAll('.chip'));
 
-    function build(filter='all'){
+    function build(filter = 'all') {
       grid.innerHTML = '';
       // 1) 过滤
-      const items = src.filter(c => filter==='all' || (c.dataset.tags||'').split(/\s+/).includes(filter))
-                       .map(c => c.cloneNode(true));
+      const items = src.filter(c => filter === 'all' || (c.dataset.tags || '').split(/\s+/).includes(filter))
+        .map(c => c.cloneNode(true));
 
-      if (items.length === 0){
+      if (items.length === 0) {
         grid.innerHTML = '<p style="color:var(--muted)">No projects match this filter (yet).</p>';
         return;
       }
 
       // 2) 顺序打包
       const rows = [];
-      let i=0;
-      while(i < items.length){
+      let i = 0;
+      while (i < items.length) {
         const remain = items.length - i;
         const layout = items[i].dataset.layout; // 'wide-left' | 'wide-right' | undefined
 
-        if ((layout==='wide-left' || layout==='wide-right') && remain >= 2){
-          rows.push({type:'row-2', wide:layout, cards:[items[i], items[i+1]]});
+        if ((layout === 'wide-left' || layout === 'wide-right') && remain >= 2) {
+          rows.push({ type: 'row-2', wide: layout, cards: [items[i], items[i + 1]] });
           i += 2;
-        } else if (remain >= 3){
-          rows.push({type:'row-3', cards:[items[i], items[i+1], items[i+2]]});
+        } else if (remain >= 3) {
+          rows.push({ type: 'row-3', cards: [items[i], items[i + 1], items[i + 2]] });
           i += 3;
-        } else if (remain === 2){
-          rows.push({type:'row-2', wide:null, cards:[items[i], items[i+1]]});
+        } else if (remain === 2) {
+          rows.push({ type: 'row-2', wide: null, cards: [items[i], items[i + 1]] });
           i += 2;
         } else { // remain === 1  -> 尝试与上一行重组，避免单卡
-          if (rows.length && rows[rows.length-1].type==='row-3'){
-            const moved = rows[rows.length-1].cards.pop(); // 从上一行移走一个
-            rows[rows.length-1] = {type:'row-2', wide:null, cards: rows[rows.length-1].cards};
-            rows.push({type:'row-2', wide:null, cards:[moved, items[i]]});
+          if (rows.length && rows[rows.length - 1].type === 'row-3') {
+            const moved = rows[rows.length - 1].cards.pop(); // 从上一行移走一个
+            rows[rows.length - 1] = { type: 'row-2', wide: null, cards: rows[rows.length - 1].cards };
+            rows.push({ type: 'row-2', wide: null, cards: [moved, items[i]] });
           } else {
             // 上一行是 2 列（没法再拆），用一个不可见占位符填充为 2 列
             const ph = document.createElement('a');
             ph.className = 'card placeholder';
-            rows.push({type:'row-2', wide:null, cards:[items[i], ph]});
+            rows.push({ type: 'row-2', wide: null, cards: [items[i], ph] });
           }
           i += 1;
         }
@@ -256,10 +575,10 @@
     }
 
     // 绑定筛选
-    chips.forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        chips.forEach(b=>b.setAttribute('aria-pressed','false'));
-        btn.setAttribute('aria-pressed','true');
+    chips.forEach(btn => {
+      btn.addEventListener('click', () => {
+        chips.forEach(b => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
         build(btn.dataset.filter);
       });
     });
@@ -268,4 +587,5 @@
     build('all');
   </script>
 </body>
+
 </html>
