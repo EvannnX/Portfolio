@@ -553,6 +553,251 @@
       }
     }
 
+    /* === Mobile Responsive Styles === */
+
+    /* iPad and tablets (768px - 1024px) */
+    @media (max-width:1024px) {
+      .row-3 {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .row-2.wide-left,
+      .row-2.wide-right {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .hero h1 {
+        font-size: clamp(36px, 8vw, 64px)
+      }
+
+      .hero .tagline {
+        font-size: clamp(14px, 2vw, 18px);
+        max-width: 90%
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 24px
+      }
+
+      .cols {
+        grid-column: 1;
+        flex-wrap: wrap;
+        gap: 32px
+      }
+    }
+
+    /* Small tablets and large phones (600px - 768px) */
+    @media (max-width:768px) {
+      :root {
+        --g: 12px
+      }
+
+      .site-header {
+        padding: 14px 16px
+      }
+
+      nav a {
+        margin: 0 8px;
+        font-size: .7rem
+      }
+
+      .hero {
+        max-height: 70vh
+      }
+
+      .hero h1 {
+        font-size: clamp(32px, 10vw, 48px)
+      }
+
+      .hero .tagline {
+        font-size: 14px;
+        padding: 0 16px
+      }
+
+      .scroll-indicator {
+        bottom: 20px
+      }
+
+      .section {
+        padding: 48px 16px
+      }
+
+      .row {
+        --row-h: clamp(200px, 50vw, 320px)
+      }
+
+      .row-3,
+      .row-2,
+      .row-2.wide-left,
+      .row-2.wide-right {
+        grid-template-columns: 1fr
+      }
+
+      .row .card .label h3 {
+        font-size: clamp(16px, 4vw, 22px)
+      }
+
+      .row .card .label .client {
+        font-size: .75rem
+      }
+
+      .mast {
+        padding: 28px 16px
+      }
+
+      .mast h2 {
+        font-size: clamp(24px, 6vw, 36px)
+      }
+
+      .mast p {
+        font-size: 14px
+      }
+
+      .footer-inner {
+        padding: 24px 16px
+      }
+
+      .cols {
+        flex-direction: column;
+        gap: 24px
+      }
+
+      .legal {
+        padding: 16px
+      }
+    }
+
+    /* iPhone and small phones (320px - 480px) */
+    @media (max-width:480px) {
+      :root {
+        --g: 10px
+      }
+
+      .site-header {
+        padding: 12px 14px
+      }
+
+      .logo-img {
+        height: 26px
+      }
+
+      nav {
+        display: none
+      }
+
+      .hero {
+        max-height: 60vh
+      }
+
+      .hero h1 {
+        font-size: clamp(28px, 12vw, 42px);
+        letter-spacing: -.02em
+      }
+
+      .hero .tagline {
+        font-size: 13px;
+        line-height: 1.5
+      }
+
+      .hero .eyebrow {
+        font-size: .65rem;
+        padding: 6px 12px
+      }
+
+      .scroll-indicator {
+        display: none
+      }
+
+      .section {
+        padding: 32px 14px
+      }
+
+      .mast {
+        padding: 20px 14px
+      }
+
+      .mast h2 {
+        font-size: clamp(22px, 7vw, 30px)
+      }
+
+      .row {
+        --row-h: clamp(180px, 60vw, 280px)
+      }
+
+      .row .card {
+        border-radius: 12px
+      }
+
+      .row .card .label {
+        left: 12px;
+        right: 12px;
+        bottom: 10px
+      }
+
+      .row .card .label h3 {
+        font-size: 16px
+      }
+
+      .row .card .label .client {
+        font-size: .7rem
+      }
+
+      .site-footer {
+        margin-top: 48px
+      }
+
+      .footer-inner {
+        padding: 20px 14px;
+        gap: 20px
+      }
+
+      .site-footer .logo .logo-img {
+        height: 36px
+      }
+
+      .col-title {
+        font-size: .8rem
+      }
+
+      .col ul {
+        gap: 6px
+      }
+
+      .col a {
+        font-size: .9rem
+      }
+
+      .col .icon-img {
+        width: 32px;
+        height: 32px
+      }
+
+      .legal {
+        font-size: .8rem;
+        padding: 12px 14px
+      }
+    }
+
+    /* Extra small phones (below 360px) */
+    @media (max-width:360px) {
+      .hero h1 {
+        font-size: 26px
+      }
+
+      .hero .tagline {
+        font-size: 12px
+      }
+
+      .row {
+        --row-h: clamp(160px, 55vw, 240px)
+      }
+
+      .row .card .label h3 {
+        font-size: 14px
+      }
+    }
+
     .icons-vert {
       display: flex;
       flex-direction: column;

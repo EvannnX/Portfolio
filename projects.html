@@ -373,11 +373,52 @@
       .row-3 {
         grid-template-columns: repeat(2, 1fr)
       }
+
+      .row-2.wide-left,
+      .row-2.wide-right {
+        grid-template-columns: 1fr 1fr
+      }
     }
 
-    @media (max-width:820px) {
+    /* Small tablets and large phones */
+    @media (max-width:768px) {
+      .site-header {
+        padding: 14px 16px
+      }
+
+      nav a {
+        margin: 0 8px;
+        font-size: .7rem
+      }
+
+      .mast {
+        padding: 100px 16px 14px
+      }
+
+      .mast h1 {
+        font-size: clamp(26px, 7vw, 42px)
+      }
+
+      .mast p {
+        font-size: 14px
+      }
+
+      .filters {
+        padding: 0 16px;
+        gap: 8px
+      }
+
+      .chip {
+        padding: 6px 10px;
+        font-size: .85rem
+      }
+
+      .wrap {
+        padding: 10px 16px 60px
+      }
+
       .row {
-        --row-h: clamp(220px, 56vw, 420px)
+        --row-h: clamp(200px, 50vw, 350px)
       }
 
       .row-3,
@@ -387,8 +428,158 @@
         grid-template-columns: 1fr
       }
 
+      .card {
+        border-radius: 14px
+      }
+
+      .meta {
+        left: 14px;
+        right: 14px;
+        bottom: 12px
+      }
+
+      .meta h3 {
+        font-size: clamp(16px, 4.5vw, 22px)
+      }
+
+      .meta .org {
+        font-size: .8rem
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+        padding: 24px 16px
+      }
+
+      .cols {
+        grid-column: 1;
+        flex-direction: column;
+        gap: 24px
+      }
+    }
+
+    /* iPhone and small phones */
+    @media (max-width:480px) {
+      .site-header {
+        padding: 12px 14px
+      }
+
+      .logo-img {
+        height: 26px
+      }
+
       nav {
         display: none
+      }
+
+      .mast {
+        padding: 90px 14px 12px
+      }
+
+      .mast h1 {
+        font-size: clamp(24px, 8vw, 34px)
+      }
+
+      .mast p {
+        font-size: 13px
+      }
+
+      .filters {
+        padding: 0 14px;
+        gap: 6px;
+        margin-top: 8px
+      }
+
+      .chip {
+        padding: 5px 8px;
+        font-size: .8rem
+      }
+
+      .wrap {
+        padding: 8px 14px 48px
+      }
+
+      .row {
+        --row-h: clamp(180px, 55vw, 300px);
+        gap: 10px;
+        margin-top: 10px
+      }
+
+      .card {
+        border-radius: 12px
+      }
+
+      .meta {
+        left: 12px;
+        right: 12px;
+        bottom: 10px
+      }
+
+      .meta h3 {
+        font-size: 16px
+      }
+
+      .meta .org {
+        font-size: .75rem
+      }
+
+      .site-footer {
+        margin-top: 48px
+      }
+
+      .footer-inner {
+        padding: 20px 14px;
+        gap: 20px
+      }
+
+      .site-footer .logo .logo-img {
+        height: 36px
+      }
+
+      .col-title {
+        font-size: .8rem
+      }
+
+      .col ul {
+        gap: 6px
+      }
+
+      .col a {
+        font-size: .9rem
+      }
+
+      .col .icon-img {
+        width: 32px;
+        height: 32px
+      }
+
+      .legal {
+        font-size: .8rem;
+        padding: 12px 14px
+      }
+    }
+
+    /* Extra small phones */
+    @media (max-width:360px) {
+      .mast h1 {
+        font-size: 22px
+      }
+
+      .mast p {
+        font-size: 12px
+      }
+
+      .chip {
+        font-size: .75rem;
+        padding: 4px 7px
+      }
+
+      .row {
+        --row-h: clamp(160px, 50vw, 260px)
+      }
+
+      .meta h3 {
+        font-size: 14px
       }
     }
   </style>

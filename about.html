@@ -459,30 +459,256 @@
       }
     }
 
-    @media (max-width:820px) {
-
-      /* stack only on small screens */
+    /* iPad and tablets */
+    @media (max-width:900px) {
       .man-hero {
         grid-template-columns: 1fr
       }
 
       .man-photo {
         order: 0;
-        margin-top: 16px
+        margin-top: 16px;
+        max-width: 100%
+      }
+
+      .info-grid {
+        grid-template-columns: repeat(2, 1fr)
       }
     }
 
-    @media (max-width:700px) {
+    /* Small tablets and large phones */
+    @media (max-width:768px) {
+      .section {
+        padding: 80px 16px
+      }
+
+      .site-header {
+        padding: 14px 16px
+      }
+
+      nav a {
+        margin: 0 8px;
+        font-size: .7rem
+      }
+
+      .man-hero {
+        gap: 20px
+      }
+
+      .man-copy {
+        font-size: clamp(15px, 3.5vw, 18px)
+      }
+
+      .man-photo {
+        max-width: 320px;
+        margin: 16px auto 0
+      }
+
+      .profile h2,
+      .toolbox h2,
+      .logos h2 {
+        font-size: clamp(24px, 6vw, 36px)
+      }
+
+      .profile .subtitle {
+        font-size: 15px
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+        gap: 14px
+      }
+
+      .info {
+        padding: 16px
+      }
+
+      .info h3 {
+        font-size: clamp(16px, 4vw, 20px)
+      }
+
+      .chip {
+        padding: 6px 12px;
+        font-size: .9rem
+      }
+
+      .tool-grid {
+        gap: 8px
+      }
+
+      .tool {
+        padding: 8px 12px;
+        font-size: .9rem
+      }
+
+      .logo-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px
+      }
+
+      .logo-card {
+        height: 60px;
+        font-size: .75rem
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+        padding: 24px 16px
+      }
+
+      .cols {
+        grid-column: 1;
+        flex-direction: column;
+        gap: 24px
+      }
+    }
+
+    /* iPhone and small phones */
+    @media (max-width:480px) {
+      .section {
+        padding: 60px 14px
+      }
+
+      .site-header {
+        padding: 12px 14px
+      }
+
+      .logo-img {
+        height: 26px
+      }
+
       nav {
         display: none
       }
 
-      .svc-grid {
-        grid-template-columns: 1fr
+      .man-copy {
+        font-size: 15px;
+        line-height: 1.6
+      }
+
+      .man-photo {
+        max-width: 280px;
+        border-radius: 14px
+      }
+
+      .profile h2,
+      .toolbox h2,
+      .logos h2 {
+        font-size: clamp(22px, 7vw, 28px)
+      }
+
+      .profile .subtitle {
+        font-size: 14px
+      }
+
+      .info-grid {
+        gap: 12px
+      }
+
+      .info {
+        padding: 14px;
+        border-radius: 12px
+      }
+
+      .info h3 {
+        font-size: 16px
+      }
+
+      .info p {
+        font-size: 14px
+      }
+
+      .chips {
+        gap: 6px
+      }
+
+      .chip {
+        padding: 5px 10px;
+        font-size: .85rem
+      }
+
+      .tool-grid {
+        gap: 6px
+      }
+
+      .tool {
+        padding: 6px 10px;
+        font-size: .85rem;
+        border-radius: 10px
       }
 
       .logo-grid {
-        grid-template-columns: repeat(3, 1fr)
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px
+      }
+
+      .logo-card {
+        height: 56px;
+        font-size: .7rem;
+        border-radius: 10px
+      }
+
+      .site-footer {
+        margin-top: 48px
+      }
+
+      .footer-inner {
+        padding: 20px 14px;
+        gap: 20px
+      }
+
+      .site-footer .logo .logo-img {
+        height: 36px
+      }
+
+      .col-title {
+        font-size: .8rem
+      }
+
+      .col ul {
+        gap: 6px
+      }
+
+      .col a {
+        font-size: .9rem
+      }
+
+      .col .icon-img {
+        width: 32px;
+        height: 32px
+      }
+
+      .legal {
+        font-size: .8rem;
+        padding: 12px 14px
+      }
+    }
+
+    /* Extra small phones */
+    @media (max-width:360px) {
+      .man-copy {
+        font-size: 14px
+      }
+
+      .man-photo {
+        max-width: 100%
+      }
+
+      .info h3 {
+        font-size: 15px
+      }
+
+      .chip {
+        font-size: .8rem;
+        padding: 4px 8px
+      }
+
+      .tool {
+        font-size: .8rem
+      }
+
+      .logo-grid {
+        grid-template-columns: repeat(2, 1fr)
       }
     }
   </style>

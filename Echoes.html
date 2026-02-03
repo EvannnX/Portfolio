@@ -725,6 +725,449 @@
         gap: 32px
       }
     }
+
+    /* iPad and tablets */
+    @media (max-width:1024px) {
+      .hero-video {
+        max-height: 70vh
+      }
+
+      .hero-title {
+        font-size: clamp(36px, 10vw, 64px)
+      }
+
+      .hero-subtitle {
+        font-size: clamp(16px, 3vw, 24px)
+      }
+
+      .steps-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .arch-layer {
+        flex-direction: column;
+        text-align: center
+      }
+
+      .arch-icon {
+        margin: 0 auto
+      }
+    }
+
+    /* Small tablets and large phones */
+    @media (max-width:768px) {
+      .site-header {
+        padding: 14px 16px
+      }
+
+      nav a {
+        margin: 0 8px;
+        font-size: .7rem
+      }
+
+      .hero-video {
+        max-height: 60vh
+      }
+
+      .hero-content {
+        bottom: 10%;
+        padding: 0 16px
+      }
+
+      .hero-eyebrow {
+        font-size: .65rem;
+        padding: 6px 14px;
+        letter-spacing: .3em
+      }
+
+      .hero-title {
+        font-size: clamp(32px, 12vw, 48px)
+      }
+
+      .hero-subtitle {
+        font-size: clamp(15px, 4vw, 20px);
+        max-width: 90%
+      }
+
+      .hero-tagline {
+        font-size: clamp(12px, 3vw, 15px)
+      }
+
+      .section {
+        padding: 80px 16px
+      }
+
+      .wrap {
+        padding: 0 16px
+      }
+
+      .scene-block {
+        padding: 48px 16px
+      }
+
+      .scene-block img {
+        border-radius: 14px
+      }
+
+      .scene-block .scene-title {
+        font-size: clamp(18px, 5vw, 24px)
+      }
+
+      .scene-block .scene-desc {
+        font-size: clamp(13px, 3vw, 16px)
+      }
+
+      .stage {
+        margin: 32px 0;
+        gap: 20px
+      }
+
+      .stage .text h2 {
+        font-size: clamp(18px, 5vw, 28px)
+      }
+
+      .stage .text p {
+        font-size: 14px
+      }
+
+      .steps-grid {
+        grid-template-columns: 1fr;
+        gap: 16px
+      }
+
+      .step-card {
+        padding: 20px
+      }
+
+      .step-num {
+        font-size: 2.5rem;
+        top: 16px;
+        right: 16px
+      }
+
+      .step-card h4 {
+        font-size: 1rem
+      }
+
+      .step-card p {
+        font-size: .9rem
+      }
+
+      .stats-row {
+        grid-template-columns: 1fr;
+        gap: 16px
+      }
+
+      .stat-item {
+        padding: 24px
+      }
+
+      .stat-num {
+        font-size: clamp(32px, 10vw, 48px)
+      }
+
+      .stat-label {
+        font-size: .8rem
+      }
+
+      .quote-block {
+        padding: 48px 16px
+      }
+
+      .quote-inner blockquote {
+        font-size: clamp(20px, 6vw, 32px)
+      }
+
+      .arch-block {
+        padding: 24px
+      }
+
+      .arch-layer {
+        padding: 16px;
+        gap: 14px
+      }
+
+      .arch-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem
+      }
+
+      .arch-content h4 {
+        font-size: 1rem
+      }
+
+      .arch-content p {
+        font-size: .9rem
+      }
+
+      .roadmap-item {
+        padding: 18px;
+        flex-direction: column;
+        gap: 10px
+      }
+
+      .roadmap-phase {
+        width: auto
+      }
+
+      .roadmap-content h4 {
+        font-size: .95rem
+      }
+
+      .roadmap-content p {
+        font-size: .9rem
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+        padding: 24px 16px
+      }
+
+      .cols {
+        flex-direction: column;
+        gap: 24px
+      }
+    }
+
+    /* iPhone and small phones */
+    @media (max-width:480px) {
+      .site-header {
+        padding: 12px 14px
+      }
+
+      .logo-img {
+        height: 26px
+      }
+
+      nav {
+        display: none
+      }
+
+      .hero-video {
+        max-height: 55vh
+      }
+
+      .hero-content {
+        bottom: 8%
+      }
+
+      .hero-eyebrow {
+        font-size: .6rem;
+        padding: 5px 12px
+      }
+
+      .hero-title {
+        font-size: clamp(28px, 14vw, 40px)
+      }
+
+      .hero-subtitle {
+        font-size: 14px
+      }
+
+      .hero-tagline {
+        font-size: 12px
+      }
+
+      .section {
+        padding: 60px 14px
+      }
+
+      .wrap {
+        padding: 0 14px
+      }
+
+      .scene-block {
+        padding: 32px 14px
+      }
+
+      .scene-block img {
+        border-radius: 12px
+      }
+
+      .scene-block figcaption {
+        margin-top: 14px
+      }
+
+      .scene-block .scene-title {
+        font-size: 16px
+      }
+
+      .scene-block .scene-desc {
+        font-size: 13px
+      }
+
+      .stage {
+        margin: 24px 0;
+        gap: 16px
+      }
+
+      .stage .text h2 {
+        font-size: 18px
+      }
+
+      .stage .text p {
+        font-size: 13px;
+        line-height: 1.6
+      }
+
+      .stage .text ul {
+        font-size: 13px
+      }
+
+      .media img,
+      .media video {
+        border-radius: 12px
+      }
+
+      .steps-grid {
+        gap: 12px
+      }
+
+      .step-card {
+        padding: 16px;
+        border-radius: 12px
+      }
+
+      .step-num {
+        font-size: 2rem
+      }
+
+      .step-card h4 {
+        font-size: .95rem
+      }
+
+      .step-card p {
+        font-size: .85rem
+      }
+
+      .stats-row {
+        gap: 12px
+      }
+
+      .stat-item {
+        padding: 20px;
+        border-radius: 12px
+      }
+
+      .stat-num {
+        font-size: 36px
+      }
+
+      .stat-label {
+        font-size: .75rem
+      }
+
+      .quote-block {
+        padding: 32px 14px
+      }
+
+      .quote-inner blockquote {
+        font-size: 18px;
+        line-height: 1.4
+      }
+
+      .arch-block {
+        padding: 18px;
+        border-radius: 14px
+      }
+
+      .arch-layer {
+        padding: 14px;
+        border-radius: 10px
+      }
+
+      .arch-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+        border-radius: 10px
+      }
+
+      .roadmap {
+        margin-top: 20px
+      }
+
+      .roadmap-item {
+        padding: 14px;
+        border-radius: 10px;
+        margin-bottom: 12px
+      }
+
+      .roadmap-phase {
+        font-size: .8rem
+      }
+
+      .site-footer {
+        margin-top: 48px
+      }
+
+      .footer-inner {
+        padding: 20px 14px;
+        gap: 20px
+      }
+
+      .site-footer .logo .logo-img {
+        height: 36px
+      }
+
+      .col-title {
+        font-size: .8rem
+      }
+
+      .col ul {
+        gap: 6px
+      }
+
+      .col a {
+        font-size: .9rem
+      }
+
+      .col .icon-img {
+        width: 32px;
+        height: 32px
+      }
+
+      .legal {
+        font-size: .8rem;
+        padding: 12px 14px
+      }
+    }
+
+    /* Extra small phones */
+    @media (max-width:360px) {
+      .hero-title {
+        font-size: 26px
+      }
+
+      .hero-subtitle {
+        font-size: 13px
+      }
+
+      .scene-block .scene-title {
+        font-size: 15px
+      }
+
+      .stage .text h2 {
+        font-size: 16px
+      }
+
+      .step-card h4 {
+        font-size: .9rem
+      }
+
+      .stat-num {
+        font-size: 30px
+      }
+
+      .quote-inner blockquote {
+        font-size: 16px
+      }
+    }
   </style>
 </head>
 
