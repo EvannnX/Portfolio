@@ -45,7 +45,7 @@ jobs:
       - name: Upload website
         run: |
           ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$DEPLOY_USER@$DEPLOY_HOST" "test -d '$DEPLOY_PATH' && command -v rsync"
-          rsync -rz --itemize-changes --chmod=D755,F644 -e 'ssh -o BatchMode=yes -o StrictHostKeyChecking=yes' /tmp/portfolio-site/ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/"
+          rsync -rcz --itemize-changes --chmod=D755,F644 -e 'ssh -o BatchMode=yes -o StrictHostKeyChecking=yes' /tmp/portfolio-site/ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/"
       - name: Verify uploaded homepage
         run: |
           local_hash=$(sha256sum /tmp/portfolio-site/index.html | cut -d ' ' -f 1)
