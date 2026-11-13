@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Projects — Evan Xiao</title>
   <meta name="description"
-    content="Selected projects by Evan Xiao (HCI / UX/UI / Product & Code). Two/three-up rows, equal heights, with smart packing and filters." />
+    content="Projects by Evan Xiao: HCI research, robotics, and light and kinetic installations." />
   <link rel="icon" type="image/png" href="assets/images/general/logo.png" />
 
 
@@ -225,11 +225,11 @@
     }
 
     .card.video-robotic video {
-      transform: scale(1.8)
+      transform: scale(1.36)
     }
 
     .card.video-robotic:hover video {
-      transform: scale(1.86)
+      transform: scale(1.4)
     }
 
     .card::after {
@@ -593,21 +593,23 @@
     </a>
     <nav aria-label="Main">
       <a href="projects.html" aria-current="page">Projects</a>
+      <a href="publications.html">Publications</a>
       <a href="about.html">About</a>
-      <a class="btn" href="mailto:hello@example.com">Contact</a>
+      <a class="btn" href="mailto:bx2181@nyu.edu">Contact</a>
     </nav>
   </header>
 
   <!-- Mast -->
   <section class="mast" aria-label="Projects mast">
     <h1>Selected Projects</h1>
-    <p>A curated selection across HCI, UX/UI, prototyping, and visual experiments.</p>
+    <p>Research, robotics and installations, newest first.</p>
   </section>
 
   <!-- Filters -->
   <div class="filters" role="toolbar" aria-label="Project filters">
     <button class="chip" data-filter="all" aria-pressed="true">All</button>
     <button class="chip" data-filter="ux">UX / UI</button>
+    <button class="chip" data-filter="research">Research</button>
     <button class="chip" data-filter="hci">HCI</button>
     <button class="chip" data-filter="proto">Prototyping</button>
     <button class="chip" data-filter="visual">Visual</button>
@@ -616,28 +618,42 @@
   <main class="wrap" id="grid" aria-live="polite"></main>
 
   <!-- 卡片源（平铺列表，JS 将打包成一行行的 .row）。新增项目只需在这里加卡片 -->
-  <template id="cardTemplate">
-    <!-- 例：普通卡（默认 1fr 宽） -->
-    <a class="card" data-tags="ux" href="#">
-      <img loading="lazy" src="https://picsum.photos/seed/p01/1600/1200" alt="Project cover">
-      <div class="meta"><span class="org">Experiment</span>
-        <h3>Hi AI</h3>
-      </div>
-    </a>
-  </template>
+
 
   <div id="cardsSource" hidden>
-    <!-- 你可以自由增删这些卡片；用 data-tags 标注分类（空格分隔），可选 data-layout：wide-left / wide-right -->
-    <a class="card" data-tags="hci proto" href="interactive-ai-powered-robot.html"><img
-        src="assets/images/projects/interactive-ai-powered-robot/ima-bot-blue.jpg" alt="Interactive AI-Powered Robot">
-      <div class="meta"><span class="org">NYU Shanghai · IMA</span>
-        <h3>Interactive AI-Powered Robot</h3>
+    <!-- 顺序即展示顺序；data-layout（wide-left / wide-right）写在一行的第一张卡上 -->
+    <a class="card" data-tags="hci research ux" data-layout="wide-left" href="Echoes.html">
+      <video style="object-position:left center" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/images/projects/Echoes/web/hero.jpg"><source src="assets/images/projects/Echoes/web/hero.mp4" type="video/mp4"></video>
+      <div class="meta"><span class="org">Accepted · UbiComp / ISWC 2026</span>
+        <h3>ECHOES — AR Heritage Docent</h3>
       </div>
     </a>
-    <a class="card" data-tags="hci proto" href="Spiral-Genesis.html"><img
+    <a class="card" data-tags="hci research proto" href="VoiceGuard.html">
+      <img src="assets/images/projects/VoiceGuard/web/hero.jpg" alt="VoiceGuard arm grasping a mug"
+        style="object-position:center 40%">
+      <div class="meta"><span class="org">Assistive Robotics · NYU Shanghai × Carleton</span>
+        <h3>VoiceGuard</h3>
+      </div>
+    </a>
+    <a class="card" data-tags="hci proto" data-layout="wide-right" href="Spiral-Genesis.html"><img
         src="assets/images/projects/Spiral-Genesis/DSC04515.JPG" alt="Spiral Genesis">
       <div class="meta"><span class="org">NYU Shanghai · IMA</span>
         <h3>Spiral Genesis</h3>
+      </div>
+    </a>
+    <a class="card" data-tags="hci research ux visual" href="Youshen.html">
+      <video autoplay muted loop playsinline webkit-playsinline preload="metadata"
+        poster="assets/images/projects/Youshen/youshen-loop-poster.jpg">
+        <source src="assets/images/projects/Youshen/youshen-loop.mp4" type="video/mp4">
+      </video>
+      <div class="meta"><span class="org">Digital Archive · Interactive Installation</span>
+        <h3>Yóushén — Living Deities</h3>
+      </div>
+    </a>
+    <a class="card" data-tags="hci proto" data-layout="wide-left" href="interactive-ai-powered-robot.html"><img
+        src="assets/images/projects/interactive-ai-powered-robot/ima-bot-blue.jpg" alt="Interactive AI-Powered Robot">
+      <div class="meta"><span class="org">NYU Shanghai · IMA</span>
+        <h3>Interactive AI-Powered Robot</h3>
       </div>
     </a>
     <a class="card" data-tags="hci proto" href="2024-2025-VEX-High-Stakes.html"><img
@@ -646,17 +662,7 @@
         <h3>2024-2025 VEX High Stakes</h3>
       </div>
     </a>
-    <a class="card video-robotic" data-tags="hci robotics" href="robotic-arms-art.html">
-      <video autoplay muted loop playsinline webkit-playsinline preload="metadata"
-        poster="assets/images/projects/robotic-arms-art/signal%202.jpg">
-        <source src="assets/images/projects/robotic-arms-art/signals-of-the-void.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <div class="meta"><span class="org">IMA × Franka Robotics</span>
-        <h3>Robotic Arms in Art</h3>
-      </div>
-    </a>
-    <a class="card" data-tags="hci light" data-layout="wide-left" href="Pulse.html">
+    <a class="card" data-tags="hci light visual" href="Pulse.html">
       <video autoplay muted loop playsinline webkit-playsinline preload="metadata"
         poster="assets/images/projects/Pulse/截屏2025-03-24-17.19.13.png">
         <source src="assets/images/projects/Pulse/Pulse-loop.mp4" type="video/mp4">
@@ -666,11 +672,14 @@
         <h3>Pulse — Refracted Light Score</h3>
       </div>
     </a>
-    <a class="card" data-tags="hci ux proto" data-layout="wide-right" href="Echoes.html" style="background:#0d1117">
-      <img src="assets/images/projects/Echoes/lQDPJwlkjTu0obfNB9DNB9CwFndFp3RXG3gI-HpUjz4-AA_2000_2000_1200x1200@2x.jpg"
-        alt="Echoes - Gaze-Driven AR Heritage" style="object-fit:cover;transform:scale(1.05);transform-origin:center">
-      <div class="meta"><span class="org">AR · AI · Cultural Heritage</span>
-        <h3>Echoes — Gaze-Driven Heritage AI</h3>
+    <a class="card video-robotic" data-tags="hci robotics visual" href="robotic-arms-art.html">
+      <video autoplay muted loop playsinline webkit-playsinline preload="metadata"
+        poster="assets/images/projects/robotic-arms-art/signal%202.jpg">
+        <source src="assets/images/projects/robotic-arms-art/signals-of-the-void.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="meta"><span class="org">IMA × Franka Robotics</span>
+        <h3>Robotic Arms in Art</h3>
       </div>
     </a>
   </div>
@@ -686,8 +695,9 @@
           <ul>
             <li><a href="index.html#top">Home</a></li>
             <li><a href="projects.html">Projects</a></li>
+            <li><a href="publications.html">Publications</a></li>
             <li><a href="about.html">About</a></li>
-            <li><a href="mailto:hello@example.com">Contact</a></li>
+            <li><a href="mailto:bx2181@nyu.edu">Contact</a></li>
           </ul>
         </div>
         <div class="col social-col">

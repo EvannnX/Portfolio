@@ -3,1689 +3,326 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Echoes — Gaze-Driven Urban Heritage AI · Evan Xiao</title>
+  <title>ECHOES — Adaptive AR Heritage Docent · Evan Xiao</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description"
-    content="Echoes: Enhancing Urban Heritage Experiences via Gaze-Driven Multimodal AI Agents. Bridging the gap between static history and modern visitors—without the screen." />
+    content="ECHOES is an adaptive LLM-powered AR-glasses docent for evidence-grounded urban heritage interpretation on the Bund, Shanghai. Accepted to UbiComp / ISWC 2026." />
   <link rel="icon" type="image/png" href="assets/images/general/logo.png" />
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&family=Playfair+Display:ital,wght@1,400;1,600&display=swap"
-    rel="stylesheet">
-
-  <style>
-    :root {
-      --bg: #0b0e11;
-      --text: #e8ecef;
-      --muted: #c8ced4;
-      --brand: #fff;
-      --glass: rgba(10, 12, 15, .55);
-      --hairline: rgba(255, 255, 255, .08);
-      --g: 28px;
-      --header-h: 72px;
-      --header-blur: 10px;
-      --maxw: 1200px;
-      --accent: #6366f1;
-      --accent-warm: #f59e0b;
-    }
-
-    * {
-      box-sizing: border-box
-    }
-
-    html,
-    body {
-      height: 100%
-    }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.35
-    }
-
-    /* Header */
-    .site-header {
-      position: fixed;
-      inset: 0 0 auto 0;
-      height: var(--header-h);
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 0 24px;
-      background: var(--glass);
-      backdrop-filter: saturate(130%) blur(var(--header-blur));
-      box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset;
-      transition: background .25s, box-shadow .25s, backdrop-filter .25s
-    }
-
-    .site-header.transparent {
-      background: transparent;
-      box-shadow: none;
-      backdrop-filter: none
-    }
-
-    .logo {
-      display: inline-flex;
-      align-items: center;
-      text-decoration: none
-    }
-
-    .logo-img {
-      height: 30px;
-      width: auto;
-      display: block
-    }
-
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      opacity: .92;
-      font-weight: 800;
-      letter-spacing: .12em;
-      font-size: .78rem;
-      margin: 0 12px;
-      text-transform: uppercase
-    }
-
-    nav a:hover {
-      opacity: 1
-    }
-
-    .btn {
-      appearance: none;
-      border: 1px solid rgba(255, 255, 255, .28);
-      background: rgba(255, 255, 255, .06);
-      color: #fff;
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-weight: 700;
-      letter-spacing: .02em;
-      text-decoration: none
-    }
-
-    .section {
-      padding: 120px 0
-    }
-
-    .pad-top {
-      padding-top: calc(var(--header-h) + 32px)
-    }
-
-    /* Hero with Cover Image */
-    .hero-video {
-      position: relative;
-      height: 100vh;
-      max-height: 860px;
-      width: 100vw;
-      overflow: hidden
-    }
-
-    .hero-video img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center
-    }
-
-    .hero-video::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(9, 11, 18, .18) 0, rgba(9, 11, 18, .55) 70%, rgba(9, 11, 18, 1) 100%);
-      pointer-events: none
-    }
-
-    .hero-content {
-      position: absolute;
-      z-index: 1;
-      bottom: 15%;
-      left: 0;
-      right: 0;
-      text-align: center;
-      padding: 0 24px
-    }
-
-    .hero-eyebrow {
-      display: inline-block;
-      margin-bottom: 16px;
-      letter-spacing: .4em;
-      text-transform: uppercase;
-      font-size: .72rem;
-      font-weight: 800;
-      color: rgba(232, 236, 239, .6);
-      border: 1px solid rgba(255, 255, 255, .15);
-      padding: 8px 20px;
-      border-radius: 999px
-    }
-
-    .hero-title {
-      margin: 0 0 20px;
-      font-weight: 900;
-      letter-spacing: -.02em;
-      font-size: clamp(42px, 8vw, 86px);
-      line-height: 1.05
-    }
-
-    .hero-subtitle {
-      margin: 0 0 30px;
-      color: rgba(255, 255, 255, .8);
-      font-family: "Playfair Display", Georgia, serif;
-      font-style: italic;
-      font-size: clamp(18px, 2.4vw, 28px);
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto
-    }
-
-    .hero-tagline {
-      margin: 0;
-      color: var(--muted);
-      font-size: clamp(14px, 1.4vw, 18px);
-      font-weight: 500
-    }
-
-    /* Mast */
-    .wrap {
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding: 0 24px
-    }
-
-    .mast-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 36px;
-      align-items: start
-    }
-
-    .mast h1 {
-      margin: 0 0 10px;
-      font-weight: 900;
-      letter-spacing: -.01em;
-      font-size: clamp(30px, 5vw, 58px)
-    }
-
-    .mast p.sub {
-      margin: 0;
-      color: #e9eff6;
-      font-family: "Playfair Display", Georgia, serif;
-      font-style: italic;
-      font-size: clamp(16px, 1.6vw, 24px)
-    }
-
-    .facts {
-      margin-top: 18px;
-      border-top: 1px solid var(--hairline);
-      padding-top: 14px
-    }
-
-    .facts dl {
-      margin: 0;
-      display: grid;
-      grid-template-columns: 120px 1fr;
-      row-gap: 10px;
-      column-gap: 12px
-    }
-
-    .facts dt {
-      opacity: .75;
-      font-weight: 800;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      font-size: .78rem
-    }
-
-    .facts dd {
-      margin: 0
-    }
-
-    .col h3 {
-      margin: 0 0 12px;
-      font-weight: 900;
-      letter-spacing: -.01em;
-      font-size: clamp(18px, 2.4vw, 24px)
-    }
-
-    .col p {
-      margin: 0 0 14px
-    }
-
-    /* Rails layout */
-    .rails {
-      display: grid;
-      grid-template-columns: 1fr 4fr 1fr;
-      width: 100vw
-    }
-
-    .stage {
-      grid-column: 2;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: var(--g);
-      align-items: center;
-      margin: 56px 0
-    }
-
-    .stage .text h2 {
-      margin: 0 0 10px;
-      font-weight: 900;
-      letter-spacing: -.01em;
-      font-size: clamp(20px, 3vw, 34px)
-    }
-
-    .stage .text p {
-      margin: 0 0 12px
-    }
-
-    .stage .text ul {
-      margin: .2rem 0 0 1.2rem;
-      line-height: 1.6
-    }
-
-    .stage .text li {
-      margin: 6px 0
-    }
-
-    .muted {
-      color: var(--muted)
-    }
-
-    .media {
-      display: block;
-      width: 100%
-    }
-
-    .media figure {
-      margin: 0
-    }
-
-    .media img,
-    .media video {
-      display: block;
-      width: 100%;
-      max-width: 100%;
-      height: auto;
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, .08);
-      box-shadow: 0 18px 54px rgba(0, 0, 0, .32);
-      background: rgba(255, 255, 255, .02)
-    }
-
-    .media video {
-      object-fit: cover
-    }
-
-    figcaption {
-      font-size: .9rem;
-      color: var(--muted);
-      margin-top: 6px
-    }
-
-    .stage.single {
-      grid-template-columns: minmax(0, 1fr)
-    }
-
-    .stage.reverse {
-      direction: rtl
-    }
-
-    .stage.reverse>* {
-      direction: ltr
-    }
-
-    /* Full-width Scene Images */
-    .scene-block {
-      padding: 80px 24px;
-      position: relative
-    }
-
-    .scene-block .wrap {
-      max-width: 1400px
-    }
-
-    .scene-block figure {
-      margin: 0;
-      position: relative
-    }
-
-    .scene-block img {
-      width: 100%;
-      height: auto;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, .08);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, .45)
-    }
-
-    .scene-block figcaption {
-      margin-top: 20px;
-      text-align: center
-    }
-
-    .scene-block .scene-title {
-      font-size: clamp(20px, 2.5vw, 28px);
-      font-weight: 800;
-      margin: 0 0 8px
-    }
-
-    .scene-block .scene-desc {
-      font-size: clamp(14px, 1.2vw, 18px);
-      color: var(--muted);
-      max-width: 700px;
-      margin: 0 auto;
-      line-height: 1.6
-    }
-
-    /* Pull Quote */
-    .quote-block {
-      padding: 80px 24px;
-      background: linear-gradient(180deg, rgba(99, 102, 241, .05) 0%, transparent 100%)
-    }
-
-    .quote-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center
-    }
-
-    .quote-inner blockquote {
-      margin: 0;
-      font-size: clamp(24px, 4vw, 42px);
-      font-weight: 800;
-      letter-spacing: -.01em;
-      line-height: 1.3;
-      color: var(--text)
-    }
-
-    .quote-inner blockquote::before {
-      content: open-quote;
-      color: var(--accent);
-      font-size: 1.2em
-    }
-
-    .quote-inner blockquote::after {
-      content: close-quote;
-      color: var(--accent);
-      font-size: 1.2em
-    }
-
-    /* Numbered Steps */
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 32px
-    }
-
-    .step-card {
-      background: rgba(255, 255, 255, .03);
-      border: 1px solid var(--hairline);
-      border-radius: 16px;
-      padding: 28px;
-      position: relative
-    }
-
-    .step-num {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      font-size: 3rem;
-      font-weight: 900;
-      color: rgba(99, 102, 241, .2);
-      line-height: 1
-    }
-
-    .step-card h4 {
-      margin: 0 0 12px;
-      font-weight: 800;
-      font-size: 1.1rem
-    }
-
-    .step-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: .95rem;
-      line-height: 1.5
-    }
-
-    /* Architecture Diagram */
-    .arch-block {
-      background: rgba(255, 255, 255, .02);
-      border: 1px solid var(--hairline);
-      border-radius: 20px;
-      padding: 40px;
-      margin-top: 32px
-    }
-
-    .arch-layer {
-      display: flex;
-      gap: 20px;
-      margin-bottom: 20px;
-      padding: 20px;
-      border-radius: 12px;
-      background: rgba(99, 102, 241, .06);
-      border: 1px solid rgba(99, 102, 241, .15)
-    }
-
-    .arch-layer:last-child {
-      margin-bottom: 0
-    }
-
-    .arch-icon {
-      width: 60px;
-      height: 60px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.6rem;
-      flex-shrink: 0
-    }
-
-    .arch-content h4 {
-      margin: 0 0 6px;
-      font-weight: 800;
-      font-size: 1.1rem
-    }
-
-    .arch-content p {
-      margin: 0;
-      color: var(--muted);
-      font-size: .95rem;
-      line-height: 1.5
-    }
-
-    /* Stats Row */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin: 40px 0
-    }
-
-    .stat-item {
-      text-align: center;
-      padding: 32px;
-      background: rgba(245, 158, 11, .04);
-      border: 1px solid rgba(245, 158, 11, .15);
-      border-radius: 16px
-    }
-
-    .stat-num {
-      font-size: clamp(36px, 5vw, 56px);
-      font-weight: 900;
-      color: var(--accent-warm);
-      line-height: 1;
-      margin-bottom: 8px
-    }
-
-    .stat-label {
-      font-size: .9rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      font-weight: 700
-    }
-
-    /* Roadmap */
-    .roadmap {
-      margin-top: 32px
-    }
-
-    .roadmap-item {
-      display: flex;
-      gap: 20px;
-      margin-bottom: 24px;
-      padding: 24px;
-      background: rgba(255, 255, 255, .02);
-      border: 1px solid var(--hairline);
-      border-radius: 14px
-    }
-
-    .roadmap-phase {
-      flex-shrink: 0;
-      width: 100px;
-      font-weight: 800;
-      color: var(--accent);
-      font-size: .9rem;
-      text-transform: uppercase;
-      letter-spacing: .06em
-    }
-
-    .roadmap-content h4 {
-      margin: 0 0 6px;
-      font-weight: 800;
-      font-size: 1rem
-    }
-
-    .roadmap-content p {
-      margin: 0;
-      color: var(--muted);
-      font-size: .95rem;
-      line-height: 1.5
-    }
-
-    /* Reveal */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      filter: blur(6px);
-      transition: opacity 1s ease, transform 1s cubic-bezier(0.2, 0.7, 0, 1), filter 1s ease;
-      will-change: opacity, transform, filter
-    }
-
-    .reveal.in {
-      opacity: 1;
-      transform: none;
-      filter: none
-    }
-
-    /* Footer */
-    .site-footer {
-      margin-top: 96px;
-      background: #0b0d0f;
-      border-top: 1px solid var(--hairline);
-      position: relative
-    }
-
-    .site-footer::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: 80px;
-      background: radial-gradient(60% 100% at 50% 0%, rgba(255, 255, 255, .06), rgba(255, 255, 255, 0))
-    }
-
-    .footer-inner {
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding: 36px 24px;
-      display: grid;
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      align-items: start;
-      gap: 36px
-    }
-
-    .site-footer .logo {
-      color: #fff;
-      gap: .4rem
-    }
-
-    .site-footer .logo-img {
-      height: 44px;
-      width: auto;
-      display: block
-    }
-
-    .cols {
-      display: flex;
-      gap: 64px;
-      grid-column: 9 / span 4;
-      justify-self: start;
-      align-items: center
-    }
-
-    .col-title {
-      font-size: .85rem;
-      font-weight: 900;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      opacity: .8;
-      margin-bottom: 10px
-    }
-
-    .col ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 8px
-    }
-
-    .col a {
-      color: var(--text);
-      text-decoration: none
-    }
-
-    .col a:hover {
-      text-decoration: underline
-    }
-
-    .icons-vert {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      align-items: flex-start
-    }
-
-    .icon-link {
-      display: inline-block
-    }
-
-    .icon-img {
-      width: 40px;
-      height: 40px;
-      display: block;
-      opacity: .92
-    }
-
-    .icon-link:hover .icon-img {
-      opacity: 1
-    }
-
-    .legal {
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding: 0 24px 24px;
-      font-size: .85rem;
-      color: var(--muted)
-    }
-
-    @media (max-width:900px) {
-      .mast-grid {
-        grid-template-columns: 1fr
-      }
-
-      .rails {
-        grid-template-columns: 1fr
-      }
-
-      .stage {
-        grid-column: 1;
-        margin: 42px 0;
-        grid-template-columns: 1fr
-      }
-
-      .stage.reverse {
-        direction: ltr
-      }
-
-      .steps-grid {
-        grid-template-columns: 1fr
-      }
-
-      .stats-row {
-        grid-template-columns: 1fr
-      }
-
-      .cols {
-        grid-column: 1 / -1;
-        justify-self: start;
-        gap: 32px
-      }
-    }
-
-    /* iPad and tablets */
-    @media (max-width:1024px) {
-      .hero-video {
-        max-height: 70vh
-      }
-
-      .hero-title {
-        font-size: clamp(36px, 10vw, 64px)
-      }
-
-      .hero-subtitle {
-        font-size: clamp(16px, 3vw, 24px)
-      }
-
-      .steps-grid {
-        grid-template-columns: repeat(2, 1fr)
-      }
-
-      .stats-row {
-        grid-template-columns: repeat(2, 1fr)
-      }
-
-      .arch-layer {
-        flex-direction: column;
-        text-align: center
-      }
-
-      .arch-icon {
-        margin: 0 auto
-      }
-    }
-
-    /* Small tablets and large phones */
-    @media (max-width:768px) {
-      .site-header {
-        padding: 14px 16px
-      }
-
-      nav a {
-        margin: 0 8px;
-        font-size: .7rem
-      }
-
-      .hero-video {
-        max-height: 60vh
-      }
-
-      .hero-content {
-        bottom: 10%;
-        padding: 0 16px
-      }
-
-      .hero-eyebrow {
-        font-size: .65rem;
-        padding: 6px 14px;
-        letter-spacing: .3em
-      }
-
-      .hero-title {
-        font-size: clamp(32px, 12vw, 48px)
-      }
-
-      .hero-subtitle {
-        font-size: clamp(15px, 4vw, 20px);
-        max-width: 90%
-      }
-
-      .hero-tagline {
-        font-size: clamp(12px, 3vw, 15px)
-      }
-
-      .section {
-        padding: 80px 16px
-      }
-
-      .wrap {
-        padding: 0 16px
-      }
-
-      .scene-block {
-        padding: 48px 16px
-      }
-
-      .scene-block img {
-        border-radius: 14px
-      }
-
-      .scene-block .scene-title {
-        font-size: clamp(18px, 5vw, 24px)
-      }
-
-      .scene-block .scene-desc {
-        font-size: clamp(13px, 3vw, 16px)
-      }
-
-      .stage {
-        margin: 32px 0;
-        gap: 20px
-      }
-
-      .stage .text h2 {
-        font-size: clamp(18px, 5vw, 28px)
-      }
-
-      .stage .text p {
-        font-size: 14px
-      }
-
-      .steps-grid {
-        grid-template-columns: 1fr;
-        gap: 16px
-      }
-
-      .step-card {
-        padding: 20px
-      }
-
-      .step-num {
-        font-size: 2.5rem;
-        top: 16px;
-        right: 16px
-      }
-
-      .step-card h4 {
-        font-size: 1rem
-      }
-
-      .step-card p {
-        font-size: .9rem
-      }
-
-      .stats-row {
-        grid-template-columns: 1fr;
-        gap: 16px
-      }
-
-      .stat-item {
-        padding: 24px
-      }
-
-      .stat-num {
-        font-size: clamp(32px, 10vw, 48px)
-      }
-
-      .stat-label {
-        font-size: .8rem
-      }
-
-      .quote-block {
-        padding: 48px 16px
-      }
-
-      .quote-inner blockquote {
-        font-size: clamp(20px, 6vw, 32px)
-      }
-
-      .arch-block {
-        padding: 24px
-      }
-
-      .arch-layer {
-        padding: 16px;
-        gap: 14px
-      }
-
-      .arch-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.3rem
-      }
-
-      .arch-content h4 {
-        font-size: 1rem
-      }
-
-      .arch-content p {
-        font-size: .9rem
-      }
-
-      .roadmap-item {
-        padding: 18px;
-        flex-direction: column;
-        gap: 10px
-      }
-
-      .roadmap-phase {
-        width: auto
-      }
-
-      .roadmap-content h4 {
-        font-size: .95rem
-      }
-
-      .roadmap-content p {
-        font-size: .9rem
-      }
-
-      .footer-inner {
-        grid-template-columns: 1fr;
-        padding: 24px 16px
-      }
-
-      .cols {
-        flex-direction: column;
-        gap: 24px
-      }
-    }
-
-    /* iPhone and small phones */
-    @media (max-width:480px) {
-      .site-header {
-        padding: 12px 14px
-      }
-
-      .logo-img {
-        height: 26px
-      }
-
-      nav {
-        display: none
-      }
-
-      .hero-video {
-        max-height: 55vh
-      }
-
-      .hero-content {
-        bottom: 8%
-      }
-
-      .hero-eyebrow {
-        font-size: .6rem;
-        padding: 5px 12px
-      }
-
-      .hero-title {
-        font-size: clamp(28px, 14vw, 40px)
-      }
-
-      .hero-subtitle {
-        font-size: 14px
-      }
-
-      .hero-tagline {
-        font-size: 12px
-      }
-
-      .section {
-        padding: 60px 14px
-      }
-
-      .wrap {
-        padding: 0 14px
-      }
-
-      .scene-block {
-        padding: 32px 14px
-      }
-
-      .scene-block img {
-        border-radius: 12px
-      }
-
-      .scene-block figcaption {
-        margin-top: 14px
-      }
-
-      .scene-block .scene-title {
-        font-size: 16px
-      }
-
-      .scene-block .scene-desc {
-        font-size: 13px
-      }
-
-      .stage {
-        margin: 24px 0;
-        gap: 16px
-      }
-
-      .stage .text h2 {
-        font-size: 18px
-      }
-
-      .stage .text p {
-        font-size: 13px;
-        line-height: 1.6
-      }
-
-      .stage .text ul {
-        font-size: 13px
-      }
-
-      .media img,
-      .media video {
-        border-radius: 12px
-      }
-
-      .steps-grid {
-        gap: 12px
-      }
-
-      .step-card {
-        padding: 16px;
-        border-radius: 12px
-      }
-
-      .step-num {
-        font-size: 2rem
-      }
-
-      .step-card h4 {
-        font-size: .95rem
-      }
-
-      .step-card p {
-        font-size: .85rem
-      }
-
-      .stats-row {
-        gap: 12px
-      }
-
-      .stat-item {
-        padding: 20px;
-        border-radius: 12px
-      }
-
-      .stat-num {
-        font-size: 36px
-      }
-
-      .stat-label {
-        font-size: .75rem
-      }
-
-      .quote-block {
-        padding: 32px 14px
-      }
-
-      .quote-inner blockquote {
-        font-size: 18px;
-        line-height: 1.4
-      }
-
-      .arch-block {
-        padding: 18px;
-        border-radius: 14px
-      }
-
-      .arch-layer {
-        padding: 14px;
-        border-radius: 10px
-      }
-
-      .arch-icon {
-        width: 44px;
-        height: 44px;
-        font-size: 1.1rem;
-        border-radius: 10px
-      }
-
-      .roadmap {
-        margin-top: 20px
-      }
-
-      .roadmap-item {
-        padding: 14px;
-        border-radius: 10px;
-        margin-bottom: 12px
-      }
-
-      .roadmap-phase {
-        font-size: .8rem
-      }
-
-      .site-footer {
-        margin-top: 48px
-      }
-
-      .footer-inner {
-        padding: 20px 14px;
-        gap: 20px
-      }
-
-      .site-footer .logo .logo-img {
-        height: 36px
-      }
-
-      .col-title {
-        font-size: .8rem
-      }
-
-      .col ul {
-        gap: 6px
-      }
-
-      .col a {
-        font-size: .9rem
-      }
-
-      .col .icon-img {
-        width: 32px;
-        height: 32px
-      }
-
-      .legal {
-        font-size: .8rem;
-        padding: 12px 14px
-      }
-    }
-
-    /* Extra small phones */
-    @media (max-width:360px) {
-      .hero-title {
-        font-size: 26px
-      }
-
-      .hero-subtitle {
-        font-size: 13px
-      }
-
-      .scene-block .scene-title {
-        font-size: 15px
-      }
-
-      .stage .text h2 {
-        font-size: 16px
-      }
-
-      .step-card h4 {
-        font-size: .9rem
-      }
-
-      .stat-num {
-        font-size: 30px
-      }
-
-      .quote-inner blockquote {
-        font-size: 16px
-      }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/case.css" />
+  <link rel="stylesheet" href="css/echoes.css" />
+  <link rel="stylesheet" href="css/echoes-system.css" />
 </head>
 
 <body>
   <header class="site-header transparent" aria-label="Primary">
-    <a href="index.html" class="logo" aria-label="Home">
-      <img class="logo-img" src="assets/images/general/logo.png" alt="Evan Xiao logo" />
-    </a>
+    <a href="index.html" class="logo" aria-label="Home"><img class="logo-img" src="assets/images/general/logo.png" alt="Evan Xiao logo" /></a>
     <nav>
       <a href="projects.html">Projects</a>
+      <a href="publications.html">Publications</a>
       <a href="about.html">About</a>
-      <a class="btn" href="mailto:hello@example.com">Contact</a>
+      <a class="btn" href="mailto:bx2181@nyu.edu">Contact</a>
     </nav>
   </header>
 
-
-
   <!-- Hero -->
-  <section class="hero-video" aria-label="Echoes hero"
-    style="background:#0b0e11; max-height:860px; height:100vh; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative;">
-    <div
-      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden;">
-      <div style="width: 100%; height: 100%; transform: scale(1.35);">
-        <iframe width="100%" height="100%"
-          src="https://www.youtube.com/embed/TIQpWHRefTM?start=91&autoplay=1&mute=1&loop=1&playlist=TIQpWHRefTM&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&vq=hd1080"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen style="object-fit: cover; width: 100vw; height: 100vh;"></iframe>
-      </div>
-    </div>
-    <div style="position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.1);"></div>
+  <section class="hero-video" aria-label="ECHOES hero video">
+    <video style="object-position:right bottom" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/images/projects/Echoes/web/hero.jpg">
+      <source src="assets/images/projects/Echoes/web/hero.mp4" type="video/mp4" />
+    </video>
   </section>
 
-  <section class="scene-block reveal in" style="padding-top:60px; padding-bottom:20px; text-align:center;">
-    <div class="wrap">
-      <h1 class="hero-title" style="font-size:clamp(42px, 6vw, 84px); margin-bottom:10px;">ECHOES</h1>
-      <p class="hero-tagline" style="font-size:clamp(16px, 2vw, 24px); color:var(--muted);">基于流式视觉大模型与边缘计算的空间历史重构系统</p>
-    </div>
-  </section>
-
-  <!-- Preface: Invisible Tech -->
-  <section class="scene-block reveal" aria-label="Preface" style="padding-top:80px">
-    <div class="wrap" style="max-width:1400px">
-      <figure>
-
-        <figcaption>
-          <h3 class="scene-title">当科技隐形，历史方能显形</h3>
-          <div class="scene-desc" style="text-align:left; max-width:900px; margin:20px auto 0;">
-            <p><strong>我们在凝视历史时，究竟在凝视什么？</strong></p>
-            <p>ECHOES
-              的诞生，始于我作为一名普通游客在博物馆和历史街区中无数次经历的“挫败瞬间”。我是一个对历史细节充满好奇的人。在参观时，我经常会对某个特定的展品、角落或建筑纹理产生强烈的兴趣。然而，当我想深入了解时，现实往往给我泼了一盆冷水：我不得不掏出手机，在搜索引擎的浩瀚信息中费力地筛选，低头阅读长篇大论的文字。当我终于找到答案抬起头时，那种与历史对话的沉浸感早已烟消云散——我花费了太多的精力在“获取信息”上，而非“感受当下”。
-            </p>
-            <p>
-              我也曾尝试过其他方案，但体验总有缺憾：私人讲解的高昂费用让“单人游”的我望而却步；传统的录音讲解器虽然便宜，却像一个只会背书的机器人，永远无法回答我突发奇想的“特定疑问”；而博物馆的公益讲解虽然优质，却因为每天仅有两三场的固定排期，经常与我的行程冲突。
-            </p>
-            <p><strong>“不够便捷、不够即时、不够懂我。”</strong>
-              正是这些真实存在的痛点，让我开始反思：是否有一种方式，能让我在不脱离现实、不打断沉浸感的前提下，获得一个随时待命、无所不知且能与我对话的“私人向导”？</p>
-            <p>基于对这些切身经历的交互反思，在上海纽约大学文化遗产数字化实验室与 Rokid 团队的技术支持下，ECHOES 应运而生。我们的愿景激进却纯粹：<strong>我们要让科技隐形，让历史显形。</strong>
-            </p>
-            <p>本项目依托 Rokid
-              第三代智能眼镜的光波导显示技术，结合前沿的流式视觉语言模型与检索增强生成架构，构建了一套“即看即问”的自然交互系统。我们拒绝将眼镜做成“戴在脸上的手机”，而是将其定义为“不仅能看，更能理解的第二双眼睛”。通过构建动态叙事人格和视听双通道反馈，我们在不通过屏幕遮挡现实世界的前提下，试图重塑人与空间之间那份久违的“场所精神”。
-            </p>
-          </div>
-        </figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <!-- Video Block -->
-  <section class="video-block reveal" style="padding: 40px 0;">
-    <div class="wrap" style="max-width:1200px">
-      <div style="aspect-ratio:16/9; border-radius:20px; overflow:hidden;">
-        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/TIQpWHRefTM?rel=0&vq=hd1080"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen></iframe>
-      </div>
-    </div>
-  </section>
-
-  <!-- Chapter 1: Market Autopsy -->
-  <section class="section pad-top" aria-label="Market Autopsy" style="padding-top:40px">
-    <div class="wrap reveal">
-      <h2 style="margin:0 0 32px;font-weight:900;letter-spacing:-.01em;font-size:clamp(26px,4vw,42px)">介质的异化与体验断层</h2>
-      <div style="max-width:900px; margin:0 auto; color:var(--muted); line-height:1.6;">
-        <p>
-          如果说我个人的挫败感是项目的导火索，那么随后在南京东路街道进行的田野调查，则是一次从“自我主观感受”迈向“群体客观验证”的体验诊断。为了厘清这种“在场却缺席”的矛盾究竟是个例还是通病，我将视角投向了更广泛的游客群体，试图解构现有导览服务在真实场景下的失效机制。
-        </p>
-
-        <h3 style="color:var(--text); margin:32px 0 16px;">注意力的零和博弈：当工具成为阻碍</h3>
-        <p>在对现有公共导览服务（如二维码、微信小程序）的可用性测试中，我发现了一个反直觉的数据悖论：虽然数字化门槛被降到了最低——无需下载、扫码即用——但游客的平均使用时长却短得惊人。</p>
-        <p>
-          通过对数十位游客的全程跟踪观察，问题的症结逐渐浮出水面：智能手机在现代旅游中扮演了过度拥挤的“瑞士军刀”角色。它既是相机，又是地图，还是社交工具，最后才是一个导览器。当游客试图使用手机获取信息时，实际上被迫卷入了一场高频的多任务切换。我曾记录下一位年轻游客的典型行为路径：她每听一段语音讲解，视线就必须离开展品，低头解锁屏幕、确认进度；而当她想要抓拍精彩瞬间时，又不得不切断音频、退出界面、启动相机。
-        </p>
-        <p>
-          这种在“听觉输入”与“视觉记录”之间反复横跳的过程，制造了巨大的认知摩擦。小程序虽然轻量，但它依然霸占了屏幕这一稀缺资源，迫使游客在“凝视现实”和“操作界面”之间进行排他性选择。这种“低头看屏幕，抬头一片茫然”的交互模式，本质上依然是一堵将人与空间隔绝的数字高墙。只要导览还需要占用双手和屏幕，它就永远无法解决沉浸感断裂的根本矛盾。
-        </p>
-
-        <h3 style="color:var(--text); margin:32px 0 16px;">供需错位：被物理机能阻断的深度渴望</h3>
-        <p>除了交互层面的摩擦力，在对不同人群的深层观察中，我还发现了一个被行业长期忽视的代际服务断层。</p>
-        <p>在南京东路的街头，我注意到真正愿意驻足良久、细细品味历史建筑纹理的，往往是 <strong>50 岁以上</strong>
-          的年长群体。他们拥有最充裕的时间和深厚的文化积淀，对知识准确性的要求远高于普通游客。然而，现有的数字产品对他们而言是充满敌意的。</p>
-        <p>我无数次目睹这样的场景：一位头发花白的老先生在户外强光下，艰难地试图看清手机屏幕上密密麻麻的文字介绍。他不得不反复摘下老花镜去远眺建筑，再戴上眼镜去阅读屏幕。这种生理层面的视觉负担，直接劝退了他们深入了解的欲望。
-        </p>
-        <p>这就造成了一个尴尬的结构性错配：最渴望深度内容的年长用户，被生理机能和复杂的屏幕交互挡在了门外；而最擅长使用数字设备的年轻“数字原住民”，却往往因为现有导览内容的枯燥说教而早早流失。</p>
-
-        <h3 style="color:var(--text); margin:32px 0 16px;">迈向“去介质化”的设计原点</h3>
-        <p>
-          基于上述的竞品缺陷梳理与用户痛点共情，我意识到问题的核心不在于“信息匮乏”，而在于<strong>“交互介质的阻隔”</strong>。屏幕作为中介，切断了具身认知与物理空间的连接；线性叙事作为逻辑，扼杀了探索的好奇心。这一结论直接指引了后续的设计方向：我们需要一种全新的交互范式，它不应占用双手，不应争夺视觉，而应作为一种环境智能，自然地融入用户的游览动线之中。我们需要从<strong>“图形用户界面”走向“自然用户界面”，从“手持设备”走向“穿戴式增强”</strong>。这不仅是为了技术的升级，更是为了把“看”的权利，重新还给眼睛。
-        </p>
-      </div>
-    </div>
-    </div>
-  </section>
-
-  <!-- Pull Quote 1 -->
-  <div class="quote-block reveal">
-    <div class="quote-inner">
-      <blockquote>"我们要让科技隐形，让历史显形。"</blockquote>
-    </div>
-  </div>
-
-  <!-- Chapter 2: User Personas -->
-  <main class="rails" aria-label="User Personas">
-    <section class="stage reveal" style="display:block; grid-column:2;">
-      <h2
-        style="margin:0 0 32px;font-weight:900;letter-spacing:-.01em;font-size:clamp(26px,4vw,42px); text-align:center;">
-        从碎片数据到典型画像</h2>
-      <p style="text-align:center; max-width:800px; margin:0 auto 40px; color:var(--muted);">
-        为了确保设计决策不偏离真实的人性需求，我并没有急于在实验室里构想“理想用户”，而是将田野调查中收集到的数十份访谈记录与观察笔记进行了<strong>亲和图（Affinity
-          Diagram）</strong>梳理。透过那些看似杂乱的吐槽与抱怨，我发现不同背景的游客在行为模式与核心痛点上呈现出高度的聚类特征。基于此，我们将这些碎片化的需求聚合成了三个极具代表性的用户画像。他们代表的不是某个人，而是三类典型的心理模型与行为困境。
-      </p>
-
-      <div class="steps-grid" style="grid-template-columns: 1fr;">
-        <div class="step-card" style="background:rgba(99, 102, 241, 0.05); border-color:rgba(99, 102, 241, 0.2);">
-          <div style="display:flex; gap:24px; align-items:center;">
-            <div style="width:28%; min-width:160px; flex-shrink:0;">
-              <img src="assets/images/projects/Echoes/Zoe.png" alt="Zoe"
-                style="width:100%; height:auto; border-radius:12px; display:block;">
-            </div>
-            <div>
-              <h4 style="color:var(--accent); margin-top:0;">画像一：拒绝说教的“体验派” - 佐伊 (Zoe)</h4>
-              <p class="meta" style="font-size:0.9rem; color:var(--muted); margin-bottom:10px;">22岁 | 视觉传达专业学生 | 数字原住民
-              </p>
-              <p style="margin-top:10px;">
-                这一画像集合了我们在调研中遇到的<strong>“数字原住民”</strong>群体特征。作为社交媒体的重度用户，他们对博物馆官方那种“百科全书式”的解说持强烈的保留态度。在归纳他们的行为时，我发现了一个有趣的矛盾：他们讨厌被动地听课，却极度渴望发现。
-              </p>
-              <p style="margin-top:10px;">
-                <strong>痛点：去滤镜化的真实</strong><br>对于佐伊这类用户而言，现有的导览器太严肃、太无趣。他们并不想知道这栋建筑建于哪一年，而是想知道这里发生过什么鲜为人知的轶事。他们需要的是<strong>“社交货币”</strong>，是那些能让他们在朋友圈显得独具慧眼的微小发现。因此，ECHOES
-                对他们来说，不能是一个古板的说教者，而必须是一个风趣博学的朋友，能在一瞥之间告诉他们：“嘿，你看那个窗框，其实设计师在那里藏了一个彩蛋。”
-              </p>
-            </div>
-          </div>
+  <!-- Mast -->
+  <section class="section pad-top mast" aria-label="Overview">
+    <div class="wrap mast-grid reveal">
+      <div>
+        <h1>ECHOES</h1>
+        <p class="sub">An adaptive LLM-powered AR glasses docent for evidence-grounded urban heritage interpretation.</p>
+        <div class="facts">
+          <dl>
+            <dt>Venue</dt><dd>UbiComp / ISWC 2026 · Poster &amp; demo</dd>
+            <dt>Role</dt><dd>Lead author · Research, interaction design, system</dd>
+            <dt>Team</dt><dd>Bang Xiao, Baosheng Jin, Jinhan Niu, Xingchen Zhang, Hua Shen</dd>
+            <dt>Stack</dt><dd>Rokid AR glasses · Doubao multimodal API · LLM agent · Self-built knowledge base</dd>
+            <dt>Site</dt><dd>East Nanjing Road and the Bund, Shanghai</dd>
+          </dl>
         </div>
-        <div class="step-card" style="background:rgba(245, 158, 11, 0.05); border-color:rgba(245, 158, 11, 0.2);">
-          <div style="display:flex; gap:24px; align-items:center;">
-            <div style="width:28%; min-width:160px; flex-shrink:0;">
-              <img src="assets/images/projects/Echoes/Lily.png" alt="Lily"
-                style="width:100%; height:auto; border-radius:12px; display:block;">
-            </div>
-            <div>
-              <h4 style="color:var(--accent-warm); margin-top:0;">画像二：由于物理受限而焦虑的家长 - 莉莉 (Lily)</h4>
-              <p class="meta" style="font-size:0.9rem; color:var(--muted); margin-bottom:10px;">35岁 | 二胎妈妈 | 物理受限者</p>
-              <p style="margin-top:10px;">
-                这一画像不仅代表了家长，更涵盖了所有在游览中双手被占用的群体。在观察数据中，我发现这类用户面临的挑战是极其具体的物理限制。她需要一手推着婴儿车，一手拉着大孩子，根本没有“第三只手”去操作手机。手机对她来说甚至是一个危险的干扰源——低头看屏幕的瞬间，可能就意味着孩子跑出了视线范围。
-              </p>
-              <p style="margin-top:10px;">
-                <strong>痛点：解放双手的安全感</strong><br>她的核心诉求是物理层面的<strong>“减负”</strong>。她希望眼镜能成为她的育儿助手，引导孩子“去寻找藏在画里的那只小狗”，让孩子主动观察，而不是让她照着说明牌念书。对她来说，安全性至关重要，她需要开放式的音频体验，确保在听讲解的同时，也能时刻听到孩子的呼唤。
-              </p>
+      </div>
+      <div class="col">
+        <h3>Project</h3>
+        <p>ECHOES is an AR-glasses heritage guide for historical districts. Visitors look at a building and ask questions naturally; the system combines what the glasses see, open-ended dialogue, and a curated historical knowledge base to explain it.</p>
+        <p>Across a visit, ECHOES adapts topic emphasis and explanation depth while keeping that personalization visible and controllable. It only says what its sources support.</p>
+        <div class="links">
+          <a class="pill" href="https://arxiv.org/abs/2610.34865" target="_blank" rel="noopener">Read the paper ↗</a>
+          <a class="pill" href="#watch">Watch the demo</a>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Watch -->
+  <section class="video-block" id="watch" aria-label="Watch ECHOES">
+    <div class="video-inner reveal">
+      <span class="eyebrow">Watch</span>
+      <h2>Ask in place, on East Nanjing Road</h2>
+      <p>The UbiComp / ISWC 2026 demo, recorded through the glasses: look at a building, ask, and keep the conversation going as you walk.</p>
+      <div class="video-frame">
+        <video controls playsinline preload="none" poster="assets/images/projects/Echoes/web/demo.jpg">
+          <source src="assets/images/projects/Echoes/web/demo.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <main class="rails" aria-label="Case study">
+    <!-- Context -->
+    <section class="stage single reveal" aria-labelledby="h-context">
+      <div class="text">
+        <h2 id="h-context">From the street, you only see the façade</h2>
+        <p class="muted">Who built a building, what it was for and how it changed are recorded elsewhere, in archives, books and local memory. On the Bund, 23 historic buildings stand along about 1.5&nbsp;km of riverfront, a new one every few dozen steps. We mapped how visitors learn about them today on two scales: how freely they can ask, and whether they have to hold something.</p>
+        <div class="gmap" id="gmap" role="group" aria-label="Existing guidance methods mapped by question freedom and hands-free use">
+          <span class="axis ax-y1">Hands-free</span>
+          <span class="axis ax-y0">Device held</span>
+          <span class="axis ax-x0">Fixed content</span>
+          <span class="axis ax-x1">Ask anything</span>
+          <button class="dot" style="--x:.10;--y:.80" data-note="Plays by location. Same script for everyone.">App audio guide</button>
+          <button class="dot" style="--x:.55;--y:.80" data-note="A docent leads a route and answers questions, but on a fixed schedule and in a group.">Human guide</button>
+          <button class="dot" style="--x:.15;--y:.48" data-note="Scan a plaque for text, audio or video. You hold the phone each time.">QR plaque</button>
+          <button class="dot" style="--x:.03;--y:.12" data-note="Fixed text and a map, in your hands the whole way.">Printed guide</button>
+          <button class="dot" style="--x:.27;--y:.12" data-note="Handheld audio playback, rented and returned.">Rented device</button>
+          <button class="dot" style="--x:.56;--y:.12" data-note="You search and you filter, and your eyes leave the building.">Phone search</button>
+          <button class="dot" style="--x:.84;--y:.12" data-note="Point a camera, talk to an AI. Free to ask, but phone in hand and rarely cites a source.">AI video call</button>
+          <button class="dot echoes flip on" style="--x:.9;--y:.92" data-note="Look and ask, hands-free, with answers grounded in a curated knowledge base.">ECHOES</button>
+        </div>
+        <p class="gmap-note" id="gmapNote" aria-live="polite"><strong>ECHOES</strong>: Look and ask, hands-free, with answers grounded in a curated knowledge base.</p>
+        <div class="limits">
+          <div><strong>Prepared content stays at the surface</strong>Signs and audio guides tell everyone the same few facts.</div>
+          <div><strong>Asking takes the visitor's hands</strong>Search and video calls pull eyes off the building.</div>
+          <div><strong>Answers rarely show their sources</strong>Generated replies sound confident with nothing to check.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Listening -->
+    <section class="stage single reveal" aria-labelledby="h-listen">
+      <div class="text">
+        <h2 id="h-listen">What 19 visitors told us</h2>
+        <p class="muted">Six Shanghai locals, six visitors from elsewhere in China and seven international students talked through recent visits to the Forbidden City, No. 12 the Bund and Hagia Sophia, then imagined ECHOES. Twelve findings across four themes became eight design principles.</p>
+        <div data-tabs>
+          <div class="tabs" role="tablist" aria-label="Themes">
+            <button class="pill" data-key="a">When curiosity happens</button>
+            <button class="pill" data-key="b">What a good answer holds</button>
+            <button class="pill" data-key="c">How the guide should behave</button>
+            <button class="pill" data-key="d">Whether to trust it</button>
+          </div>
+
+          <div class="explorer" data-pane="a">
+            <ul class="bars">
+              <li class="bar" style="--v:52.6%"><span>Questions start on site and fade after leaving</span><b>10/19</b><span class="track"><i></i></span></li>
+              <li class="bar" style="--v:47.4%"><span>Phone lookups pull eyes off the building</span><b>9/19</b><span class="track"><i></i></span></li>
+              <li class="bar" style="--v:36.8%"><span>They want nearby sites, and what to skip</span><b>7/19</b><span class="track"><i></i></span></li>
+            </ul>
+            <div><span class="arrow-label">So we designed:</span>
+              <ul class="dps"><li><strong>Answer what they're looking at, right then</strong>The glasses see it, so visitors just ask "what is this?"</li></ul>
+              <p class="quote" style="margin-top:22px;font-size:clamp(17px,1.8vw,22px)">"My interest was strongest during the visit. Afterward it no longer seemed important."</p>
+              <p class="quote-by">Shanghai local, at Wukang Road</p>
             </div>
           </div>
-        </div>
-        <div class="step-card" style="background:rgba(255, 255, 255, 0.05); border-color:rgba(255, 255, 255, 0.2);">
-          <div style="display:flex; gap:24px; align-items:center;">
-            <div style="width:28%; min-width:160px; flex-shrink:0;">
-              <img src="assets/images/projects/Echoes/Arthur.png" alt="Arthur"
-                style="width:100%; height:auto; border-radius:12px; display:block;">
+          <div class="explorer" data-pane="b" hidden>
+            <ul class="bars">
+              <li class="bar" style="--v:63.2%"><span>Signs and audio guides: same for all, few stories</span><b>12/19</b><span class="track"><i></i></span></li>
+              <li class="bar" style="--v:42.1%"><span>First answer: two or three sentences, then more</span><b>8/19</b><span class="track"><i></i></span></li>
+              <li class="bar" style="--v:68.4%"><span>Show how the place changed and what was restored</span><b>13/19</b><span class="track"><i></i></span></li>
+            </ul>
+            <div><span class="arrow-label">So we designed:</span>
+              <ul class="dps">
+                <li><strong>Short first, deeper on request</strong>Two or three sentences; more only when asked.</li>
+                <li><strong>Lead with stories</strong>People, events and change, not dates and sizes.</li>
+              </ul>
+              <p class="quote" style="margin-top:22px;font-size:clamp(17px,1.8vw,22px)">"It doesn't use vivid stories to help me remember. It just gives information … it feels lifeless."</p>
+              <p class="quote-by">Visitor at the Grand Canal Museum</p>
             </div>
-            <div>
-              <h4 style="color:#fff; margin-top:0;">画像三：拒绝“降智”的硬核考据党 - 陈工 (Arthur)</h4>
-              <p class="meta" style="font-size:0.9rem; color:var(--muted); margin-bottom:10px;">62岁 | 退休土木工程师 | 银发专家</p>
-              <p style="margin-top:10px;">
-                这一画像代表了文化遗产旅游中最核心、却最常被科技产品忽视的<strong>“银发专家”</strong>群体。他们对历史建筑有着极高的专业要求，经常因为导览内容的浅显或错误而感到失望。我们在访谈中反复听到类似的抱怨：“这个解说太浅了，完全是在哄小孩。”或者“字太小了，为了看清楚我得把眼镜摘下来。”
-              </p>
-              <p style="margin-top:10px;">
-                <strong>痛点：生理与认知的双重门槛</strong><br>他们的痛点在于生理机能退化与高认知需求之间的矛盾。在户外强光下，视力下降让他们难以看清手机屏幕；而作为专业人士，他们极其痛恨人工智能可能产生的“虚假信息”。对于陈工这类用户，ECHOES
-                必须解决两个问题：一是利用增强现实技术进行视觉辅助（如大字号、高对比度），二是确保内容的学术级准确性。他需要的不是故事，而是严谨的知识。
-              </p>
+          </div>
+          <div class="explorer" data-pane="c" hidden>
+            <ul class="bars">
+              <li class="bar" style="--v:47.4%"><span>Text in the lens can block the view</span><b>9/19</b><span class="track"><i></i></span></li>
+              <li class="bar" style="--v:36.8%"><span>Speak up unprompted only when it's worth it</span><b>7/19</b><span class="track"><i></i></span></li>
+              <li class="bar" style="--v:89.5%"><span>Adapt to me, but let me see and change it</span><b>17/19</b><span class="track"><i></i></span></li>
+            </ul>
+            <div><span class="arrow-label">So we designed:</span>
+              <ul class="dps">
+                <li><strong>Keep their eyes on the building</strong>Voice first, little text, quiet unless asked.</li>
+                <li><strong>Adapt where visitors can see it</strong>Asks before changing; reset it by voice.</li>
+              </ul>
+              <p class="quote" style="margin-top:22px;font-size:clamp(17px,1.8vw,22px)">"I don't want too many unsolicited explanations; that would feel like having a task to complete."</p>
+              <p class="quote-by">Visitor at the Summer Palace</p>
+            </div>
+          </div>
+          <div class="explorer" data-pane="d" hidden>
+            <ul class="bars">
+              <li class="bar" style="--v:100%"><span>Accuracy first: say "I don't know" rather than guess</span><b>19/19</b><span class="track"><i></i></span></li>
+              <li class="bar" style="--v:94.7%"><span>Sources add trust, but are rarely opened on site</span><b>18/19</b><span class="track"><i></i></span></li>
+              <li class="bar" style="--v:89.5%"><span>When accounts conflict, show both and who says what</span><b>17/19</b><span class="track"><i></i></span></li>
+            </ul>
+            <div><span class="arrow-label">So we designed:</span>
+              <ul class="dps">
+                <li><strong>Only say what the sources support</strong>If the knowledge base has no answer, it says so.</li>
+                <li><strong>Sources on request</strong>Each answer keeps its source one step away.</li>
+                <li><strong>Show disagreements</strong>Each account and who holds it, no winner picked.</li>
+              </ul>
+              <p class="quote" style="margin-top:22px;font-size:clamp(17px,1.8vw,22px)">"Doubao may say it searched over 40 webpages, but they could all cite one page that was fabricated."</p>
+              <p class="quote-by">Visitor at Hagia Sophia</p>
             </div>
           </div>
         </div>
       </div>
-      <p style="text-align:center; max-width:800px; margin:40px auto 0; color:var(--muted); font-style:italic;">
-        <strong>设计机会点收敛：</strong><br>通过对这三类典型画像的解构，ECHOES
-        的设计挑战变得清晰可见：我们需要设计一套自适应系统，既能满足佐伊的探索欲，又能解决莉莉的物理束缚，同时还能补偿陈工的视觉机能。
-      </p>
     </section>
   </main>
 
-  <!-- Chapter 3: Tech Architecture -->
-  <section class="section" aria-label="Technical Architecture">
-    <div class="wrap reveal">
-      <h2 style="margin:0 0 32px;font-weight:900;letter-spacing:-.01em;font-size:clamp(26px,4vw,42px)">技术架构的演进与突破</h2>
-      <div style="max-width:900px; margin:0 auto; color:var(--muted); font-size:1.1rem; line-height:1.7;">
-        <p>ECHOES
-          的研发过程并非简单的软硬件堆砌，而是一场在边缘计算算力、设备功耗与算法精度之间寻找平衡的艰难战役。作为设计师，我必须时刻警惕“技术决定论”的诱惑，确保每一行代码、每一克重量的增加，都直接服务于上一阶段梳理出的真实用户痛点。我们经历了从“理想化概念”到“工程化落地”的深刻转型。
-        </p>
-      </div>
-
-      <div class="arch-item" style="margin-top:40px; display:flex; gap:32px; align-items:center;">
-        <div class="arch-text" style="flex:1;">
-          <h3 style="color:var(--text); margin-bottom:8px;">1. 硬件载体的抉择：为何是 Rokid Glass 3？</h3>
-          <p>
-            在硬件选型阶段，我们面临着极其艰难的权衡（Trade-off）。为了同时满足普通游客对<strong>“全天候无感佩戴”</strong>的苛刻要求，以及视力衰退群体在<strong>户外强光环境下</strong>的阅读刚需，我们在对比了
-            HoloLens 2（过重）、Meta Ray-Ban（中国大陆监管问题无法使用）等竞品后，最终锁定了 Rokid Glass 3 作为开发平台。</p>
-          <ul class="feature-list" style="margin-top:16px;">
-            <li><strong>佩戴阈值的突破（49克）：</strong> 现有的增强现实设备大多在 80 克以上，长期佩戴会对鼻梁造成压迫。Rokid Glass 3 通过镁锂合金骨架将重量控制在 49
-              克，仅相当于一副墨镜。这一物理特性的突破，直接回应了长时间游览者对舒适度的底线要求，确保设备在物理感知上趋于“隐形”。</li>
-            <li><strong>对抗环境光干扰（1500尼特）：</strong> 户外导览最大的敌人是阳光。普通的 OLED 屏幕在正午强光下几乎不可见。Rokid 的微型发光二极管（Micro
-              LED）配合衍射光波导方案，提供了高达 1500 尼特 的入眼亮度。这意味着即便在南京东路正午的强光直射下，视力机能下降的年长用户也无需反复摘戴墨镜或老花镜，依然能清晰辨识叠加在现实之上的增强信息。</li>
-            <li><strong>视场角的自然融合（40°+）：</strong>
-              其光波导镜片的设计避免了“管中窥豹”的视觉封闭感，保留了用户原本的余光视野。这种开放式的光学方案，确保了人工智能的“视界”与用户的“自然视界”无缝融合，不会因视野遮挡而引发晕动症。</li>
-          </ul>
-        </div>
-        <div style="width:360px; flex-shrink:0;">
-          <img src="assets/images/projects/Echoes/Rokid_glasses.png" alt="Rokid Glass 3"
-            style="width:100%; height:auto; display:block;">
-        </div>
-      </div>
-
-      <div class="arch-item" style="margin-top:40px; display:flex; gap:32px; align-items:center;">
-        <div class="arch-text" style="flex:1;">
-          <h3 style="color:var(--text); margin-bottom:8px;">2. 认知引擎的重构：流式视觉捕捉</h3>
-          <p>这是本项目遭遇的最大技术壁垒。在早期的原型测试中，我们遭遇了所谓的<strong>“金鱼记忆”</strong>问题：传统的视频大模型在处理长视频流时，会因为“键值缓存”（KV
-            Cache）溢出而崩溃。这意味着，如果用户戴着眼镜从南京东路的一头走到另一头，几分钟后人工智能就会“忘记”他在起点处看到的建筑风格。这对于强调连续叙事体验的漫步导览是致命的。</p>
-          <p style="margin-top:12px;">为了解决这一问题，我们引入了前沿的<strong>“流式视觉语言模型”</strong>技术。我们并未简单地截取视频帧，而是采用了一种创新的 “注意力锚点” 机制：
-          </p>
-          <ul class="feature-list" style="margin-top:8px;">
-            <li><strong>机制原理：</strong> 系统会在显存中始终保留对话开始时的关键信息（锚点），同时动态刷新最近的视觉信息，自动丢弃中间冗余的帧。</li>
-            <li><strong>体验价值：</strong> 这就像在一部厚重的长篇小说中插上了无数智能书签，确保了人工智能能够拥有连贯的<strong>“空间记忆”</strong>。</li>
-            <li><strong>性能实测：</strong> 实验数据显示，在连续运行 2 小时后，系统的显存占用率保持平稳，彻底解决了传统模型运行 15 分钟就断片的体验顽疾。</li>
-          </ul>
-        </div>
-        <div style="width:360px; flex-shrink:0;">
-          <img src="assets/images/projects/Echoes/vlmflow.jpg" alt="流式视觉捕捉"
-            style="width:100%; height:auto; display:block; border-radius:12px;">
-        </div>
-      </div>
-
-      <div class="arch-item" style="margin-top:40px; display:flex; gap:32px; align-items:center;">
-        <div class="arch-text" style="flex:1;">
-          <h3 style="color:var(--text); margin-bottom:8px;">3. 知识护城河：基于街道档案的检索增强生成</h3>
-          <p>为了解决生成式人工智能容易产生<strong>“虚假信息”（即幻觉）</strong>的问题——这在严肃的历史领域是绝对的红线——我们构建了<strong>“文化遗产检索增强生成（Cultural
-              RAG）”</strong>架构。这是一个专门为回应高知群体及考据型用户而设计的防幻觉机制。且为了保证内容的独家性与在地性，我们并未接入通用的互联网百科数据，而是与南京东路街道达成了深度数据合作。</p>
-          <p style="margin-top:12px;">当用户提问“这栋楼以前是做什么的？”时，系统执行的是一套严格的闭环程序：</p>
-          <ul class="feature-list" style="margin-top:8px;">
-            <li><strong>视觉向量化：</strong> 首先将眼镜捕捉到的建筑特征（如立面装饰、门牌号）转化为数学向量；</li>
-            <li><strong>本地私有云检索：</strong>
-              系统直接潜入南京东路街道提供的数字化历史档案库。这里存储着互联网上无法搜索到的珍贵资料，包括百年前的街道修缮记录、老字号的工商登记档案、甚至是原住民的口述历史录音；</li>
-            <li><strong>叙事合成：</strong> 最后，大模型将这些经过验证的、带有“烟火气”的权威档案作为上下文，进行口语化的叙事合成。</li>
-          </ul>
-          <p style="margin-top:12px;">这一架构确保了每一句解说不仅具有学术级的准确性，更拥有无可替代的“在地感”。我们提供的不是百度百科式的标准答案，而是这片土地深处真实的记忆回响。</p>
-        </div>
-        <div style="width:360px; flex-shrink:0;">
-          <img src="assets/images/projects/Echoes/RAGflow.jpg" alt="基于街道档案的检索增强生成"
-            style="width:100%; height:auto; display:block; border-radius:12px;">
-        </div>
-      </div>
+  <!-- System -->
+  <section class="video-block sys-block" aria-label="System design">
+    <div class="video-inner wide reveal">
+      <span class="eyebrow">System</span>
+      <h2>Look, ask, and get an answer grounded in evidence</h2>
+      <p>LLMs can make up history, so the agent answers only from a knowledge base we built. A context agent runs alongside it, carrying the visit from turn to turn.</p>
     </div>
+
+    <div class="sysmap reveal" id="sysmap" role="img" aria-label="ECHOES system: AR glasses capture the view and a voice question; Doubao multimodal recognition grounds the building; an adaptive LLM agent retrieves evidence from a self-built historical knowledge base; a concise multilingual answer appears on the AR display. A parallel context agent tracks history, language and interests.">
+      <!-- Context agent (spans recognition → output) -->
+      <div class="ctx">
+        <svg class="ctx-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h11a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H9l-4 3v-3H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M19 9h1a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1v3l-4-3h-3"/></svg>
+        <span class="ctx-name">Context agent <em>parallel</em></span>
+        <span class="ctx-desc">Tracks conversation history, language choice and visitor interests, and passes them to each turn.</span>
+      </div>
+      <span class="wire w-ctx-down" aria-hidden="true"></span>
+      <span class="wire w-ctx-up" aria-hidden="true"></span>
+
+      <!-- Capture -->
+      <div class="st st-capture">
+        <h3>Capture &amp; input</h3>
+        <p>AR glasses capture the current view and a voice question.</p>
+        <div class="cam"><img src="assets/images/projects/Echoes/web/ui-4.jpg" alt="" loading="lazy" /><i class="c tl"></i><i class="c tr"></i><i class="c bl"></i><i class="c br"></i></div>
+        <div class="voice">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+          <span><small>Voice question</small>"What is this building?"</span>
+        </div>
+      </div>
+      <span class="arrow a1" aria-hidden="true"></span>
+
+      <!-- Recognition -->
+      <div class="st st-ground">
+        <h3>Recognition &amp; grounding</h3>
+        <p>Multimodal API (Doubao) identifies the building.</p>
+        <div class="det"><img src="assets/images/projects/Echoes/web/ui-4.jpg" alt="" loading="lazy" /><span class="box"><b>Building</b></span></div>
+        <dl class="readout">
+          <div><dt>Building label</dt><dd>Building</dd></div>
+          <div><dt>Confidence score</dt><dd>0.92</dd></div>
+          <div><dt>Site ID</dt><dd>SH-00123</dd></div>
+        </dl>
+      </div>
+      <span class="arrow a2" aria-hidden="true"><small>site ID +<br>voice question</small></span>
+
+      <!-- Agent -->
+      <div class="st st-agent">
+        <h3>Adaptive LLM agent</h3>
+        <p>Evidence-grounded reasoning and response generation.</p>
+        <svg class="net" viewBox="0 0 120 120" aria-hidden="true">
+          <g class="edges"><path d="M60 14 98 36 98 84 60 106 22 84 22 36Z"/><path d="M60 14 60 106M22 36 98 84M98 36 22 84M60 60 22 36M60 60 98 36"/></g>
+          <g class="nodes"><circle cx="60" cy="14" r="5"/><circle cx="98" cy="36" r="5"/><circle cx="98" cy="84" r="5"/><circle cx="60" cy="106" r="5"/><circle cx="22" cy="84" r="5"/><circle cx="22" cy="36" r="5"/><circle cx="60" cy="60" r="7"/></g>
+        </svg>
+        <ul class="roles">
+          <li>Heritage docent initialization</li>
+          <li>Receives visitor context</li>
+          <li>Interaction-driven adaptation</li>
+        </ul>
+      </div>
+      <span class="arrow a3" aria-hidden="true"></span>
+
+      <!-- Output -->
+      <div class="st st-output">
+        <h3>AR output</h3>
+        <p>Concise multilingual response.</p>
+        <div class="hud">
+          <div class="hud-bar"><span>10:30</span><span class="bat" aria-hidden="true"></span></div>
+          <p><b>EN</b>This building was a landmark department store in early 20th-century Shanghai…</p>
+          <p lang="zh"><b>中文</b>这座建筑曾是著名百货楼栋，建于20世纪初……</p>
+        </div>
+        <ul class="actions">
+          <li>Source cue</li>
+          <li>Follow-up prompt</li>
+          <li>Next-site suggestion</li>
+        </ul>
+      </div>
+
+      <!-- Knowledge base (under the agent) -->
+      <span class="loop" aria-hidden="true"><small class="q">query knowledge base<br>(retrieve evidence)</small><small class="r">retrieved<br>evidence</small></span>
+      <div class="kb">
+        <h3>Self-built historical knowledge base</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg>Wikipedia</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9 12 4l9 5M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg>Official collections</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M6 16v-4h12v4"/></svg>Architectural reference</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h7a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H3zM21 5h-7a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h7z"/></svg>Urban narratives</li>
+        </ul>
+      </div>
+
+      <!-- Why each choice -->
+      <div class="why w1"><b>Rokid AR glasses</b><span>Visitors keep their eyes on the building, not a phone. Chosen over Meta Ray-Ban and Google Glass: built for the Chinese market, and a partner of our Digital Heritage Lab.</span></div>
+      <div class="why w2"><b>Doubao multimodal API</b><span>YOLO: our training set was too small. Gemini: needs a VPN in China and dropped on tours. Doubao: best with Chinese questions and street scenes.</span></div>
+      <div class="why w3"><b>Doubao agent + Bund-MKG</b><span>A system prompt makes it a heritage docent. Bund-MKG covers the 27 protected buildings of the Bund, with archival records, local memories, folklore and dialect.</span></div>
+      <div class="why w4"><b>Custom UI + voice</b><span>Answers short enough to read at a glance, also read aloud with subtitles. Switch language on the AR page, or just by asking.</span></div>
     </div>
   </section>
 
-  <!-- Chapter 4: Interaction Paradigm -->
-  <section class="scene-block reveal" aria-label="Interaction Paradigm">
-    <div class="wrap" style="max-width:1400px">
-      <!-- Image Moved to Chapter 5 -->
+  <main class="rails" aria-label="Case study, continued">
 
-      <div style="max-width:900px; margin:0 auto; color:var(--muted); font-size:1.1rem; line-height:1.7;">
-        <h3 style="color:var(--text); margin-bottom:16px;">即看即问：低干扰的增强现实体验</h3>
-        <p>在解决了底层的技术地基后，摆在设计团队面前的是一个更为棘手的交互难题：如何在一个仅仅 0.25 英寸的微型显示区域内，传递海量信息，同时又不遮挡用户对现实世界的凝视？我们并未激进地追求“完全无界面”的科幻感，而是确立了
-          <strong>“极简图形界面”</strong> 的设计原则。我们认为，界面不应是现实的遮挡层，而应是现实的注脚。因此，ECHOES 定义了 “即看即问” 的全新交互范式。
-        </p>
-
-        <h3 style="color:var(--text); margin:32px 0 16px;">隐式关注与多模态意图</h3>
-        <p>在传统的导览设备中，用户必须通过复杂的菜单点击来告诉机器“我想了解这个”。而在 ECHOES
-          的设计中，我们试图让这一过程回归人类的本能。我们利用眼镜内置的惯性测量单元（IMU），开发了一套<strong>“注视检测算法”</strong>：</p>
-        <ul class="feature-list">
-          <li><strong>触发逻辑：</strong> 当系统检测到用户的头部姿态在某一特定方向（如南京东路上的永安百货大楼）停留超过 0.5 秒 且保持相对静止时，系统会自动进入“预备唤醒状态”。</li>
-          <li><strong>多模态融合：</strong> 此时，用户只需轻触镜腿或直接开口提问：“这个塔是用什么材料做的？”</li>
-          <li><strong>意图对齐：</strong> 系统利用 “视觉定位” 技术，瞬间将语音指令中的代词“这个”，与视野中心捕捉到的建筑实体进行对齐。</li>
-        </ul>
-        <p style="margin-top:12px;">这种“眼动指引 + 语音确认”的多模态交互，消除了传统界面中的层级跳转，让获取信息变得像自言自语一样自然。</p>
-
-        <h3 style="color:var(--text); margin:32px 0 16px;">视听双通道：环境式字幕流</h3>
-        <p>
-          在南京东路步行街的实地测试中，我们发现了一个无法忽视的客观干扰：环境噪音。熙熙攘攘的人声和车流声，往往会让骨传导耳机的音频效果大打折扣。同时，对于像陈工（Arthur）这样可能存在听力衰退的年长用户，纯音频反馈极其容易造成信息遗漏。
-        </p>
-        <p>为此，我们设计了
-          <strong>“弹幕式”的视觉反馈机制</strong>，作为音频的必要补充。人工智能生成的语音讲解，会被实时转录为文字，以半透明滚动字幕的形式出现在眼镜视场的最底端边缘。这一看似简单的设计，背后其实蕴含着深层的认知心理学考量：
-        </p>
-        <ul class="feature-list">
-          <li><strong>周边视觉的应用：</strong> 我们特意将字幕区设定在视线下方 15°
-            的非聚焦区域（周边视觉区）。这确保了用户视野中心的古建筑始终是清晰、完整的，文字流仅作为一种“环境信息”存在，只有当用户有意识地下瞥时，它才会进入注意力的中心。</li>
-          <li><strong>双重编码的强化：</strong>
-            心理学的双重编码理论指出，同时接受听觉和视觉信息能显著提升记忆留存率。对于总是担心“听漏了”的二胎妈妈莉莉，底部的文字流提供了一种无需回放的<strong>“安全感”</strong>。</li>
-          <li><strong>无障碍的延伸：</strong> 这一设计意外地解决了听障人士无法使用语音导览的痛点，体现了包容性设计的价值。</li>
-        </ul>
-
-        <h3 style="color:var(--text); margin:32px 0 16px;">动态人格生成引擎</h3>
-        <p>交互不仅是“怎么说”，更是“谁在说”。为了解决内容的“僵化”问题，我们基于大模型构建了 “动态人格生成引擎”。基于前文所述的南京东路街道独家档案，系统会根据用户选择的模式，实时调整叙事的口吻与视角：</p>
-        <ul class="feature-list">
-          <li><strong>对于佐伊（体验派）：</strong> 人工智能会扮演一位“老住户”。它不会枯燥地罗列年份，而是用第一人称讲述：“我记得 1930 年这里发生过一场大火，当时我就住在对面...”
-            这种叙事极大地满足了年轻人对<strong>“故事感”</strong>的渴求。</li>
-          <li><strong>对于陈工（考据派）：</strong> 人工智能则瞬间切换为一位“建筑史学家”。它会严谨地分析：“这是典型的装饰艺术风格（Art Deco），请注意看窗棂的几何线条与立面的垂直分割...”
-          </li>
-        </ul>
-        <p style="margin-top:12px;">这种动态的人格切换，配合底部的实时字幕，将原本冰冷的数据库，转化为了一个个有温度、有性格的<strong>“数字原住民”</strong>，真正实现了与用户的深度共情。
-        </p>
+    <!-- Publication -->
+    <section class="stage reveal" aria-labelledby="h-pub">
+      <div class="text">
+        <h2 id="h-pub">Presented at UbiComp / ISWC 2026</h2>
+        <p><em>ECHOES: An Adaptive LLM-Powered AR Glasses Docent for Evidence-Grounded Urban Heritage Interpretation.</em> <a class="pill" href="https://arxiv.org/abs/2610.34865" target="_blank" rel="noopener">arXiv:2610.34865 ↗</a></p>
+        <p class="muted">Poster and live demo. The demonstration walks East Nanjing Road and the Bund: activate, ground the site, ask a question, extend the route, and adapt the follow-up.</p>
+        <p class="status">A field study on the Bund is ongoing.</p>
       </div>
-    </div>
-  </section>
+      <div class="media gallery two" style="grid-template-rows:auto auto">
+        <figure class="tall"><img loading="lazy" src="assets/images/projects/Echoes/web/poster.jpg" alt="The ECHOES poster" /></figure>
+        <figure><img loading="lazy" src="assets/images/projects/Echoes/web/booth-1.jpg" alt="Standing beside the ECHOES poster and demo table" /></figure>
+        <figure><img loading="lazy" src="assets/images/projects/Echoes/web/booth-2.jpg" alt="Explaining ECHOES to a visitor" /></figure>
+      </div>
+    </section>
 
-  <!-- Pull Quote 2 -->
-  <div class="quote-block reveal">
-    <div class="quote-inner">
-      <blockquote>"不再是戴在脸上的手机，而是不仅能看、更能理解的第二双眼睛。"</blockquote>
-    </div>
+    <section class="stage single reveal" aria-label="Acknowledgements">
+      <div class="text">
+        <p class="muted" style="max-width:72ch">Supported by the Shanghai Pujiang Talents Program (25PJA109), the NYU Shanghai Center for Data Science, Digital Heritage Lab and BiAlign Lab. Thanks to Rokid for hardware support, and to the Huangpu District Government and East Nanjing Road Subdistrict for site access and archives.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="next">
+    <a href="VoiceGuard.html"><span><span class="lede">Next project</span><strong>VoiceGuard</strong></span><span class="arrow" aria-hidden="true">→</span></a>
   </div>
-
-  <!-- Chapter 5: Pivot -->
-  <section class="section" aria-label="Pivot">
-    <div class="wrap reveal">
-      <h2 style="margin:0 0 16px;font-weight:900;letter-spacing:-.01em;font-size:clamp(26px,4vw,42px)">战略转型与商业路径的闭环</h2>
-      <p style="max-width:800px;color:var(--muted);font-size:clamp(16px,1.4vw,20px);line-height:1.7;margin:0 0 32px">
-        在项目的最小可行性产品定义阶段，我们经历了一次至关重要的战略转型。这一转型不仅解决了硬件性能的物理瓶颈，更为 ECHOES 赋予了可持续的商业生命力。
-      </p>
-
-      <div style="display:flex; flex-direction:column; gap:60px;">
-
-        <!-- Row 1: Vision on Demand -->
-        <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:40px; align-items:center;">
-          <div style="display:flex; flex-direction:column;">
-            <h3 style="color:var(--accent-warm);">从“实时视觉流”到“按需视觉”</h3>
-            <p style="color:var(--muted);line-height:1.6;">
-              从“实时视觉流”到“按需视觉”的功耗权衡：在最初的交互设想中，我们追求的是一种全天候、无感知的实时视觉分析系统。然而，在南京东路街道进行的实地测试中，技术现实给了我们沉重的打击：
-            </p>
-            <ul class="feature-list" style="margin-top:10px;">
-              <li><strong>续航瓶颈：</strong> 在连续开启摄像头并进行云端大模型分析的状态下，现有眼镜硬件的电池仅能支撑约 40 分钟，且设备发热极高，难以满足游客长达数小时的漫步需求。</li>
-              <li><strong>成本冗余：</strong> 每一秒视频流的实时处理都意味着高昂的计算成本，这对于大规模推广是极大的负担。</li>
-            </ul>
-            <p style="color:var(--muted);line-height:1.6; margin-top:10px;">
-              面对这一挑战，我主导了系统的核心逻辑转型，提出了 <strong>“音频优先，视觉按需”</strong>
-              的分层触发机制：系统默认处于静默状态，仅依靠低功耗的地理位置信号触发环境音景；只有当用户主动通过语音提问或轻触镜腿时，摄像头才会被激活并抓取单帧高质量图像进行视觉模型分析。这一策略将设备续航从不到 1
-              小时大幅延长至
-              4 小时以上，同时将计算成本降低了 70%，在保留了智能交互核心体验的同时，确保了项目落地的可行性。
-            </p>
-          </div>
-          <figure
-            style="border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); aspect-ratio:16/9; margin:0;">
-            <img src="assets/images/projects/Echoes/vlm识图演示.png" alt="VLM 演示"
-              style="width:100%; height:100%; object-fit:cover; display:block;">
-          </figure>
-        </div>
-
-        <!-- Row 2: Dual-Track Strategy -->
-        <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:40px; align-items:center;">
-          <div style="display:flex; flex-direction:column;">
-            <h3 style="color:var(--accent);">“软件订阅 + 硬件租赁”的双轨制服务模型</h3>
-            <p style="color:var(--muted);line-height:1.6; margin-bottom:20px;">
-              针对前文调研中发现的“硬件持有者与内容需求方”之间的代际断层，我们联合南京东路街道和 Rokid 团队，确立了 <strong>“软件即服务 + 硬件即服务”</strong>
-              的混合双轨制策略，旨在实现真正的“技术普惠”。
-            </p>
-            <p style="color:var(--muted);line-height:1.6; margin-bottom:20px;">
-              <strong>针对科技拥趸的“自带设备”模式：</strong> 对于年轻的 Z 世代用户，他们往往已经是增强现实设备的早期采用者。我们提供的是一种纯软件订阅服务。用户无需额外购买或租赁硬件，只需在应用商店下载
-              ECHOES 插件，即可直接在私有设备上启动导览，通过订阅制或单次解锁南京东路街道的独家历史档案。这为项目提供了极具潜力的未来增长空间。
-            </p>
-            <p style="color:var(--muted);line-height:1.6; margin-bottom:20px;">
-              <strong>针对银发群体的“硬件租赁”模式：</strong>
-              对于那些最渴望深度历史知识、但并不拥有昂贵设备的年长游客，我们利用南京东路街道现有的公共服务中心与社区站点作为物理触点，推出硬件即服务模式。游客只需在服务台凭证件进行低门槛租赁，即可领到一套预装好软件、并配置好离线数据库的智能眼镜。这种模式彻底消除了老年用户在安装、配网和交互学习上的障碍，真正做到了“戴上即看”。
-            </p>
-            <p style="color:var(--muted);line-height:1.6; margin-bottom:20px;">
-              <strong>商业模式的闭环：不仅是产品，更是公共服务</strong><br>通过这一双轨制设计，ECHOES 成功地将一个高门槛的科技产品，转化为了一套多方共赢的城市更新公共服务方案：
-            <ul class="feature-list">
-              <li>对街道而言： 激活了南京东路深厚的历史文化底蕴，提升了公共服务的数字化水平。</li>
-              <li>对 Rokid 而言： 获得了一个极具代表性的城市级应用场景，完成了从“极客玩具”到“文化工具”的品牌升级。</li>
-              <li>对用户而言： 无论年龄与设备持有状况，每一位走进这片土地的游客，都能获得平等的、无障碍的数字化历史体验。</li>
-            </ul>
-            </p>
-          </div>
-          <figure
-            style="border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); aspect-ratio:16/9; margin:0;">
-            <img src="assets/images/projects/Echoes/博物馆使用场景矩形.png" alt="HaaS 场景"
-              style="width:100%; height:100%; object-fit:cover; display:block;">
-          </figure>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Chapter 6: Impact & Future -->
-  <section class="section" aria-label="Impact">
-    <div class="wrap reveal">
-      <h2 style="margin:0 0 16px;font-weight:900;letter-spacing:-.01em;font-size:clamp(26px,4vw,42px)">社会影响力、伦理防线与未来愿景
-      </h2>
-      <p style="max-width:800px;color:var(--muted);font-size:clamp(16px,1.4vw,20px);line-height:1.7;margin:0 0 40px">
-        ECHOES 不仅仅是一款技术驱动的硬件产品，它是一次关于人类认知能力的实验，也是一次在数字人文领域进行的深度实践。在项目接近尾声时，我们跳出了功能与逻辑的框架，开始思考技术在更广阔的社会维度下所扮演的角色。
-      </p>
-
-      <div class="roadmap">
-        <div class="roadmap-item">
-          <div class="roadmap-phase">Impact</div>
-          <div class="roadmap-content">
-            <h4>弥合数字鸿沟：包容性设计的意外收获</h4>
-            <p>通过与南京东路街道合作的“硬件租赁”模式，ECHOES
-              意外地成为了一款极佳的无障碍工具。在测试过程中，我们发现这种“张口即问、即看即得”的交互方式，彻底消除了老年群体在使用智能手机时的心理畏难情绪。对于他们而言，不再需要学习复杂的界面层级，也不再需要忍受小屏幕对视力的摧残。
-            </p>
-            <p style="margin-top:10px;">更令人欣慰的是，这种设计展现出了服务于视障群体的潜力。对于视力受损的游客，ECHOES
-              可以通过骨传导耳机告诉他们：“你的正前方两米处是著名的历史建筑立面。”这种从“增强视觉”到“视觉延伸”的转变，真正实现了技术普惠的愿景——让每个人，无论生理机能如何，都能平等地拥有感受城市脉络的权利。</p>
-          </div>
-        </div>
-
-        <div class="roadmap-item">
-          <div class="roadmap-phase">Ethics</div>
-          <div class="roadmap-content">
-            <h4>真实性底线：应对人工智能的“幻觉”伦理</h4>
-            <p>在历史与文化遗产领域，真实性是不可逾越的底线。作为设计师，我们深知生成式人工智能存在的“幻觉”问题可能带来的负面影响。为此，我们在系统逻辑中植入了严格的伦理防线：</p>
-            <ul class="feature-list" style="margin-top:10px;">
-              <li><strong>显式表达不确定性：</strong>
-                当检索到的南京东路街道档案中存在文献冲突，或者人工智能对某个细节无法百分之百确定时，系统被设计为必须诚实地表达不确定性，例如：“关于这扇窗户的材质，目前的历史档案中有两种记载……”</li>
-              <li><strong>拒绝编造：</strong>
-                我们宁愿让系统回答“目前数据库中暂无此项记载”，也绝不允许其为了叙事的流畅性而编造虚假的历史细节。这种设计决策不仅是技术上的约束，更是我们对历史、对这片土地记忆的最高敬畏。</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="roadmap-item">
-          <div class="roadmap-phase">Future</div>
-          <div class="roadmap-content">
-            <h4>未来回响：从被动问答走向主动代理</h4>
-            <p>ECHOES 的终点绝不仅限于此。展望未来，我们的演进方向将是从“被动响应”走向<strong>“主动代理”</strong>。</p>
-            <p style="margin-top:10px;">
-              在下一阶段的研发规划中，我们计划引入多模态长期记忆功能。眼镜将不再只是单次问答的工具，而是能够根据用户的游览轨迹与视觉历史，主动建议游览路线。例如，当系统感知到你连续关注了三栋装饰艺术风格的建筑时，它会在你路过下一个街角前轻声提醒：“你似乎对这种风格感兴趣，右转的弄堂里隐藏着一件你不能错过的作品。”
-            </p>
-            <p style="margin-top:10px;">此外，我们还将探索基于超宽带技术的高精度室内定位，以实现在复杂历史建筑内部的物体级识别，将“场所精神”的重塑从街道延伸至建筑的每一寸内部空间。</p>
-          </div>
-        </div>
-      </div>
-
-      <p
-        style="margin-top:40px; color:var(--muted); font-size:1.1rem; text-align:left; max-width:800px; margin-left:auto; margin-right:auto;">
-        正如项目代号 "ECHOES"（回响）所寓意的，
-      </p>
-
-      <div style="max-width:900px; margin:40px auto; text-align:center;">
-        <span
-          style="font-size:clamp(22px, 3vw, 32px); font-weight:900; color:var(--text); line-height:1.4; display:block;">
-          我们希望通过科技，<br class="mobile-break">捕捉并放大那些消散在历史长河中微弱的声息。
-        </span>
-      </div>
-
-      <p
-        style="color:var(--muted); font-size:1.1rem; text-align:left; max-width:800px; margin-left:auto; margin-right:auto;">
-        在这一场关于南京东路街道的叙事实验中，我深刻体会到：<strong>最好的科技，是让你感受不到科技的存在，却能让你更清晰地看清这个世界。</strong>
-        当我们终于可以放下手机，抬起头，通过一副轻便的眼镜与百年前的建筑对话时，技术便完成了它最伟大的使命——回归人类感官的延伸，而非束缚。
-      </p>
-    </div>
-  </section>
-
-  <!-- Acknowledgements -->
-  <section class="section" aria-label="Acknowledgements" style="padding-top:0; padding-bottom:80px;">
-    <div class="wrap reveal">
-      <h2
-        style="margin:0 0 40px; font-weight:900; letter-spacing:-.01em; font-size:clamp(24px,3vw,32px); text-align:center;">
-        鸣谢与致意 Acknowledgements
-      </h2>
-      <p style="text-align:center; max-width:800px; margin:0 auto 40px; color:var(--muted);">
-        ECHOES 项目从最初的个人洞察到最终的原型落地，离不开产学研各界的鼎力协作。<br>
-        我们首先向 <strong>上海纽约大学 及 文化遗产数字化实验室</strong> 致以最深切的谢意。实验室提供的数字人文研究框架与严谨的学术指导，为本项目奠定了坚实的理论基石。特别感谢 <strong>Rokid
-          团队</strong> 在硬件开发与技术调试阶段提供的全方位支持，其开放的生态让“隐形科技”的构想拥有了极致轻量化的载体。<br>
-        同时，我们诚挚感谢 <strong>上海市黄浦区人民政府 以及 南京东路街道</strong>
-        为本项目提供的场景开放与独家历史档案支持。正是得益于这种对城市数字化转型的远见与包容，我们的设计才得以走出实验室，在最真实的城市肌理中寻回那份久违的记忆回响。
-      </p>
-      <div style="display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:40px 60px;">
-        <img src="assets/images/general/NYUSH_logo.png" alt="NYU Shanghai"
-          style="height:60px; width:auto; opacity:0.9;">
-        <img src="assets/images/general/DHL Logo（Outlined) (1).avif" alt="Digital Heritage Lab"
-          style="height:60px; width:auto; opacity:0.9;">
-        <img src="assets/images/general/rokid_logo-black.svg" alt="Rokid"
-          style="height:50px; width:auto; opacity:0.9; filter: invert(1);">
-        <img src="assets/images/general/黄浦区人民政府logo.png" alt="Huangpu District Government"
-          style="height:60px; width:auto; opacity:0.9;">
-      </div>
-    </div>
-  </section>
 
   <footer class="site-footer" aria-label="Footer">
     <div class="footer-inner">
-      <a class="logo" href="index.html#top" aria-label="Home"><img class="logo-img" src="assets/images/general/logo.png"
-          alt="Logo" /></a>
+      <a class="logo" href="index.html#top" aria-label="Home"><img class="logo-img" src="assets/images/general/logo.png" alt="Logo" /></a>
       <div class="cols">
         <div class="col">
           <div class="col-title">Sitemap</div>
           <ul>
             <li><a href="index.html#top">Home</a></li>
             <li><a href="projects.html">Projects</a></li>
+            <li><a href="publications.html">Publications</a></li>
             <li><a href="about.html">About</a></li>
-            <li><a href="mailto:hello@example.com">Contact</a></li>
+            <li><a href="mailto:bx2181@nyu.edu">Contact</a></li>
           </ul>
         </div>
         <div class="col social-col">
           <div class="icons-vert">
-            <a class="icon-link" href="https://www.linkedin.com/in/evan-xiao-4a6060309/" aria-label="LinkedIn">
-              <img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/linkedin.png" alt="LinkedIn">
-            </a>
-            <a class="icon-link" href="https://www.instagram.com/evan_nn__" aria-label="Instagram">
-              <img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/instagram-new.png" alt="Instagram">
-            </a>
+            <a class="icon-link" href="https://www.linkedin.com/in/evan-xiao-4a6060309/" aria-label="LinkedIn"><img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/linkedin.png" alt="LinkedIn"></a>
+            <a class="icon-link" href="https://www.instagram.com/evan_nn__" aria-label="Instagram"><img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/instagram-new.png" alt="Instagram"></a>
           </div>
         </div>
       </div>
@@ -1693,35 +330,8 @@
     <div class="legal">© <span id="year"></span> Evan Xiao</div>
   </footer>
 
-  <script>
-    // Footer year
-    const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
-
-    // Reveal animations
-    const reveals = [...document.querySelectorAll('.reveal')];
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: .15, rootMargin: '0px 0px -8% 0px' });
-    reveals.forEach(el => io.observe(el));
-
-    // Header transparency toggled by hero visibility
-    const header = document.querySelector('.site-header');
-    const hero = document.querySelector('.hero-video');
-    if (header && hero) {
-      const heroIO = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) { header.classList.add('transparent'); }
-          else { header.classList.remove('transparent'); }
-        });
-      }, { threshold: 0.35 });
-      heroIO.observe(hero);
-    }
-  </script>
+  <script src="js/case.js"></script>
+  <script src="js/echoes.js"></script>
 </body>
 
 </html>

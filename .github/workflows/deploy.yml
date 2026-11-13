@@ -1,0 +1,56 @@
+name: Deploy portfolio
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: portfolio-production
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      DEPLOY_HOST: 111.229.247.82
+      DEPLOY_USER: root
+      DEPLOY_PATH: /www/wwwroot/evan-xiao.com
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          test -n "$SSH_KEY"
+          test -n "$KNOWN_HOSTS"
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/id_rsa
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_rsa ~/.ssh/known_hosts
+      - name: Prepare website files
+        run: |
+          mkdir -p /tmp/portfolio-site
+          find . -maxdepth 1 -type f \( -name '*.html' -o -name 'robots.txt' -o -name 'sitemap.xml' -o -name 'favicon.ico' \) -exec cp {} /tmp/portfolio-site/ \;
+          for dir in assets css js data; do
+            if [ -d "$dir" ]; then
+              rsync -r --exclude='.DS_Store' --exclude='*.pem' --exclude='*.key' --exclude='.env*' "$dir" /tmp/portfolio-site/
+            fi
+          done
+          test -s /tmp/portfolio-site/index.html
+      - name: Back up current website
+        run: |
+          ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$DEPLOY_USER@$DEPLOY_HOST" "mkdir -p /www/backup/portfolio && tar -czf /www/backup/portfolio/site-\$(date +%Y%m%d-%H%M%S)-${GITHUB_RUN_ID}.tar.gz -C '$DEPLOY_PATH' --exclude='./f1' --exclude='./f1-backup-*' ."
+      - name: Upload website
+        run: |
+          ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$DEPLOY_USER@$DEPLOY_HOST" "test -d '$DEPLOY_PATH' && command -v rsync"
+          rsync -rz --itemize-changes --chmod=D755,F644 -e 'ssh -o BatchMode=yes -o StrictHostKeyChecking=yes' /tmp/portfolio-site/ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/"
+      - name: Verify uploaded homepage
+        run: |
+          local_hash=$(sha256sum /tmp/portfolio-site/index.html | cut -d ' ' -f 1)
+          remote_hash=$(ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$DEPLOY_USER@$DEPLOY_HOST" "sha256sum '$DEPLOY_PATH/index.html'" | cut -d ' ' -f 1)
+          test "$local_hash" = "$remote_hash"
+      - name: Remove SSH key
+        if: always()
+        run: rm -f ~/.ssh/id_rsa

@@ -1,0 +1,187 @@
+/* ==========================================================
+   Case study pages — mirrors Pulse.html (header, hero, mast,
+   rails/stage, "Watch" block, blur reveal) and adds the shared
+   interactive pieces: tabs, steppers, bars, counters, galleries.
+   ========================================================== */
+:root {
+  --bg: #0b0e11; --text: #e8ecef; --muted: #c8ced4; --dim: rgba(232, 236, 239, .55); --brand: #fff;
+  --glass: rgba(10, 12, 15, .55); --hairline: rgba(255, 255, 255, .08); --line: rgba(255, 255, 255, .14);
+  --g: 28px; --header-h: 72px; --header-blur: 10px; --maxw: 1200px;
+  --accent: #fff;
+  --ease: cubic-bezier(.2, .7, 0, 1);
+}
+* { box-sizing: border-box }
+html, body { height: 100% }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  -webkit-font-smoothing: antialiased; line-height: 1.35; overflow-x: hidden
+}
+img, video { display: block; max-width: 100% }
+[hidden]:not(.swap > [data-pane]) { display: none !important }
+button { font: inherit; color: inherit }
+
+/* ---------- Header (Pulse) ---------- */
+.site-header { position: fixed; inset: 0 0 auto 0; height: var(--header-h); z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 24px; background: var(--glass); backdrop-filter: saturate(130%) blur(var(--header-blur)); box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset; transition: background .25s, box-shadow .25s, backdrop-filter .25s }
+.site-header.transparent { background: transparent; box-shadow: none; backdrop-filter: none }
+.logo { display: inline-flex; align-items: center; text-decoration: none }
+.logo-img { height: 30px; width: auto; display: block }
+nav a { color: #fff; text-decoration: none; opacity: .92; font-weight: 800; letter-spacing: .12em; font-size: .78rem; margin: 0 12px; text-transform: uppercase }
+nav a:hover { opacity: 1 }
+.btn { appearance: none; border: 1px solid rgba(255, 255, 255, .28); background: rgba(255, 255, 255, .06); color: #fff; padding: 10px 14px; border-radius: 999px; font-weight: 700; letter-spacing: .02em; text-decoration: none }
+
+/* ---------- Hero (Pulse) ---------- */
+.hero-video { position: relative; height: 100vh; max-height: 860px; width: 100%; overflow: hidden; background: #000 }
+.hero-video video, .hero-video img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center }
+.hero-video::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(9, 11, 18, .18) 0, rgba(9, 11, 18, .55) 70%, rgba(9, 11, 18, 1) 100%); pointer-events: none }
+
+/* ---------- Mast (Pulse) ---------- */
+.section { padding: 120px 0 }
+.pad-top { padding-top: calc(var(--header-h) + 32px) }
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px }
+.mast-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start }
+.mast h1 { margin: 0 0 10px; font-weight: 900; letter-spacing: -.01em; font-size: clamp(30px, 5vw, 58px) }
+.mast p.sub { margin: 0; color: #e9eff6; font-family: "Playfair Display", Georgia, serif; font-style: italic; font-size: clamp(16px, 1.6vw, 24px) }
+.facts { margin-top: 18px; border-top: 1px solid var(--hairline); padding-top: 14px }
+.facts dl { margin: 0; display: grid; grid-template-columns: 120px 1fr; row-gap: 10px; column-gap: 12px }
+.facts dt { opacity: .75; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; font-size: .78rem }
+.facts dd { margin: 0 }
+.col h3 { margin: 0 0 12px; font-weight: 900; letter-spacing: -.01em; font-size: clamp(18px, 2.4vw, 24px) }
+.col p { margin: 0 0 14px; line-height: 1.5 }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px }
+
+/* ---------- "Watch"-style centred block (Pulse) ---------- */
+.video-block { padding: 100px 24px; background: var(--bg) }
+.video-inner { max-width: 960px; margin: 0 auto; text-align: center }
+.video-inner.wide { max-width: var(--maxw) }
+.eyebrow { display: inline-block; margin-bottom: 12px; letter-spacing: .38em; text-transform: uppercase; font-size: .78rem; font-weight: 800; color: rgba(232, 236, 239, .7) }
+.video-inner h2 { margin: 0; font-weight: 900; letter-spacing: -.01em; font-size: clamp(26px, 4vw, 42px) }
+.video-inner > p { margin: 12px auto 0; max-width: 60ch; color: var(--muted); line-height: 1.5 }
+.video-frame { margin-top: 32px; border-radius: 26px; overflow: hidden; box-shadow: 0 40px 120px rgba(0, 0, 0, .55); border: 1px solid rgba(255, 255, 255, .08); background: #000 }
+.video-frame video { width: 100%; display: block }
+.panel { margin-top: 36px; text-align: left }
+
+/* ---------- Rails / stage (Pulse) ---------- */
+.rails { display: grid; grid-template-columns: 1fr 4fr 1fr; width: 100% }
+.stage { grid-column: 2; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--g); align-items: center; margin: 56px 0 }
+.stage.single { grid-template-columns: minmax(0, 1fr) }
+.stage.top { align-items: start }
+.stage .text h2 { margin: 0 0 10px; font-weight: 900; letter-spacing: -.01em; font-size: clamp(20px, 3vw, 34px) }
+.stage .text p { margin: 0 0 12px; line-height: 1.5 }
+.stage .text ul { margin: .2rem 0 0 1.2rem; line-height: 1.6 }
+.stage .text li { margin: 6px 0 }
+.muted { color: var(--muted) }
+.media img, .media video { width: 100%; height: auto; border-radius: 16px; border: 1px solid rgba(255, 255, 255, .08); box-shadow: 0 18px 54px rgba(0, 0, 0, .32); background: rgba(255, 255, 255, .02) }
+figure { margin: 0 }
+figcaption { font-size: .9rem; color: var(--muted); margin-top: 6px }
+
+/* ---------- Text controls (no boxes) ---------- */
+/* .pill = inline text control: dim until hovered / selected, then white with a hairline underline. */
+.pill { all: unset; cursor: pointer; display: inline-block; padding: 4px 0; color: var(--dim); font-weight: 700; font-size: .92rem; letter-spacing: .01em; text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: color .3s, background-size .45s var(--ease) }
+.pill:hover { color: var(--text) }
+a.pill { color: var(--text); background-size: 100% 1px }
+a.pill:hover { background-size: 0 1px }
+.pill[aria-pressed="true"], .pill[aria-selected="true"] { color: #fff; background-size: 100% 1px }
+/* keyboard focus shows as a heavier underline, not a box */
+.pill:focus-visible { outline: none; color: #fff; background-size: 100% 2px }
+.tab:focus-visible { outline: none; color: #fff; text-decoration: underline; text-underline-offset: 6px }
+.links { gap: 10px 28px }
+
+/* ---------- Tabs ---------- */
+.tabs { display: flex; flex-wrap: wrap; gap: 6px 28px; margin: 0 0 26px }
+.tablist-v { display: grid; gap: 0; margin-top: 8px }
+.tab { all: unset; cursor: pointer; display: block; padding: 11px 0; color: var(--dim); font-weight: 700; transition: color .3s }
+.tab small { display: block; font-weight: 400; margin-top: 4px; color: var(--muted); font-size: .88rem; line-height: 1.5; max-height: 0; overflow: hidden; opacity: 0; transition: max-height .5s var(--ease), opacity .4s }
+.tab:hover { color: var(--text) }
+.tab[aria-selected="true"] { color: #fff }
+.tab[aria-selected="true"] small { max-height: 8em; opacity: 1 }
+.swap { position: relative }
+.swap > [data-pane] { transition: opacity .6s ease, transform .7s var(--ease) }
+.swap > [data-pane][hidden] { display: block; position: absolute; inset: 0; opacity: 0; transform: translateY(8px); pointer-events: none; visibility: hidden }
+
+/* ---------- Stepper progress (one hairline) ---------- */
+.progress { display: flex; gap: 4px; margin-top: 20px }
+.progress span { flex: 1; height: 1px; background: rgba(255, 255, 255, .12); overflow: hidden }
+.progress span i { display: block; height: 100%; width: 0; background: rgba(255, 255, 255, .8) }
+.progress span.done i { width: 100% }
+.progress span.on i { animation: fill var(--dur, 4s) linear forwards }
+@keyframes fill { to { width: 100% } }
+
+/* ---------- Animated bars & counters ---------- */
+.bars { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none }
+.bar { display: grid; grid-template-columns: 1fr auto; gap: 6px 14px; font-size: .92rem }
+.bar b { font-weight: 900; font-variant-numeric: tabular-nums }
+.bar .track { grid-column: 1 / -1; height: 1px; background: rgba(255, 255, 255, .12); overflow: hidden }
+.bar .track i { display: block; height: 100%; width: 0; background: #fff; transition: width 1.4s var(--ease) }
+.in .bar .track i, .bar.in .track i { width: var(--v) }
+.figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 24px; margin: 28px 0 0; text-align: left }
+.figure b { display: block; font-weight: 900; letter-spacing: -.02em; font-size: clamp(34px, 4.4vw, 56px); line-height: 1; font-variant-numeric: tabular-nums }
+.figure span { display: block; margin-top: 8px; color: var(--muted); font-size: .9rem; line-height: 1.45 }
+
+/* ---------- Quote (Playfair, as on home) ---------- */
+.quote { margin: 0; font-family: "Playfair Display", Georgia, serif; font-style: italic; font-weight: 400; font-size: clamp(20px, 2.4vw, 30px); line-height: 1.32 }
+.quote-by { margin-top: 12px; font-size: .9rem; color: var(--muted) }
+
+/* ---------- Gallery ---------- */
+.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px }
+.gallery.two { grid-template-columns: 2fr 1fr }
+.gallery img { width: 100%; height: 100%; object-fit: cover; border-radius: 16px; border: 1px solid rgba(255, 255, 255, .08); box-shadow: 0 12px 36px rgba(0, 0, 0, .35) }
+.gallery .tall { grid-row: span 2 }
+
+/* ---------- Status line ---------- */
+.status { font-family: "Playfair Display", Georgia, serif; font-style: italic; color: var(--muted) }
+
+/* ---------- Next project ---------- */
+.next { border-top: 1px solid var(--hairline); margin-top: 40px }
+.next a { display: flex; justify-content: space-between; align-items: center; gap: 24px; max-width: var(--maxw); margin: 0 auto; padding: 56px 24px; text-decoration: none; color: inherit }
+.next .lede { display: block; font-family: "Playfair Display", Georgia, serif; font-style: italic; font-size: clamp(16px, 1.6vw, 22px); color: var(--muted) }
+.next strong { display: block; font-weight: 900; letter-spacing: -.01em; font-size: clamp(32px, 5vw, 58px); line-height: 1.05 }
+.next .arrow { font-size: clamp(28px, 4vw, 48px); transition: transform .35s var(--ease) }
+.next a:hover .arrow { transform: translateX(8px) }
+
+/* ---------- Reveal (Pulse) ---------- */
+.reveal { opacity: 0; transform: translateY(40px); filter: blur(6px); transition: opacity 1s ease, transform 1s var(--ease), filter 1s ease; will-change: opacity, transform, filter }
+.reveal.in { opacity: 1; transform: none; filter: none }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; filter: none; transition: none }
+  .progress span.on i { animation: none; width: 100% }
+}
+
+/* ---------- Footer (Pulse) ---------- */
+.site-footer { margin-top: 0; background: #0b0d0f; border-top: 1px solid var(--hairline); position: relative }
+.site-footer::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 80px; background: radial-gradient(60% 100% at 50% 0%, rgba(255, 255, 255, .06), rgba(255, 255, 255, 0)) }
+.footer-inner { max-width: var(--maxw); margin: 0 auto; padding: 36px 24px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; gap: 36px }
+.site-footer .logo-img { height: 44px }
+.cols { display: flex; gap: 64px; grid-column: 9 / span 4; justify-self: start; align-items: center }
+.col-title { font-size: .85rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; opacity: .8; margin-bottom: 10px }
+.cols ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px }
+.cols a { color: var(--text); text-decoration: none }
+.cols a:hover { text-decoration: underline }
+.icons-vert { display: flex; flex-direction: column; gap: 14px; align-items: flex-start }
+.icon-img { width: 40px; height: 40px; display: block; opacity: .92 }
+.legal { max-width: var(--maxw); margin: 0 auto; padding: 0 24px 24px; font-size: .85rem; color: var(--muted) }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  /* a full-height hero crops landscape media to a sliver on phones */
+  .hero-video { height: auto; max-height: none; aspect-ratio: 3 / 2 }
+  .mast-grid { grid-template-columns: 1fr }
+  .rails { grid-template-columns: 1fr }
+  .stage { grid-column: 1; margin: 42px 0; grid-template-columns: 1fr; padding: 0 20px }
+  .gallery, .gallery.two { grid-template-columns: 1fr 1fr }
+  .cols { grid-column: 1 / -1; justify-self: start; gap: 32px }
+  .footer-inner { grid-template-columns: 1fr }
+}
+@media (max-width: 600px) {
+  .site-header { padding: 0 14px }
+  nav a { margin: 0 6px; font-size: .68rem }
+  .section { padding: 80px 0 }
+  .video-block { padding: 72px 20px }
+  .facts dl { grid-template-columns: 96px 1fr }
+  .gallery, .gallery.two { grid-template-columns: 1fr }
+}
+@media (max-width: 420px) { nav a:not(.btn) { display: none } }
+
+/* Component lists sit flush with the text column (Pulse's bullet indent is for prose lists only). */
+.stage .text ul[class] { margin-left: 0; padding-left: 0; list-style: none }
+.stage .text ul[class] li { margin: 0 }

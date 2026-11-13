@@ -4,9 +4,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Evan Xiao — Home</title>
+  <title>Evan Xiao — HCI Researcher</title>
   <meta name="description"
-    content="Replica demo of a portfolio landing page with full-screen background video, left-aligned hero text, and transparent header." />
+    content="Evan Xiao is an HCI researcher at NYU Shanghai. Selected work: ECHOES (UbiComp / ISWC 2026), VoiceGuard, Yóushén, and robotics and light installations." />
   <link rel="icon" type="image/png" href="assets/images/general/logo.png" />
 
 
@@ -176,7 +176,7 @@
       object-fit: cover;
       object-position: center;
       filter: saturate(.9) contrast(1.1) brightness(.86);
-      transform: scale(1.8);
+      transform: scale(1.36);
       transform-origin: center;
       pointer-events: none
     }
@@ -798,6 +798,82 @@
       }
     }
 
+    /* About + Publications, directly under the hero (rows come from css/entries.css) */
+    .home-about {
+      padding-top: 72px;
+      padding-bottom: 32px
+    }
+
+    .home-about-grid {
+      max-width: var(--maxw);
+      margin: 28px auto 0;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 48px;
+      align-items: start
+    }
+
+    .home-about-text p {
+      margin: 0 0 18px;
+      max-width: 62ch;
+      font-size: clamp(16px, 1.35vw, 19px);
+      line-height: 1.6;
+      color: var(--muted)
+    }
+
+    .home-about-text p:first-child {
+      color: var(--text)
+    }
+
+    .home-about-text .home-about-links {
+      display: flex;
+      gap: 6px 24px;
+      margin-top: 26px;
+      font-size: .95rem;
+      font-weight: 700
+    }
+
+    .home-about-links a {
+      color: #fff;
+      text-decoration: none;
+      padding-bottom: 2px;
+      background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
+      transition: background-size .45s cubic-bezier(.2, .7, 0, 1)
+    }
+
+    .home-about-links a:hover {
+      background-size: 0 1px
+    }
+
+    .home-about-photo img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      object-position: 46% 30%;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, .06)
+    }
+
+    @media (max-width:900px) {
+      .home-about-grid {
+        grid-template-columns: 1fr;
+        gap: 28px
+      }
+    }
+
+    .pubs {
+      padding-top: 40px;
+      padding-bottom: 8px
+    }
+
+    .pubs-inner {
+      max-width: var(--maxw);
+      margin: 28px auto 0;
+      padding: 0 24px
+    }
+
     .icons-vert {
       display: flex;
       flex-direction: column;
@@ -818,7 +894,7 @@
     }
 
     .row .card.card-video-robotic video {
-      transform: scale(1.8)
+      transform: scale(1.36)
     }
 
     .row .card:hover video {
@@ -827,9 +903,10 @@
     }
 
     .row .card.card-video-robotic:hover video {
-      transform: scale(1.86)
+      transform: scale(1.4)
     }
   </style>
+  <link rel="stylesheet" href="css/entries.css" />
 </head>
 
 <body>
@@ -840,8 +917,9 @@
     </a>
     <nav aria-label="Main">
       <a href="projects.html">Projects</a>
+      <a href="publications.html">Publications</a>
       <a href="about.html">About</a>
-      <a class="btn" href="mailto:hello@example.com">Contact</a>
+      <a class="btn" href="mailto:bx2181@nyu.edu">Contact</a>
     </nav>
   </header>
 
@@ -863,19 +941,64 @@
         <div class="lede">Portfolio of</div>
         <h1 class="name">Evan Xiao</h1>
         <h2 class="roles">
-          HCI, UX/UI,<br>
-          Product Designer<br>
+          HCI Researcher,<br>
+          Designer<br>
           <span class="amp">&amp; Coder</span>
         </h2>
       </div>
-      <p class="subnote">NYU Shanghai junior majoring in Interactive Media Arts with a minor in Computer Science</p>
+      <p class="subnote">Interactive Media Arts and Computer Science at NYU Shanghai, class of 2027</p>
       <span class="scroll-indicator" aria-hidden="true"></span>
     </div>
   </main>
 
+  <!-- ======= ABOUT ======= -->
+  <section id="about" class="section home-about" aria-label="About">
+    <div id="projectsSentinel"></div>
+    <header class="projects-mast">
+      <h2 class="projects-title">
+        <span class="mute">About</span>
+        <span class="fancy">Evan Xiao</span>
+      </h2>
+    </header>
+    <div class="home-about-grid">
+      <div class="home-about-text">
+        <p>Evan Xiao (肖邦, published as Bang Xiao) is an HCI researcher and an undergraduate at NYU Shanghai, studying Interactive Media Arts and Computer Science. </p>
+        <p>Evan's research explores two connected questions: how interacting with AI reshapes the way people think, feel, and pay attention, and how those insights can be used to design AI systems that truly fit human needs. As AI moves beyond flat screens into wearables, robots, and physical space, it changes daily behavior in subtle ways.</p>
+        <p class="entry-links home-about-links"><a href="about.html">More about Evan</a><a href="mailto:bx2181@nyu.edu">Email</a></p>
+      </div>
+      <a class="home-about-photo" href="about.html" aria-label="About Evan Xiao"><img src="assets/images/about/evan-desk.jpg" alt="Evan Xiao working at a laptop" loading="lazy" /></a>
+    </div>
+  </section>
+
+  <!-- ======= PUBLICATIONS ======= -->
+  <section id="publications" class="section pubs" aria-label="Publications">
+    <header class="projects-mast">
+      <h2 class="projects-title">
+        <span class="mute">Recent</span>
+        <span class="fancy">Publications</span>
+      </h2>
+    </header>
+    <div class="pubs-inner">
+      <ol class="entries">
+        <li class="entry">
+          <div class="entry-meta">UbiComp / ISWC 2026</div>
+          <div>
+            <h3 class="entry-title"><a href="https://arxiv.org/abs/2610.34865" target="_blank" rel="noopener">ECHOES: An Adaptive LLM-Powered AR Glasses Docent for Evidence-Grounded Urban Heritage Interpretation</a></h3>
+            <p class="entry-sub"><b>Bang Xiao</b>, Baosheng Jin, Jinhan Niu, Xingchen Zhang, Hua Shen</p>
+            <p class="entry-links">
+              <a href="https://arxiv.org/abs/2610.34865" target="_blank" rel="noopener">arXiv:2610.34865 ↗</a>
+              <a href="https://arxiv.org/pdf/2610.34865" target="_blank" rel="noopener">PDF ↗</a>
+              <a href="Echoes.html">Project page</a>
+              <a href="publications.html">All research</a>
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
   <!-- ======= PROJECTS (full) ======= -->
   <section id="projects" class="section projects" aria-label="Projects">
-    <div id="projectsSentinel"></div>
     <header class="projects-mast">
       <h2 class="projects-title">
         <span class="mute">Some of my</span>
@@ -887,7 +1010,46 @@
     </header>
 
     <div class="cards">
-      <!-- Row 1: Interactive AI (wide) + Spiral Genesis -->
+      <!-- Row 1: current research -->
+      <div class="row row-2 wide-left" style="--row-h: clamp(320px, 34vw, 520px)">
+        <a href="Echoes.html" class="card" aria-label="ECHOES project">
+          <video style="object-position:left center" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/images/projects/Echoes/web/hero.jpg"><source src="assets/images/projects/Echoes/web/hero.mp4" type="video/mp4"></video>
+          <div class="label">
+            <span class="client">Accepted · UbiComp / ISWC 2026</span>
+            <h3>ECHOES — AR Heritage Docent</h3>
+          </div>
+        </a>
+        <a href="VoiceGuard.html" class="card" aria-label="VoiceGuard project">
+          <img src="assets/images/projects/VoiceGuard/web/hero.jpg" alt="VoiceGuard arm grasping a mug"
+            loading="lazy" style="object-position:center 40%" />
+          <div class="label">
+            <span class="client">Assistive Robotics · NYU Shanghai × Carleton</span>
+            <h3>VoiceGuard</h3>
+          </div>
+        </a>
+      </div>
+
+      <!-- Row 2: Spiral Genesis + Youshen (wide) -->
+      <div class="row row-2 wide-right" style="--row-h: clamp(320px, 34vw, 500px)">
+        <a href="Spiral-Genesis.html" class="card">
+          <img src="assets/images/projects/Spiral-Genesis/DSC04515.JPG" alt="Spiral Genesis Kinetic Sculpture"
+            loading="lazy" />
+          <div class="label"><span class="client">NYU Shanghai · IMA</span>
+            <h3>Spiral Genesis</h3>
+          </div>
+        </a>
+        <a href="Youshen.html" class="card" aria-label="Yóushén project">
+          <video autoplay muted loop playsinline webkit-playsinline preload="metadata"
+            poster="assets/images/projects/Youshen/youshen-loop-poster.jpg">
+            <source src="assets/images/projects/Youshen/youshen-loop.mp4" type="video/mp4" />
+          </video>
+          <div class="label"><span class="client">Digital Archive · Interactive Installation</span>
+            <h3>Yóushén — Living Deities</h3>
+          </div>
+        </a>
+      </div>
+
+      <!-- Row 3: Interactive AI (wide) + VEX -->
       <div class="row row-2 wide-left" style="--row-h: clamp(320px, 34vw, 500px)">
         <a href="interactive-ai-powered-robot.html" class="card" aria-label="Interactive AI-Powered Robot project">
           <video autoplay muted loop playsinline webkit-playsinline preload="metadata"
@@ -900,22 +1062,24 @@
             <h3>Interactive AI-Powered Robot</h3>
           </div>
         </a>
-        <a href="Spiral-Genesis.html" class="card">
-          <img src="assets/images/projects/Spiral-Genesis/DSC04515.JPG" alt="Spiral Genesis Kinetic Sculpture"
-            loading="lazy" />
-          <div class="label"><span class="client">NYU Shanghai · IMA</span>
-            <h3>Spiral Genesis</h3>
-          </div>
-        </a>
-      </div>
-
-      <!-- Row 2: VEX + Robotic Arms (wide) -->
-      <div class="row row-2 wide-right" style="--row-h: clamp(320px, 34vw, 500px)">
         <a href="2024-2025-VEX-High-Stakes.html" class="card">
           <img src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9334.JPG" alt="VEX High Stakes Robot"
             loading="lazy" />
           <div class="label"><span class="client">NYU Shanghai · Robotics Club</span>
             <h3>2024-2025 VEX High Stakes</h3>
+          </div>
+        </a>
+      </div>
+
+      <!-- Row 4: Pulse + Robotic Arms -->
+      <div class="row row-2" style="--row-h: clamp(300px, 30vw, 460px)">
+        <a href="Pulse.html" class="card">
+          <video autoplay muted loop playsinline webkit-playsinline preload="metadata"
+            poster="assets/images/projects/Pulse/截屏2025-03-24-17.19.13.png">
+            <source src="assets/images/projects/Pulse/Pulse-loop.mp4" type="video/mp4" />
+          </video>
+          <div class="label"><span class="client">Light Installation · NYU Shanghai</span>
+            <h3>Pulse — Refracted Light Score</h3>
           </div>
         </a>
         <a href="robotic-arms-art.html" class="card card-video-robotic">
@@ -926,28 +1090,6 @@
           </video>
           <div class="label"><span class="client">IMA × Franka Robotics</span>
             <h3>Robotic Arms in Art</h3>
-          </div>
-        </a>
-      </div>
-
-      <!-- Row 3: 2-up, left double width -->
-      <div class="row row-2 wide-left" style="--row-h: clamp(300px, 30vw, 460px)">
-        <a href="Pulse.html" class="card">
-          <video autoplay muted loop playsinline webkit-playsinline preload="metadata"
-            poster="assets/images/projects/Pulse/截屏2025-03-24-17.19.13.png">
-            <source src="assets/images/projects/Pulse/Pulse-loop.mp4" type="video/mp4" />
-          </video>
-          <div class="label"><span class="client">Light Installation · NYU Shanghai</span>
-            <h3>Pulse — Refracted Light Score</h3>
-          </div>
-        </a>
-        <a href="Echoes.html" class="card" style="background:#0d1117">
-          <img
-            src="assets/images/projects/Echoes/lQDPJwlkjTu0obfNB9DNB9CwFndFp3RXG3gI-HpUjz4-AA_2000_2000_1200x1200@2x.jpg"
-            alt="Echoes - Gaze-Driven AR Heritage Experience" loading="lazy"
-            style="object-fit:cover;transform:scale(1.05);transform-origin:center" />
-          <div class="label"><span class="client">AR · AI · Cultural Heritage</span>
-            <h3>Echoes — Gaze-Driven Heritage AI</h3>
           </div>
         </a>
       </div>
@@ -965,8 +1107,9 @@
           <ul>
             <li><a href="index.html#top">Home</a></li>
             <li><a href="projects.html">Projects</a></li>
+            <li><a href="publications.html">Publications</a></li>
             <li><a href="about.html">About</a></li>
-            <li><a href="mailto:hello@example.com">Contact</a></li>
+            <li><a href="mailto:bx2181@nyu.edu">Contact</a></li>
           </ul>
         </div>
         <div class="col social-col">

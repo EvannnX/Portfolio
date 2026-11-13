@@ -1,0 +1,117 @@
+/* VoiceGuard — System Architecture Overview, drawn in HTML.
+   Desktop follows the board: LOCAL | CLOUD | LOCAL, six components left→right,
+   the stop/pause fast path across the top, execution-state feedback below,
+   then the packet example and the dispatcher's checks. */
+
+.arch {
+  --line: rgba(255, 255, 255, .14);
+  --wire: rgba(255, 255, 255, .55);
+  --stop: #ff6b6b;
+  max-width: 1400px; margin: 40px auto 0; padding: 0 24px; text-align: left;
+  display: grid;
+  grid-template-columns: 1fr 30px 1fr 30px 1fr 30px 1.15fr 30px 1fr 30px 1fr;
+  grid-template-rows: auto auto auto 56px auto;
+  filter: none !important; transform: none !important; opacity: 1 !important;
+}
+.arch h3 { margin: 0 0 12px; font-weight: 900; font-size: .98rem }
+.arch h4 { margin: 0 0 14px; font-size: .72rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--dim) }
+
+.paths { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 28px; margin-top: 26px }
+
+/* ---------- Placement ---------- */
+.fast { grid-column: 1 / 12; grid-row: 1 }
+.z-local1 { grid-column: 1; grid-row: 2 }
+.z-cloud { grid-column: 3 / 6; grid-row: 2 }
+.z-local2 { grid-column: 7 / 12; grid-row: 2 }
+.n-gate { grid-column: 1 } .a1 { grid-column: 2 } .n-router { grid-column: 3 } .a2 { grid-column: 4 }
+.n-packet { grid-column: 5 } .a3 { grid-column: 6 } .n-disp { grid-column: 7 } .a4 { grid-column: 8 }
+.n-vla { grid-column: 9 } .a5 { grid-column: 10 } .n-arm { grid-column: 11 }
+.n, .ar { grid-row: 3 }
+.fb { grid-column: 7 / 12; grid-row: 4 }
+.ex-packet { grid-column: 1 / 6; grid-row: 5 }
+.ex-checks { grid-column: 7 / 12; grid-row: 5 }
+
+/* ---------- Fast path ---------- */
+.fast { position: relative; height: 46px; margin: 0 calc(50% / 11) 0; border: 1px solid var(--stop); border-bottom: 0; border-radius: 10px 10px 0 0 }
+.fast span { position: absolute; left: 50%; top: -9px; transform: translateX(-50%); padding: 0 12px; background: var(--bg); color: var(--stop); font-size: .78rem; white-space: nowrap }
+.fast::after { content: ""; position: absolute; right: -5px; bottom: -1px; border-left: 4.5px solid transparent; border-right: 4.5px solid transparent; border-top: 7px solid var(--stop) }
+
+/* ---------- Zones ---------- */
+.zone { padding: 14px 0 12px; border-bottom: 1px dashed var(--line); font-size: .7rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--dim) }
+
+/* ---------- Nodes ---------- */
+.n { margin-top: 16px; padding: 16px; border: 1px solid var(--line); border-radius: 16px; display: flex; flex-direction: column; gap: 10px; transition: opacity .5s ease, border-color .5s }
+.n img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px }
+.n .row { margin: 0; font-size: .84rem; line-height: 1.35 }
+.n .row b { display: block; font-weight: 700 }
+.n .row span { display: block; margin-top: 2px; color: var(--dim); font-size: .76rem }
+.n .stop-row b { color: var(--stop) }
+.n .down { align-self: center; position: relative; width: 1px; height: 14px; background: var(--wire) }
+.n .down::after { content: ""; position: absolute; left: -4px; bottom: -1px; border-left: 4.5px solid transparent; border-right: 4.5px solid transparent; border-top: 6px solid var(--wire) }
+.fields { list-style: none; margin: 0; padding: 0; font: .8rem/1.9 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted) }
+.outcomes { list-style: none; margin: 4px 0 0; padding: 0 0 0 14px; border-left: 1px solid var(--wire); display: grid; gap: 6px; font-size: .84rem; transition: opacity .5s }
+.outcomes li:first-child { font-weight: 800 }
+.outcomes li:last-child { color: var(--dim) }
+
+/* ---------- Arrows ---------- */
+.ar { position: relative; align-self: center; height: 1px; margin-top: 16px; background: var(--wire); transition: opacity .5s }
+.ar::after { content: ""; position: absolute; right: -1px; top: -4px; border-left: 7px solid var(--wire); border-top: 4.5px solid transparent; border-bottom: 4.5px solid transparent }
+
+/* ---------- Execution-state feedback ---------- */
+.fb { position: relative; margin: 0 calc(100% / 10.3) 0 calc(100% / 10.3); border: 1px solid var(--wire); border-top: 0; border-radius: 0 0 10px 10px; transition: opacity .5s }
+.fb::after { content: ""; position: absolute; left: -5px; top: -1px; border-left: 4.5px solid transparent; border-right: 4.5px solid transparent; border-bottom: 7px solid var(--wire) }
+.fb span { position: absolute; left: 50%; bottom: -9px; transform: translateX(-50%); padding: 0 12px; background: var(--bg); font-family: "Playfair Display", Georgia, serif; font-style: italic; font-size: .9rem; color: var(--muted) }
+
+/* ---------- Packet example & checks ---------- */
+.ex { padding-top: 48px }
+.ex dl { margin: 0 }
+.ex dl div { display: grid; grid-template-columns: 130px 1fr; gap: 14px; padding: 9px 0; border-top: 1px solid var(--line); font-size: .86rem }
+.ex dt { font-weight: 700 }
+.ex dd { margin: 0; color: var(--muted) }
+.ex-packet dt, .ex-packet dd { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .8rem }
+
+/* ---------- Path highlighting ---------- */
+.arch.in[data-path] [data-in], .arch.in[data-path] .fast { opacity: .16 }
+.arch.in[data-path="accept"] [data-in~="accept"],
+.arch.in[data-path="clarify"] [data-in~="clarify"],
+.arch.in[data-path="reject"] [data-in~="reject"],
+.arch.in[data-path="stop"] [data-in~="stop"],
+.arch.in[data-path="stop"] .fast { opacity: 1 }
+.arch.in[data-path] .n[data-in] { border-color: var(--line) }
+.arch.in[data-path="accept"] .n[data-in~="accept"], .arch.in[data-path="clarify"] .n[data-in~="clarify"],
+.arch.in[data-path="reject"] .n[data-in~="reject"], .arch.in[data-path="stop"] .n[data-in~="stop"] { border-color: rgba(255, 255, 255, .6) }
+.arch.in[data-path="stop"] .n-gate .row:not(.stop-row), .arch.in[data-path="stop"] .n-arm .row:not(.stop-row) { opacity: .3 }
+
+/* ---------- Draw-in ---------- */
+.arch > * { opacity: 0; transform: translateY(12px); transition: opacity .8s ease, transform .9s var(--ease) }
+.arch.in > * { opacity: 1; transform: none }
+.arch.in .n-gate { transition-delay: 0s } .arch.in .a1 { transition-delay: .15s }
+.arch.in .n-router { transition-delay: .25s } .arch.in .a2 { transition-delay: .4s }
+.arch.in .n-packet { transition-delay: .5s } .arch.in .a3 { transition-delay: .65s }
+.arch.in .n-disp { transition-delay: .75s } .arch.in .a4 { transition-delay: .9s }
+.arch.in .n-vla { transition-delay: 1s } .arch.in .a5 { transition-delay: 1.15s }
+.arch.in .n-arm { transition-delay: 1.25s } .arch.in .fb { transition-delay: 1.4s }
+.arch.in .fast { transition-delay: 1.55s } .arch.in .zone { transition-delay: .1s }
+.arch.in .ex { transition-delay: 1.6s }
+/* after the draw-in, highlighting should respond immediately */
+.arch.settled > * { transition-delay: 0s !important }
+@media (prefers-reduced-motion: reduce) { .arch > * { opacity: 1; transform: none; transition: none } }
+
+/* ---------- Narrower screens: stack in order ---------- */
+@media (max-width: 1100px) {
+  .arch { display: flex; flex-direction: column; max-width: 560px }
+  .zone { display: none }
+  .fast { order: 0; height: auto; margin: 0 0 8px; padding: 12px 0 0; border: 0; border-top: 1px solid var(--stop); border-radius: 0 }
+  .fast span { position: static; transform: none; padding: 0; white-space: normal; display: block }
+  .fast::after { display: none }
+  .n { margin-top: 0 }
+  .n-router h3::after, .n-packet h3::after { content: " · cloud"; font-weight: 400; color: var(--dim) }
+  .ar { width: 1px; height: 34px; margin: 10px auto; align-self: center }
+  .ar::after { right: auto; top: auto; left: -4px; bottom: -1px; border-left: 4.5px solid transparent; border-right: 4.5px solid transparent; border-top: 7px solid var(--wire); border-bottom: 0 }
+  .fb { height: auto; margin: 14px 0 0; padding: 10px 0 0; border: 0; border-top: 1px solid var(--wire); border-radius: 0 }
+  .fb::after { display: none }
+  .fb span { position: static; transform: none; padding: 0 }
+  .fb span::before { content: "↺ ArmController reports "; font-family: Inter, system-ui, sans-serif; font-style: normal; font-size: .8rem; color: var(--dim) }
+  .ex { padding-top: 32px }
+  .ex dl div { grid-template-columns: 110px 1fr }
+}

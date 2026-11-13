@@ -1,0 +1,7 @@
+
+# Private keys and local settings
+*.pem
+*.key
+.env
+.env.*
+.DS_Store

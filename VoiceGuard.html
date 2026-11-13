@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>VoiceGuard — Voice-Routed Assistive Manipulation · Evan Xiao</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="VoiceGuard is a wheelchair-mounted robotic arm for people with limited upper-limb mobility: everyday speech, an LLM task router, a local safety layer, and a vision-language-action policy." />
+  <link rel="icon" type="image/png" href="assets/images/general/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/case.css" />
+  <link rel="stylesheet" href="css/voiceguard.css" />
+  <link rel="stylesheet" href="css/voiceguard-system.css" />
+</head>
+
+<body>
+  <header class="site-header transparent" aria-label="Primary">
+    <a href="index.html" class="logo" aria-label="Home"><img class="logo-img" src="assets/images/general/logo.png" alt="Evan Xiao logo" /></a>
+    <nav>
+      <a href="projects.html">Projects</a>
+      <a href="publications.html">Publications</a>
+      <a href="about.html">About</a>
+      <a class="btn" href="mailto:bx2181@nyu.edu">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero-video" aria-label="VoiceGuard hero">
+    <img src="assets/images/projects/VoiceGuard/web/hero.jpg" alt="The VoiceGuard arm grasping a mug on a wheelchair tray" />
+  </section>
+
+  <!-- Mast -->
+  <section class="section pad-top mast" aria-label="Overview">
+    <div class="wrap mast-grid reveal">
+      <div>
+        <h1>VoiceGuard</h1>
+        <p class="sub">Voice-routed assistive manipulation for wheelchair users.</p>
+        <div class="facts">
+          <dl>
+            <dt>Context</dt><dd>NYU Shanghai × Carleton University</dd>
+            <dt>Role</dt><dd>Lead researcher · User research, system design, hardware, VLA training</dd>
+            <dt>Team</dt><dd>Bang Xiao, Rodolfo Cossovich</dd>
+            <dt>Stack</dt><dd>SO-101 arm · LeRobot · SmolVLA · Audio-native LLM · NYU Torch HPC</dd>
+            <dt>Status</dt><dd>In progress · 2026</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Project</h3>
+        <p>VoiceGuard is a wheelchair-mounted robotic arm for people with limited upper-limb mobility. Users say what they need in everyday language.</p>
+        <p>A language model turns the request into a structured task, a safety layer checks it before anything moves, and a vision-language-action policy carries it out. Stop and pause run locally and stay available at every moment, so the user is always in control.</p>
+        <div class="links"><a class="pill" href="#system">See the system</a></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="rails" aria-label="Case study">
+    <!-- Context -->
+    <section class="stage single reveal" aria-labelledby="h-ctx">
+      <div class="text">
+        <h2 id="h-ctx">Everyday objects, just out of reach</h2>
+        <p class="muted" style="max-width:70ch">A cup, a phone or medication can sit right beside the wheelchair and still be impossible to pick up alone. Five things make these moments hard, and limit how well today's assistive arms help.</p>
+        <div class="factors">
+          <figure class="factor" tabindex="0"><img loading="lazy" src="assets/images/projects/VoiceGuard/web/factor-daily.jpg" alt="Wheelchair user reaching for a cup on a side table" />
+            <figcaption class="cap"><b>Daily needs</b><span>Reaching, grasping and handling objects were the most common needs among 49 people with tetraplegia and 9 caregivers (Hutmacher et al., 2025).</span></figcaption></figure>
+          <figure class="factor">
+            <div class="tile" aria-hidden="true"><span>USD</span><b>35K<br>–40K</b><small>per commercial assistive arm</small></div>
+            <figcaption class="cap"><b>High cost</b><span>A commercial wheelchair-mounted robotic arm typically costs USD 35,000 to 40,000, out of reach for many potential users.</span></figcaption></figure>
+          <figure class="factor" tabindex="0"><img loading="lazy" src="assets/images/projects/VoiceGuard/web/factor-scenes.jpg" alt="Robotic arm moving a cup across a desk" />
+            <figcaption class="cap"><b>Changing scenes</b><span>The same cup is on the left today and the right tomorrow. Fixed motion paths cover only a few preset cases.</span></figcaption></figure>
+          <figure class="factor" tabindex="0"><img loading="lazy" src="assets/images/projects/VoiceGuard/web/factor-speech.jpg" alt="Wheelchair user speaking in short fragments" />
+            <figcaption class="cap"><b>Speech limits</b><span>Among 14 people with cervical SCI, 93% showed voice changes. Real commands are short and fragmented (Ward et al., 2016).</span></figcaption></figure>
+          <figure class="factor" tabindex="0"><img loading="lazy" src="assets/images/projects/VoiceGuard/web/factor-control.jpg" alt="Joystick control with many mode switches" />
+            <figcaption class="cap"><b>Control burden</b><span>Joystick and mode switching turn one cup into a chain of moves, rotations and corrections (Styler et al., 2024).</span></figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Listening -->
+    <section class="stage single reveal" aria-labelledby="h-listen">
+      <div class="text">
+        <h2 id="h-listen">Say the goal, not the steps</h2>
+        <p class="muted" style="max-width:70ch">Three interviews and twenty questionnaires from wheelchair users and caregivers: which tasks are hardest, how people want to ask, how much control they want, and what makes them feel safe.</p>
+        <div class="people">
+          <figure class="person"><img src="assets/images/projects/VoiceGuard/web/person-liyue.png" alt="" loading="lazy" />
+            <figcaption><b>Li Yue, 28</b><span>Uses a power wheelchair</span><p class="quote">"Small things are hardest when they're out of reach."</p></figcaption></figure>
+          <figure class="person"><img src="assets/images/projects/VoiceGuard/web/person-chenxi.png" alt="" loading="lazy" />
+            <figcaption><b>Chen Xi, 21</b><span>Uses a power wheelchair</span><p class="quote">"Let me say what I need like I'd tell a friend."</p></figcaption></figure>
+          <figure class="person"><img src="assets/images/projects/VoiceGuard/web/person-wanglin.png" alt="" loading="lazy" />
+            <figcaption><b>Wang Lin, 52</b><span>Manual chair with a power front wheel</span><p class="quote">"If it gets too close, I need to stop it at once."</p></figcaption></figure>
+        </div>
+        <div class="qgroups">
+          <div><h3>Fetch what's out of reach</h3><ul class="bars">
+            <li class="bar" style="--v:80%"><span>Nearby or dropped objects</span><b data-count="80" data-suffix="%">80%</b><span class="track"><i></i></span></li>
+            <li class="bar" style="--v:70%"><span>Drinking assistance</span><b data-count="70" data-suffix="%">70%</b><span class="track"><i></i></span></li>
+            <li class="bar" style="--v:60%"><span>Phone or remote</span><b data-count="60" data-suffix="%">60%</b><span class="track"><i></i></span></li></ul></div>
+          <div><h3>Less manual control</h3><ul class="bars">
+            <li class="bar" style="--v:85%"><span>Prefer less manual control</span><b data-count="85" data-suffix="%">85%</b><span class="track"><i></i></span></li>
+            <li class="bar" style="--v:55%"><span>Task-level control</span><b data-count="55" data-suffix="%">55%</b><span class="track"><i></i></span></li>
+            <li class="bar" style="--v:30%"><span>Shared control</span><b data-count="30" data-suffix="%">30%</b><span class="track"><i></i></span></li></ul></div>
+          <div><h3>Understand casual speech</h3><ul class="bars">
+            <li class="bar" style="--v:90%"><span>Clarify before acting</span><b data-count="90" data-suffix="%">90%</b><span class="track"><i></i></span></li>
+            <li class="bar" style="--v:85%"><span>Understand context</span><b data-count="85" data-suffix="%">85%</b><span class="track"><i></i></span></li>
+            <li class="bar" style="--v:70%"><span>Short, incremental phrases</span><b data-count="70" data-suffix="%">70%</b><span class="track"><i></i></span></li></ul></div>
+          <div><h3>The user can always stop it</h3><ul class="bars">
+            <li class="bar" style="--v:90%"><span>Immediate stop</span><b data-count="90" data-suffix="%">90%</b><span class="track"><i></i></span></li>
+            <li class="bar" style="--v:90%"><span>Adapt when objects move</span><b data-count="90" data-suffix="%">90%</b><span class="track"><i></i></span></li>
+            <li class="bar" style="--v:80%"><span>Task status feedback</span><b data-count="80" data-suffix="%">80%</b><span class="track"><i></i></span></li>
+            <li class="bar" style="--v:75%"><span>Pause and resume</span><b data-count="75" data-suffix="%">75%</b><span class="track"><i></i></span></li></ul></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- System -->
+  <section class="video-block" id="system" aria-label="System architecture">
+    <div class="video-inner wide reveal">
+      <span class="eyebrow">System</span>
+      <h2>From a sentence to a checked, executable task</h2>
+      <p>The user speaks a task-level request. An audio-native LLM turns it into a structured function packet; a local ToolDispatcher checks it before anything moves; SmolVLA and the ArmController carry it out. Choose an outcome to see the path it takes.</p>
+      <div class="paths" role="group" aria-label="Show a path">
+        <button class="pill" data-path="accept" aria-pressed="false">Accepted</button>
+        <button class="pill" data-path="clarify" aria-pressed="false">Clarify</button>
+        <button class="pill" data-path="reject" aria-pressed="false">Rejected</button>
+        <button class="pill" data-path="stop" aria-pressed="false">Stop / pause</button>
+      </div>
+    </div>
+
+    <div class="arch reveal" id="arch" role="img" aria-label="VoiceGuard architecture. Local gate with wake phrase and always-on stop; cloud router with server-side voice activity detection, an audio-native LLM and a fixed-schema function call; the function packet; a local ToolDispatcher that validates the packet with five ordered checks and accepts, clarifies, rejects or logs it; the SmolVLA policy; and the ArmController driving the SO-101 arm. Stop and pause take a fast path straight to the arm.">
+      <div class="fast"><span>Stop / pause fast path: goes straight to the arm, never through the cloud or the ToolDispatcher</span></div>
+
+      <span class="zone z-local1">Local</span>
+      <span class="zone z-cloud">Cloud</span>
+      <span class="zone z-local2">Local</span>
+
+      <div class="n n-gate" data-in="accept clarify reject stop">
+        <h3>Local gate</h3>
+        <p class="row"><b>Wake phrase</b><span>opens stream</span></p>
+        <p class="row stop-row"><b>Stop / pause</b><span>always on</span></p>
+        <img src="assets/images/projects/VoiceGuard/web/step-1.jpg" alt="" loading="lazy" />
+      </div>
+      <span class="ar a1" data-in="accept clarify reject"></span>
+
+      <div class="n n-router" data-in="accept clarify reject">
+        <h3>Router</h3>
+        <p class="row"><b>Server-side VAD</b><span>speech start, end</span></p>
+        <span class="down"></span>
+        <p class="row"><b>Audio-native LLM</b></p>
+        <span class="down"></span>
+        <p class="row"><b>Function call</b><span>fixed schema</span></p>
+      </div>
+      <span class="ar a2" data-in="accept clarify reject"></span>
+
+      <div class="n n-packet" data-in="accept clarify reject">
+        <h3>Packet</h3>
+        <ul class="fields"><li>function</li><li>target</li><li>destination</li><li>module</li><li>checks</li><li>transcript</li></ul>
+      </div>
+      <span class="ar a3" data-in="accept clarify reject"></span>
+
+      <div class="n n-disp" data-in="accept clarify reject">
+        <h3>ToolDispatcher</h3>
+        <p class="row"><b>Packet validation</b><span>five ordered checks</span></p>
+        <ul class="outcomes">
+          <li data-in="accept">Accepted</li>
+          <li data-in="clarify">Clarify</li>
+          <li data-in="reject">Rejected</li>
+          <li data-in="clarify reject">Logged</li>
+        </ul>
+      </div>
+      <span class="ar a4" data-in="accept"></span>
+
+      <div class="n n-vla" data-in="accept">
+        <h3>SmolVLA</h3>
+        <img src="assets/images/projects/VoiceGuard/web/train-3.jpg" alt="" loading="lazy" />
+        <p class="row"><b>VLA policy</b><span>instruction + camera images → action chunks</span></p>
+      </div>
+      <span class="ar a5" data-in="accept"></span>
+
+      <div class="n n-arm" data-in="accept stop">
+        <h3>ArmController</h3>
+        <img src="assets/images/projects/VoiceGuard/web/v2-1.jpg" alt="" loading="lazy" />
+        <p class="row"><b>LeRobot commands</b><span>move, grasp, release, home</span></p>
+        <p class="row stop-row"><b>stop</b></p>
+      </div>
+
+      <div class="fb" data-in="accept"><span>execution state</span></div>
+
+      <div class="ex ex-packet">
+        <h4>Packet example</h4>
+        <dl>
+          <div><dt>function</dt><dd>deliver</dd></div>
+          <div><dt>target</dt><dd>cup</dd></div>
+          <div><dt>destination</dt><dd>mouth_pose</dd></div>
+          <div><dt>module</dt><dd>smolvla_cup_mouth_pose</dd></div>
+          <div><dt>checks</dt><dd>[target_visible, controller_ready]</dd></div>
+          <div><dt>transcript</dt><dd>"bring the cup up so I can drink"</dd></div>
+        </dl>
+      </div>
+      <div class="ex ex-checks">
+        <h4>ToolDispatcher checks, in order</h4>
+        <dl>
+          <div><dt>Schema</dt><dd>function and fields match the schema</dd></div>
+          <div><dt>Arguments</dt><dd>target and destination present, unambiguous</dd></div>
+          <div><dt>Module</dt><dd>trained module exists, task authorized</dd></div>
+          <div><dt>State</dt><dd>controller ready, target visible, no interruption</dd></div>
+          <div><dt>Limits</dt><dd>step size, speed, reach</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <main class="rails" aria-label="Case study, continued">
+    <!-- Workflow -->
+    <section class="stage top reveal" aria-labelledby="h-flow" data-tabs data-auto="3200">
+      <div class="text">
+        <h2 id="h-flow">"Bring me the water"</h2>
+        <p class="muted">One request on the tray-mounted prototype, from standby to target reached.</p>
+        <div class="tablist-v" role="tablist" aria-label="Workflow">
+          <button class="tab" data-key="a">Standby pose<small>The arm waits in a safe ready pose. Wrist and agent cameras are live.</small></button>
+          <button class="tab" data-key="b">Voice input<small>The user speaks a natural instruction for the robot.</small></button>
+          <button class="tab" data-key="c">VLA perception<small>SmolVLA grounds the task in the current visual scene.</small></button>
+          <button class="tab" data-key="d">VLA planning<small>The policy generates an executable motion plan.</small></button>
+          <button class="tab" data-key="e">Target reached<small>The arm reaches the position the user asked for.</small></button>
+        </div>
+        <div class="progress" aria-hidden="true"></div>
+      </div>
+      <div class="media">
+        <div class="shot">
+          <div class="swap">
+            <div data-pane="a"><img src="assets/images/projects/VoiceGuard/web/step-1.jpg" alt="Arm in standby pose beside the user" /><span class="tagline">safe ready pose</span></div>
+            <div data-pane="b" hidden><img src="assets/images/projects/VoiceGuard/web/step-1.jpg" alt="User speaking to the arm" /><span class="tagline">"bring me the water"</span></div>
+            <div data-pane="c" hidden><img loading="lazy" src="assets/images/projects/VoiceGuard/web/step-2.jpg" alt="Arm lifting toward the cup" /><span class="tagline">scene grounding</span></div>
+            <div data-pane="d" hidden><img loading="lazy" src="assets/images/projects/VoiceGuard/web/step-3.jpg" alt="Arm executing the plan" /><span class="tagline">action plan</span></div>
+            <div data-pane="e" hidden><img loading="lazy" src="assets/images/projects/VoiceGuard/web/step-4.jpg" alt="Arm reaching the user" /><span class="tagline">target reached</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hardware -->
+    <section class="stage single reveal" aria-labelledby="h-hw">
+      <div class="text">
+        <h2 id="h-hw">Armrest to tray</h2>
+        <p class="muted" style="max-width:70ch">To make interaction safer and VLA training more reliable, the hardware and the camera layout were iterated together.</p>
+        <div class="versions">
+          <div class="version">
+            <h3>Armrest-mounted</h3>
+            <div class="hw-row">
+              <img loading="lazy" src="assets/images/projects/VoiceGuard/web/v1-1.jpg" alt="Armrest-mounted prototype, front" />
+              <img loading="lazy" src="assets/images/projects/VoiceGuard/web/v1-2.jpg" alt="Armrest-mounted prototype, side" />
+              <img loading="lazy" src="assets/images/projects/VoiceGuard/web/v1-3.jpg" alt="Armrest-mounted prototype in the lab" />
+            </div>
+            <p>Mounted directly on the armrest, the arm could easily bump the person in the chair, and there was no good place for the third-person camera the VLA needs to see the whole scene.</p>
+          </div>
+          <div class="version">
+            <h3>Tray-mounted</h3>
+            <div class="hw-row">
+              <img loading="lazy" src="assets/images/projects/VoiceGuard/web/v2-1.jpg" alt="Tray-mounted prototype, side" />
+              <img loading="lazy" src="assets/images/projects/VoiceGuard/web/v2-2.jpg" alt="Tray-mounted prototype, front" />
+              <img loading="lazy" src="assets/images/projects/VoiceGuard/web/v2-3.jpg" alt="Tray-mounted prototype, three-quarter" />
+            </div>
+            <p>Moving the arm to a tray adds clearance between arm and user and gives the external agent camera a stable mount above the workspace, which also makes data collection steadier.</p>
+          </div>
+        </div>
+        <figure class="diagram">
+          <img loading="lazy" src="assets/images/projects/VoiceGuard/web/camera-layout.png" alt="Camera layout: external agent camera for the global view, manipulator camera for the local view, tray-mounted workspace and safer user clearance" />
+          <figcaption>Camera layout on the tray-mounted version.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Training -->
+    <section class="stage reveal" aria-labelledby="h-train">
+      <div class="text">
+        <h2 id="h-train">Teaching the arm</h2>
+        <p>We fine-tuned SmolVLA on demonstrations collected across object positions and workspace setups, at least an hour per everyday object, using a third-person agent camera and a wrist camera. Training ran on NYU Torch.</p>
+        <p class="muted">Today it works best under familiar conditions, and is still sensitive to change.</p>
+        <div class="chips"><span class="chip">Stable camera view</span><span class="chip">Familiar background</span><span class="chip">Similar object positions</span></div>
+        <div class="chips dim"><span class="chip">Background shifts</span><span class="chip">Lighting</span><span class="chip">Camera viewpoint</span></div>
+        <p class="muted" style="margin-top:16px;font-size:.88rem">Thanks to Hugging Face for open-source SmolVLA.</p>
+      </div>
+      <div class="media gallery two" style="grid-template-rows:auto auto">
+        <figure class="tall"><img loading="lazy" src="assets/images/projects/VoiceGuard/web/train-1.jpg" alt="Collecting teleoperated demonstrations" /></figure>
+        <figure><img loading="lazy" src="assets/images/projects/VoiceGuard/web/train-arm.jpg" alt="Wrist camera view of a bottle" /></figure>
+        <figure><img loading="lazy" src="assets/images/projects/VoiceGuard/web/train-3.jpg" alt="Agent camera view of the workspace" /></figure>
+      </div>
+    </section>
+  </main>
+
+  <!-- Exhibition -->
+  <section class="video-block" aria-label="Exhibition">
+    <div class="video-inner wide reveal">
+      <span class="eyebrow">Exhibition</span>
+      <h2>"Pick up the cup."</h2>
+      <p>Shown at a medicine-and-engineering rehabilitation showcase, where wheelchair users and clinicians tried the arm in person.</p>
+      <div class="gallery panel" style="grid-template-columns:1.3fr 1fr 1fr">
+        <img loading="lazy" src="assets/images/projects/VoiceGuard/web/ex-2.jpg" alt="The arm handing a mug during a hands-on session" />
+        <img loading="lazy" src="assets/images/projects/VoiceGuard/web/ex-1.jpg" alt="A wheelchair user trying VoiceGuard while others watch" />
+        <img loading="lazy" src="assets/images/projects/VoiceGuard/web/ex-wall.jpg" alt="VoiceGuard on display at the rehabilitation showcase" />
+      </div>
+    </div>
+  </section>
+
+  <div class="next">
+    <a href="Youshen.html"><span><span class="lede">Next project</span><strong>Yóushén</strong></span><span class="arrow" aria-hidden="true">→</span></a>
+  </div>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="footer-inner">
+      <a class="logo" href="index.html#top" aria-label="Home"><img class="logo-img" src="assets/images/general/logo.png" alt="Logo" /></a>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">Sitemap</div>
+          <ul>
+            <li><a href="index.html#top">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="mailto:bx2181@nyu.edu">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col social-col">
+          <div class="icons-vert">
+            <a class="icon-link" href="https://www.linkedin.com/in/evan-xiao-4a6060309/" aria-label="LinkedIn"><img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/linkedin.png" alt="LinkedIn"></a>
+            <a class="icon-link" href="https://www.instagram.com/evan_nn__" aria-label="Instagram"><img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/instagram-new.png" alt="Instagram"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="legal">© <span id="year"></span> Evan Xiao</div>
+  </footer>
+
+  <script src="js/case.js"></script>
+  <script src="js/voiceguard.js"></script>
+</body>
+
+</html>

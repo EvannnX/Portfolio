@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Yóushén — Digital Archive &amp; Interactive Installation · Evan Xiao</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Yóushén turns Fuzhou's procession of living deities into a bilingual digital archive, a 3D digital temple, and a motion-driven installation where a tāgǔ figure follows the visitor's body." />
+  <link rel="icon" type="image/png" href="assets/images/general/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/case.css" />
+  <link rel="stylesheet" href="css/youshen.css" />
+</head>
+
+<body>
+  <header class="site-header transparent" aria-label="Primary">
+    <a href="index.html" class="logo" aria-label="Home"><img class="logo-img" src="assets/images/general/logo.png" alt="Evan Xiao logo" /></a>
+    <nav>
+      <a href="projects.html">Projects</a>
+      <a href="publications.html">Publications</a>
+      <a href="about.html">About</a>
+      <a class="btn" href="mailto:bx2181@nyu.edu">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero-video" aria-label="Yóushén hero video">
+    <video autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/images/projects/Youshen/youshen-loop-poster.jpg">
+      <source src="assets/images/projects/Youshen/youshen-loop.mp4" type="video/mp4" />
+    </video>
+  </section>
+
+  <!-- Mast -->
+  <section class="section pad-top mast" aria-label="Overview">
+    <div class="wrap mast-grid reveal">
+      <div>
+        <h1>Yóushén</h1>
+        <p class="sub">A digital archive and interactive installation for Fuzhou's procession of living deities.</p>
+        <div class="facts">
+          <dl>
+            <dt>Context</dt><dd>Individual work · Digital heritage</dd>
+            <dt>Role</dt><dd>Research, design, 3D, development</dd>
+            <dt>Format</dt><dd>Bilingual website · 3D digital temple · Motion-driven projection</dd>
+            <dt>Stack</dt><dd>HTML/CSS/JS · TypeScript · three.js · MediaPipe Pose · Tripo AI · Blender</dd>
+            <dt>Status</dt><dd>Website live · Installation in development</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Project</h3>
+        <p>Yóushén is a folk ritual from Fuzhou. During the Lunar New Year, handcrafted tāgǔ deity figures are carried out of temples and through local community territories. The procession carries local belief, craft knowledge, ritual order and community memory.</p>
+        <p>In 2024 it went viral on short-video platforms, but its cultural logic stayed hard to access. This project gathers scattered material into a digital archive, then extends it into an exhibition where a projected tāgǔ responds to the visitor's body.</p>
+        <div class="links">
+          <a class="pill" href="https://evannnx.github.io/youshen/" target="_blank" rel="noopener">Visit the live site ↗</a>
+          <a class="pill" href="#hold">Turn a deity in 3D</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spreads vs hidden -->
+  <section class="video-block" aria-label="What spreads and what stays hidden">
+    <div class="video-inner wide reveal">
+      <span class="eyebrow">Context</span>
+      <h2>What spreads, and what stays hidden</h2>
+      <p>Short videos carry the spectacle. The craft, the carriers and the order behind it rarely make the cut. Drag across the image.</p>
+      <div class="compare panel" style="--pos:58%">
+        <img class="bottom" src="assets/images/projects/Youshen/web/carrier.jpg" alt="A young carrier inside a tāgǔ frame, preparing before the procession" />
+        <img class="top" src="assets/images/projects/Youshen/web/procession.jpg" alt="A tāgǔ deity dancing through a crowd during a procession" />
+        <span class="handle" aria-hidden="true"></span>
+        <span class="lab l">On screen</span><span class="lab r">Underneath</span>
+        <input type="range" min="0" max="100" value="58" aria-label="Reveal what stays hidden" />
+      </div>
+    </div>
+  </section>
+
+  <main class="rails" aria-label="Case study">
+    <!-- Structure -->
+    <section class="stage top reveal structure" aria-labelledby="h-struct" data-tabs data-auto="5000">
+      <div class="text">
+        <h2 id="h-struct">The structure under the spectacle</h2>
+        <p class="muted">Trained carriers parade deity figures along routes of up to 10&nbsp;km, with percussion, flag bearers and vanguard teams. Three systems shape how it works.</p>
+        <div class="tablist-v" role="tablist" aria-label="Hidden systems">
+          <button class="tab" data-key="jing">Territory · jìng<small>Processions follow the boundaries of a local jìng. Temples, streets and community territories define where deities travel.</small></button>
+          <button class="tab" data-key="deity">Deity system<small>A main deity leads; major deities and supporting roles form the wider pantheon. Only a few become famous online.</small></button>
+          <button class="tab" data-key="tagu">Tāgǔ craft<small>A carved head, a bamboo frame and a costume, with a human body inside that gives the deity physical presence.</small></button>
+          <button class="tab" data-key="lineage">A long lineage<small>From exorcist rites to city-god patrols: the procession has layered over two thousand years.</small></button>
+        </div>
+        <div class="progress" aria-hidden="true"></div>
+      </div>
+      <div class="media">
+        <div class="swap">
+          <img data-pane="jing" src="assets/images/projects/Youshen/web/jing.jpg" alt="Illustrated map of Fuzhou procession territories and temples" />
+          <img data-pane="deity" hidden loading="lazy" src="assets/images/projects/Youshen/web/wufu.jpg" alt="The Five Emperors enthroned on a temple altar" />
+          <img data-pane="tagu" hidden loading="lazy" src="assets/images/projects/Youshen/web/tagu.jpg" alt="Infographic of tāgǔ construction and procession order" />
+          <img data-pane="lineage" hidden loading="lazy" src="assets/images/projects/Youshen/web/scroll.jpg" alt="Qing dynasty scroll of a city-god procession" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Voices -->
+    <section class="stage single reveal voices" aria-labelledby="h-voices">
+      <div class="text">
+        <h2 id="h-voices">Visible, but hard to explain</h2>
+        <p class="muted" style="max-width:70ch">Interviews with an online viewer, a local, a diaspora student and a craft inheritor, then a questionnaire to see whether the pattern held more broadly.</p>
+        <div class="voice-grid">
+          <figure><p class="quote">"The first thing I noticed was how powerful it looked. The costumes, the movement, the whole atmosphere really caught my attention. I just didn't really know what was going on."</p><figcaption><b>Online viewer</b>University student, 22. Found yóushén through short videos.</figcaption></figure>
+          <figure><p class="quote">"I usually send them videos because they look really impressive. But when they start asking what the different things mean, sometimes I don't really know how to explain it."</p><figcaption><b>Local Fuzhounese</b>University student, 21. Grew up seeing yóushén locally.</figcaption></figure>
+          <figure><p class="quote">"Mostly through my family and videos online. I know it's connected to where my family is from, but I've noticed that a lot of the information is in Chinese, so sometimes it's hard for me to really understand what everything means."</p><figcaption><b>American-born Fuzhounese</b>University student, 21. Grew up overseas with a Fuzhou family background.</figcaption></figure>
+          <figure><p class="quote">"Most people look at the deity figures first because they're very eye-catching. They usually don't think much about how the figures are made or how much work goes into them."</p><figcaption><b>Local craft inheritor</b>Artisan, 52. Works with deity figures and ritual craft.</figcaption></figure>
+        </div>
+        <div class="figures">
+          <div class="figure"><b data-count="72" data-suffix="%">72%</b><span>first met yóushén on short-video platforms</span></div>
+          <div class="figure"><b data-count="8" data-suffix="%">8%</b><span>can name three or more deities</span></div>
+          <div class="figure"><b data-count="3" data-suffix="%">3%</b><span>understand how a tāgǔ is made</span></div>
+          <div class="figure"><b data-count="87" data-suffix="%">87%</b><span>think it should be more widely understood</span></div>
+        </div>
+        <div class="two-charts">
+          <div><h3>How people first met it</h3><ul class="bars">
+            <li class="bar" style="--v:72%"><span>Short-video platforms</span><b>72%</b><span class="track"><i></i></span></li>
+            <li class="bar" style="--v:13%"><span>Family or taking part</span><b>13%</b><span class="track"><i></i></span></li>
+            <li class="bar" style="--v:8%"><span>News reports</span><b>8%</b><span class="track"><i></i></span></li>
+            <li class="bar" style="--v:7%"><span>Friends</span><b>7%</b><span class="track"><i></i></span></li></ul></div>
+          <div><h3>How they'd like to learn more</h3><ul class="bars">
+            <li class="bar" style="--v:45%"><span>Short video</span><b>45%</b><span class="track"><i></i></span></li>
+            <li class="bar" style="--v:22%"><span>Documentary</span><b>22%</b><span class="track"><i></i></span></li>
+            <li class="bar" style="--v:15%"><span>3D interactive</span><b>15%</b><span class="track"><i></i></span></li>
+            <li class="bar" style="--v:12%"><span>Offline exhibition</span><b>12%</b><span class="track"><i></i></span></li>
+            <li class="bar" style="--v:5%"><span>Long article</span><b>5%</b><span class="track"><i></i></span></li></ul></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Design -->
+  <section class="video-block" aria-label="Design">
+    <div class="video-inner wide reveal">
+      <span class="eyebrow">Design</span>
+      <h2>Three findings, one experience</h2>
+      <p>Each finding opened an opportunity, and each opportunity a set of ideas. The ideas were combined into three connected outputs. Hover a column to trace it.</p>
+    </div>
+    <div class="dflow reveal" id="dflow" role="img" aria-label="Design flow: findings lead to opportunities, opportunities to ideas, and the ideas combine into an offline installation, a personal result and an online cultural website.">
+      <span class="lab r1">Findings</span>
+      <span class="lab r3">Opportunities</span>
+      <span class="lab r5">Idea expansion</span>
+      <span class="lab r7">Combine</span>
+      <div class="f c1"><b>Visual attraction already exists</b><span>Users first notice deity figures, rhythm and spectacle.</span></div>
+      <span class="vl c1"></span>
+      <div class="o c1">Accessible cultural entry</div>
+      <span class="br c1"><i></i><i></i><i></i></span>
+      <div class="ideas3 c1"><i>Timeline</i><i>Jìng map</i><i>Deity cards</i><i>Tāgǔ structure</i><i>Procession breakdown</i><i>Glossary</i></div>
+      <span class="cv c1"></span>
+      <div class="f c2"><b>Understanding remains shallow</b><span>Knowledge of jìng, deity systems and procession logic is limited.</span></div>
+      <span class="vl c2"></span>
+      <div class="o c2">Immersive participation</div>
+      <span class="br c2"><i></i><i></i><i></i></span>
+      <div class="ideas3 c2"><i>Motion capture</i><i>Interactive screen</i><i>Digital deity avatar</i><i>Ritual soundscape</i><i>Gesture response</i><i>Immersive entry</i></div>
+      <span class="cv c2"></span>
+      <div class="f c3"><b>Experience often ends too quickly</b><span>Interest fades without a follow-up path.</span></div>
+      <span class="vl c3"></span>
+      <div class="o c3">Continuous engagement</div>
+      <span class="br c3"><i></i><i></i><i></i></span>
+      <div class="ideas3 c3"><i>Role card</i><i>Motion snapshot</i><i>QR bridge</i><i>Follow-up website</i><i>Collect &amp; share</i><i>Revisit</i></div>
+      <span class="cv c3"></span>
+      <div class="combine">Combine</div>
+      <span class="bo"><i></i><i></i><i></i></span>
+      <div class="out o1"><b>Offline interactive installation</b><span>motion capture · immersive entry · deity visual</span></div>
+      <div class="out o2"><b>Personal result</b><span>role card · motion snapshot · QR code</span></div>
+      <div class="out o3"><b>Online cultural website</b><span>origins · deity pantheon · procession anatomy</span></div>
+    </div>
+  </section>
+
+  <!-- 3D -->
+  <section class="video-block" id="hold" aria-label="3D deity viewer">
+    <div class="video-inner wide reveal">
+      <span class="eyebrow">Hold it</span>
+      <h2>Twenty-one deities, in 3D</h2>
+      <p>Each tāgǔ was photographed in 360°, reconstructed with Tripo AI, then cleaned and rigged in Blender. These are the live models from the digital temple. Drag to turn them.</p>
+      <div class="viewer" id="viewer">
+        <div class="loading">Loading model…</div>
+        <div class="name"><b>Prince Zhao</b><span>赵世子</span></div>
+        <div class="hint">Drag to rotate</div>
+      </div>
+      <div class="deity-pick" role="group" aria-label="Choose a deity">
+        <button class="pill" aria-pressed="true" data-model="赵世子" data-orbit="90deg 80deg auto" data-en="Prince Zhao" data-role="赵世子 · the prince who went viral">Prince Zhao</button>
+        <button class="pill" aria-pressed="false" data-model="七爷" data-orbit="90deg 80deg auto" data-en="Seventh Lord" data-role="七爷 · underworld messenger">Seventh Lord</button>
+        <button class="pill" aria-pressed="false" data-model="八爷" data-en="Eighth Lord" data-role="八爷 · underworld messenger">Eighth Lord</button>
+        <button class="pill" aria-pressed="false" data-model="马元帅" data-en="Marshal Ma" data-role="马元帅 · guardian general">Marshal Ma</button>
+        <button class="pill" aria-pressed="false" data-model="哪吒" data-en="Nezha" data-role="哪吒 · child deity">Nezha</button>
+        <button class="pill" aria-pressed="false" data-model="五福大帝群像" data-en="The Five Emperors" data-role="五福大帝 · plague-expelling deities">The Five Emperors</button>
+      </div>
+    </div>
+  </section>
+
+  <main class="rails" aria-label="Case study, continued">
+    <!-- Motion -->
+    <section class="stage reveal" aria-labelledby="h-motion">
+      <div class="text">
+        <h2 id="h-motion">Carry the deity with your own body</h2>
+        <p>When a visitor picks a deity, its rigged GLB loads into a three.js scene and connects to a retargeting layer. MediaPipe reads body landmarks from the camera. Each body direction is mapped onto the avatar's bones, limited to plausible joint ranges and smoothed frame by frame, so the tāgǔ moves with you without popping through itself.</p>
+        <div class="links"><a class="pill" href="https://evannnx.github.io/youshen/motion.html" target="_blank" rel="noopener">Try it with a webcam ↗</a></div>
+      </div>
+      <div class="media">
+<pre class="code"><span class="c">// HumanoidRetargeter.update: one frame</span>
+<span class="k">const</span> dirs = <span class="f">this.computeHumanDirections</span>(
+  worldLandmarks, valid);
+<span class="k">const</span> basis = <span class="f">this.computeHumanBodyBasis</span>(worldLandmarks);
+<span class="k">const</span> toAvatar = <span class="k">this</span>.avatarRestBasis.clone()
+  .multiply(basis.invert()).normalize();
+<span class="k">const</span> targets = <span class="f">this.applyJointLimits</span>(
+  <span class="f">this.toAvatarTargets</span>(dirs, toAvatar));
+<span class="k">const</span> smoothed = <span class="f">this.stepDirections</span>(targets, dt);
+<span class="k">const</span> pose = <span class="f">this.applyBodyConstraints</span>(
+  smoothed, previous, dt);
+<span class="c">// Feed the collision-free pose back as the next
+// frame's start, so limbs slide along the body
+// instead of popping through it.</span></pre>
+      </div>
+    </section>
+
+    <!-- Website -->
+    <section class="stage top reveal" aria-labelledby="h-web" data-tabs data-auto="4200">
+      <div class="text">
+        <h2 id="h-web">An archive you walk through</h2>
+        <p class="muted">Four chapters in Chinese and English: origins, the deity pantheon, procession anatomy, and a digital temple where 21 deity models stand in a hall and corridor.</p>
+        <div class="tablist-v" role="tablist" aria-label="Website chapters">
+          <button class="tab" data-key="home">Opening<small>A cinematic entry: 游神, The Procession of Living Deities.</small></button>
+          <button class="tab" data-key="history">Origins<small>From exorcist rites to short-video platforms: three thousand years of ritual lineage.</small></button>
+          <button class="tab" data-key="deities">The Deity Pantheon<small>More than forty roles, from plague-expelling deities to princes.</small></button>
+          <button class="tab" data-key="temple">The Digital Temple<small>Walk the hall; the Five Emperors hold the main altar.</small></button>
+        </div>
+        <div class="progress" aria-hidden="true"></div>
+        <div class="links"><a class="pill" href="https://evannnx.github.io/youshen/" target="_blank" rel="noopener">evannnx.github.io/youshen ↗</a></div>
+      </div>
+      <div class="media">
+        <div class="browser">
+          <div class="bar-top"><i></i><i></i><i></i><span>evannnx.github.io/youshen</span></div>
+          <div class="swap">
+            <img data-pane="home" src="assets/images/projects/Youshen/web/site-home.jpg" alt="Yóushén website opening page" />
+            <img data-pane="history" hidden loading="lazy" src="assets/images/projects/Youshen/web-history.jpg" alt="Origins chapter" />
+            <img data-pane="deities" hidden loading="lazy" src="assets/images/projects/Youshen/web-deities.jpg" alt="Deity pantheon chapter" />
+            <img data-pane="temple" hidden loading="lazy" src="assets/images/projects/Youshen/web-temple.jpg" alt="Digital temple with the Five Emperors on the main altar" />
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="next">
+    <a href="Pulse.html"><span><span class="lede">Next project</span><strong>Pulse</strong></span><span class="arrow" aria-hidden="true">→</span></a>
+  </div>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="footer-inner">
+      <a class="logo" href="index.html#top" aria-label="Home"><img class="logo-img" src="assets/images/general/logo.png" alt="Logo" /></a>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">Sitemap</div>
+          <ul>
+            <li><a href="index.html#top">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="publications.html">Publications</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="mailto:bx2181@nyu.edu">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col social-col">
+          <div class="icons-vert">
+            <a class="icon-link" href="https://www.linkedin.com/in/evan-xiao-4a6060309/" aria-label="LinkedIn"><img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/linkedin.png" alt="LinkedIn"></a>
+            <a class="icon-link" href="https://www.instagram.com/evan_nn__" aria-label="Instagram"><img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/instagram-new.png" alt="Instagram"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="legal">© <span id="year"></span> Evan Xiao</div>
+  </footer>
+
+  <script src="js/case.js"></script>
+  <script src="js/youshen.js"></script>
+</body>
+
+</html>

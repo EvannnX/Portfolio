@@ -123,6 +123,7 @@
       .audio-toggle{ width:52px;height:52px } .audio-toggle img{ width:24px;height:24px }
     }
   </style>
+  <link rel="stylesheet" href="css/site-fixes.css" />
 </head>
 <body>
   <!-- Header -->
@@ -132,8 +133,9 @@
     </a>
     <nav aria-label="Main">
       <a href="projects.html">Projects</a>
+      <a href="publications.html">Publications</a>
       <a href="about.html">About</a>
-      <a class="btn" href="mailto:hello@example.com">Contact</a>
+      <a class="btn" href="mailto:bx2181@nyu.edu">Contact</a>
     </nav>
   </header>
 
@@ -167,7 +169,7 @@
         <div class="facts">
           <dl>
             <dt>Context</dt><dd>NYU Shanghai · IMA</dd>
-            <dt>Focus</dt><dd>HCI · Product Design · Prototyping</dd>
+            <dt>Focus</dt><dd>HCI · Product design · Prototyping</dd>
             <dt>Stack</dt><dd>ESP32, Qwen API, Servos, 3D-printed parts</dd>
             <dt>Year</dt><dd>2025</dd>
           </dl>
@@ -175,7 +177,7 @@
       </div>
       <div class="col">
         <h3>Case</h3>
-        <p>Move beyond pre-recorded toys by enabling unscripted speech and expressive motion. The robot listens, speaks, and gestures—making interactions feel alive.</p>
+        <p>Most talking toys play pre-recorded lines. This robot listens, answers in unscripted speech, and gestures while it talks.</p>
         <h3 style="margin-top:18px">Task</h3>
         <p>Design the behavior model and motion language; implement the voice pipeline (capture → Qwen API → TTS) on ESP32; integrate servos and a 3D-printed body; iterate through user tests.</p>
       </div>
@@ -186,9 +188,9 @@
   <main class="rails">
     <section class="stage reveal">
       <div class="text">
-        <h2>Abstract &amp; Project Description</h2>
-        <p>The Interactive AI Robot is a smart plush toy enhanced with real-time voice interaction and basic motion capabilities. Unlike traditional toys that rely on pre-programmed responses, this robot utilizes an ESP32 microcontroller combined with the Qwen API to perform dynamic speech generation and real-time audio processing. It aims to simulate natural human-robot interaction by providing unscripted verbal replies and expressive physical feedback.</p>
-        <p>This project explores the potential of combining natural language processing with physical motion to deliver a more engaging and emotional user experience. By transforming passive responses into active conversations and motions, the robot bridges the gap between artificial intelligence and emotional companionship in toys.</p>
+        <h2>What it is</h2>
+        <p>The Interactive AI Robot is a plush toy with real-time voice interaction and basic motion. An ESP32 microcontroller handles the audio and calls the Qwen API to generate speech, so its replies are unscripted and it moves as it speaks.</p>
+        <p>The project tests whether pairing language generation with physical motion makes a toy more engaging as a companion.</p>
       </div>
       <figure class="media">
         <img loading="lazy" src="assets/images/projects/interactive-ai-powered-robot/ima-bot-blue.jpg" alt="Robot render on blue background" />
@@ -197,16 +199,16 @@
 
     <section class="stage reveal">
       <div class="text">
-        <h2>Background, Industry Context &amp; Market Potential</h2>
-        <p>The rise of AI-integrated consumer products—particularly in the toy industry—reflects a larger shift toward immersive, interactive experiences. Open Securities projects the AI-powered plush toy market in China to reach <strong>32.3B RMB</strong> by 2027 (neutral scenario).</p>
-        <p>Globally, the companion robot market was about <strong>75B RMB</strong> in 2023 and is expected to grow to <strong>304.3B RMB</strong> by 2029 (CAGR <strong>25.6%</strong>). This highlights both economic viability and the growing social demand for emotionally intelligent, responsive robotic companions.</p>
-        <p>As AI becomes more accessible, toys can increasingly support communication, learning, and emotional development—especially for children and older adults who benefit from frequent engagement.</p>
+        <h2>Market context</h2>
+        <p>Open Securities projects that China's AI plush toy market will reach 32.3B RMB by 2027 in its neutral scenario.</p>
+        <p>Globally, the companion robot market was about 75B RMB in 2023 and is expected to reach 304.3B RMB by 2029, a CAGR of 25.6%.</p>
+        <p>As AI becomes more accessible, toys can do more for communication, learning and emotional development, especially for children and older adults who benefit from frequent engagement.</p>
       </div>
       <div class="media">
         <div class="media-vertical">
           <figure style="margin:0">
             <img loading="lazy" src="assets/images/projects/interactive-ai-powered-robot/market-forecast-1.jpg" alt="Companion robot market size forecast (2023A→2029E, 25.6% CAGR)" />
-            <figcaption>Market size forecast — 25.6% CAGR (2023A→2029E)</figcaption>
+            <figcaption>Market size forecast, 25.6% CAGR (2023A to 2029E)</figcaption>
           </figure>
           <figure style="margin:0">
             <img loading="lazy" src="assets/images/projects/interactive-ai-powered-robot/market-forecast-2.png" alt="Companion robot market growth (2023A vs 2029E)" />
@@ -218,10 +220,10 @@
 
     <section class="stage reveal">
       <div class="text">
-        <h2>Similar Projects: Market Comparison</h2>
-        <p><strong>显眼包 (ByteDance)</strong> — a trendy AI-themed wearable emphasizing emotional interaction via facial display and limited audio; not commercially available and lacks motion or active speech generation. <span class="muted">Static emoji-based responses only.</span></p>
-        <p><strong>Talking Tom (Plush)</strong> — ≈ €19.99 (≈ ¥158). Mimics voice and plays pre-recorded phrases; no smart AI processing or physical interaction.</p>
-        <p><strong>Interactive AI Robot (this project)</strong> — estimated ¥200–¥300; combines live voice recognition, AI-generated speech, and basic motion for a more responsive, lifelike companion.</p>
+        <h2>Comparable products</h2>
+        <p><strong>显眼包 (ByteDance)</strong>: an AI-themed wearable with a facial display and limited audio. It is not sold commercially, has no motion or speech generation, and responds only with static emoji.</p>
+        <p><strong>Talking Tom (plush)</strong>: about €19.99 (¥158). It mimics the user's voice and plays pre-recorded phrases, with no AI processing or physical interaction.</p>
+        <p><strong>Interactive AI Robot (this project)</strong>: an estimated ¥200 to ¥300. It combines live voice recognition, AI-generated speech and basic motion.</p>
       </div>
       <figure class="media">
         <img loading="lazy" src="assets/images/projects/interactive-ai-powered-robot/similar-projects.jpg" alt="Similar projects comparison" />
@@ -230,9 +232,9 @@
 
     <section class="stage reveal">
       <div class="text">
-        <h2>Design Concept &amp; Motion System</h2>
-        <p>The mechanical design builds on open-source contributions (OTTO Robot platform), offering a flexible, affordable base for humanoid-style motion.</p>
-        <p>Servo motors (ESP32 control) synchronize gestures—nod, wave, head-turn—with speech events generated through the Qwen API (capture → NLU → TTS). The result is a dual-modality interaction—voice + motion—that pushes beyond static AI toys.</p>
+        <h2>Design and motion</h2>
+        <p>The mechanical design builds on the open-source OTTO Robot platform, an affordable base for humanoid-style motion.</p>
+        <p>Servo motors driven by the ESP32 sync gestures (nod, wave, head turn) with speech events from the Qwen API pipeline (capture → NLU → TTS), so voice and motion happen together.</p>
       </div>
       <figure class="media">
         <img loading="lazy" src="assets/images/projects/interactive-ai-powered-robot/ai-motion-flow.jpg" alt="AI-driven motion control flow" />
@@ -241,12 +243,11 @@
 
     <section class="stage reveal">
       <div class="text">
-        <h2>Credits &amp; Acknowledgments</h2>
+        <h2>Credits</h2>
         <p>Thanks to the OTTO DIY Robot community for open-source inspiration.</p>
         <p><strong>Tech stack:</strong> ESP32, Qwen API, servo drivers, and 3D-printed casing.</p>
         <ul>
-          <li>🧠 Notion: <a href="#" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline">Interactive AI Robot Documentation</a></li>
-          <li>🧰 GitHub: <a href="https://github.com/EvannnX/JARVIS" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline">github.com/EvannnX/JARVIS</a></li>
+          <li>GitHub: <a href="https://github.com/EvannnX/JARVIS" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline">github.com/EvannnX/JARVIS</a></li>
         </ul>
       </div>
       <figure class="media">
@@ -267,8 +268,9 @@
           <ul>
             <li><a href="index.html#top">Home</a></li>
             <li><a href="projects.html">Projects</a></li>
+            <li><a href="publications.html">Publications</a></li>
             <li><a href="about.html">About</a></li>
-            <li><a href="mailto:hello@example.com">Contact</a></li>
+            <li><a href="mailto:bx2181@nyu.edu">Contact</a></li>
           </ul>
         </div>
         <div class="col social-col">
