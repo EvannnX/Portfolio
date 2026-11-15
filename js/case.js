@@ -35,18 +35,40 @@
     el.querySelectorAll('[data-count]').forEach(runCount);
     el.dispatchEvent(new CustomEvent('revealed'));
   };
-  const reveals = Array.from(document.querySelectorAll('.reveal'));
+  // An element is revealed as soon as its top edge passes this line, measured from the
+  // top of the viewport. Using the top edge (not a visible fraction) keeps very tall
+  // blocks, such as photo grids, from staying hidden.
+  const REVEAL_LINE = 0.92;
+  let pending = Array.from(document.querySelectorAll('.reveal'));
+
+  const sweep = () => {
+    const line = window.innerHeight * REVEAL_LINE;
+    pending = pending.filter((el) => {
+      if (el.getBoundingClientRect().top > line) return true;
+      onReveal(el);
+      return false;
+    });
+    if (!pending.length) {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    }
+  };
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { ticking = false; sweep(); });
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  window.addEventListener('load', sweep);
+  sweep();
   if (hasIO) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (!e.isIntersecting) return;
-        onReveal(e.target);
-        io.unobserve(e.target);
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
-    reveals.forEach((el) => io.observe(el));
-  } else {
-    reveals.forEach(onReveal);
+    // The observer catches changes that happen without a scroll event (images
+    // loading above, content resizing); the scroll listener is the safety net.
+    const io = new IntersectionObserver((entries) => { if (entries.some((e) => e.isIntersecting)) sweep(); }, { threshold: 0 });
+    pending.forEach((el) => io.observe(el));
   }
 
   // ---------- Header transparency (Pulse) ----------

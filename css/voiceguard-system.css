@@ -105,7 +105,7 @@
   .fast span { position: static; transform: none; padding: 0; white-space: normal; display: block }
   .fast::after { display: none }
   .n { margin-top: 0 }
-  .n-router h3::after, .n-packet h3::after { content: " · cloud"; font-weight: 400; color: var(--dim) }
+  .n-router h3::after, .n-packet h3::after { content: " (cloud)"; font-weight: 400; color: var(--dim) }
   .ar { width: 1px; height: 34px; margin: 10px auto; align-self: center }
   .ar::after { right: auto; top: auto; left: -4px; bottom: -1px; border-left: 4.5px solid transparent; border-right: 4.5px solid transparent; border-top: 7px solid var(--wire); border-bottom: 0 }
   .fb { height: auto; margin: 14px 0 0; padding: 10px 0 0; border: 0; border-top: 1px solid var(--wire); border-radius: 0 }
