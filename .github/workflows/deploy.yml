@@ -11,7 +11,8 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # The link from GitHub runners to the server is slow; media uploads can take a while.
+    timeout-minutes: 45
     env:
       DEPLOY_HOST: 111.229.247.82
       DEPLOY_USER: root
@@ -45,7 +46,10 @@ jobs:
       - name: Upload website
         run: |
           ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$DEPLOY_USER@$DEPLOY_HOST" "test -d '$DEPLOY_PATH' && command -v rsync"
-          rsync -rcz --itemize-changes --chmod=D755,F644 -e 'ssh -o BatchMode=yes -o StrictHostKeyChecking=yes' /tmp/portfolio-site/ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/"
+          # Assets, styles and scripts first, pages last: if the run is interrupted,
+          # the live pages never point at files that have not arrived yet.
+          rsync -rcz --partial --itemize-changes --chmod=D755,F644 --exclude='/*.html' -e 'ssh -o BatchMode=yes -o StrictHostKeyChecking=yes' /tmp/portfolio-site/ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/"
+          rsync -rcz --partial --itemize-changes --chmod=D755,F644 -e 'ssh -o BatchMode=yes -o StrictHostKeyChecking=yes' /tmp/portfolio-site/ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/"
       - name: Verify uploaded homepage
         run: |
           local_hash=$(sha256sum /tmp/portfolio-site/index.html | cut -d ' ' -f 1)
