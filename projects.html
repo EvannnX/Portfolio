@@ -621,8 +621,8 @@
 
 
   <div id="cardsSource" hidden>
-    <!-- 顺序即展示顺序；data-layout（wide-left / wide-right）写在一行的第一张卡上 -->
-    <a class="card" data-tags="hci research ux" data-layout="wide-left" href="Echoes.html">
+    <!-- 顺序即展示顺序；两张一行，左右各占一半 -->
+    <a class="card" data-tags="hci research ux" href="Echoes.html">
       <video style="object-position:left center" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/images/projects/Echoes/web/hero.jpg"><source src="assets/images/projects/Echoes/web/hero.mp4" type="video/mp4"></video>
       <div class="meta"><span class="org">UbiComp / ISWC 2026</span>
         <h3>ECHOES: AR Heritage Docent</h3>
@@ -634,7 +634,7 @@
         <h3>VoiceGuard</h3>
       </div>
     </a>
-    <a class="card" data-tags="hci research ux visual" data-layout="wide-left" href="Youshen.html">
+    <a class="card" data-tags="hci research ux visual" href="Youshen.html">
       <video autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/images/projects/Youshen/youshen-loop-poster.jpg"><source src="assets/images/projects/Youshen/youshen-loop.mp4" type="video/mp4"></video>
       <div class="meta"><span class="org">Digital archive and interactive installation</span>
         <h3>Yóushén: Living Deities</h3>
@@ -646,7 +646,7 @@
         <h3>Robotic Arms in Art</h3>
       </div>
     </a>
-    <a class="card" data-tags="hci light visual" data-layout="wide-right" href="Pulse.html">
+    <a class="card" data-tags="hci light visual" href="Pulse.html">
       <video autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/images/projects/Pulse/web/still-1.jpg"><source src="assets/images/projects/Pulse/web/pulse-loop.mp4" type="video/mp4"></video>
       <div class="meta"><span class="org">Light installation, NYU Shanghai</span>
         <h3>Pulse: Refracted Light Score</h3>
@@ -721,35 +721,17 @@
         return;
       }
 
-      // 2) 顺序打包
+      // 2) 两张一行，左右各占一半；落单的最后一张配一个不可见占位
+      const PER_ROW = 2;
       const rows = [];
-      let i = 0;
-      while (i < items.length) {
-        const remain = items.length - i;
-        const layout = items[i].dataset.layout; // 'wide-left' | 'wide-right' | undefined
-
-        if ((layout === 'wide-left' || layout === 'wide-right') && remain >= 2) {
-          rows.push({ type: 'row-2', wide: layout, cards: [items[i], items[i + 1]] });
-          i += 2;
-        } else if (remain >= 3) {
-          rows.push({ type: 'row-3', cards: [items[i], items[i + 1], items[i + 2]] });
-          i += 3;
-        } else if (remain === 2) {
-          rows.push({ type: 'row-2', wide: null, cards: [items[i], items[i + 1]] });
-          i += 2;
-        } else { // remain === 1  -> 尝试与上一行重组，避免单卡
-          if (rows.length && rows[rows.length - 1].type === 'row-3') {
-            const moved = rows[rows.length - 1].cards.pop(); // 从上一行移走一个
-            rows[rows.length - 1] = { type: 'row-2', wide: null, cards: rows[rows.length - 1].cards };
-            rows.push({ type: 'row-2', wide: null, cards: [moved, items[i]] });
-          } else {
-            // 上一行是 2 列（没法再拆），用一个不可见占位符填充为 2 列
-            const ph = document.createElement('a');
-            ph.className = 'card placeholder';
-            rows.push({ type: 'row-2', wide: null, cards: [items[i], ph] });
-          }
-          i += 1;
+      for (let i = 0; i < items.length; i += PER_ROW) {
+        const pair = items.slice(i, i + PER_ROW);
+        if (pair.length < PER_ROW) {
+          const placeholder = document.createElement('a');
+          placeholder.className = 'card placeholder';
+          pair.push(placeholder);
         }
+        rows.push({ type: 'row-2', wide: null, cards: pair });
       }
 
       // 3) 渲染
@@ -757,7 +739,7 @@
         const row = document.createElement('div');
         row.className = `row ${r.type}` + (r.wide ? ' ' + r.wide : '');
         // 可按节奏给每行不同高度
-        row.style.setProperty('--row-h', idx % 2 === 0 ? 'clamp(320px, 34vw, 520px)' : 'clamp(300px, 30vw, 460px)');
+        row.style.setProperty('--row-h', 'clamp(300px, 32vw, 480px)');
         r.cards.forEach(c => row.appendChild(c));
         grid.appendChild(row);
       });

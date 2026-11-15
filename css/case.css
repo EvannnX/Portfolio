@@ -151,7 +151,8 @@ a.pill:hover { background-size: 0 1px }
 .site-footer { margin-top: 0; background: #0b0d0f; border-top: 1px solid var(--hairline); position: relative }
 .site-footer::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 80px; background: radial-gradient(60% 100% at 50% 0%, rgba(255, 255, 255, .06), rgba(255, 255, 255, 0)) }
 .footer-inner { max-width: var(--maxw); margin: 0 auto; padding: 36px 24px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; gap: 36px }
-.site-footer .logo-img { height: 44px }
+.site-footer .logo { grid-column: 1 / span 4 }
+.site-footer .logo-img { height: 44px; width: auto; max-width: none }
 .cols { display: flex; gap: 64px; grid-column: 9 / span 4; justify-self: start; align-items: center }
 .col-title { font-size: .85rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; opacity: .8; margin-bottom: 10px }
 .cols ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px }
