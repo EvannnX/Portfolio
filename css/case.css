@@ -185,3 +185,31 @@ a.pill:hover { background-size: 0 1px }
 /* Component lists sit flush with the text column (Pulse's bullet indent is for prose lists only). */
 .stage .text ul[class] { margin-left: 0; padding-left: 0; list-style: none }
 .stage .text ul[class] li { margin: 0 }
+
+/* ==========================================================
+   Work pages: title, year, abstract, credits, then the work itself.
+   ========================================================== */
+.mast h1.long { font-size: clamp(24px, 3.1vw, 40px); line-height: 1.12 }
+.work-year { margin: 10px 0 0; font-family: "Playfair Display", Georgia, serif; font-style: italic; color: #e9eff6; font-size: clamp(16px, 1.6vw, 22px) }
+.abstract p { margin: 0 0 14px; line-height: 1.6; font-size: 1.02rem }
+.facts a { color: inherit; text-decoration: none; padding-bottom: 1px; background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; transition: background-size .45s var(--ease) }
+.facts a:hover { background-size: 0 1px }
+
+.work { max-width: var(--maxw); margin: 0 auto; padding: 0 24px 40px; display: grid; gap: 96px }
+.work-block { margin: 0 }
+.work-label { display: block; margin: 0 0 20px; letter-spacing: .38em; text-transform: uppercase; font-size: .78rem; font-weight: 800; color: rgba(232, 236, 239, .7) }
+.work-block h2 { margin: 0 0 8px; font-weight: 900; letter-spacing: -.01em; font-size: clamp(20px, 3vw, 34px) }
+.work-block > p { margin: 0 0 22px; max-width: 70ch; color: var(--muted); line-height: 1.55 }
+.work-block .video-frame { margin-top: 0 }
+.work-block .sysmap, .work-block .arch { margin-top: 0; padding: 0; max-width: none }
+.work-block .paths { justify-content: flex-start; margin: 0 0 28px }
+
+.media-grid { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); gap: 14px }
+.media-grid + .media-grid, .video-frame + .media-grid { margin-top: 14px }
+.media-grid figure { margin: 0 }
+.media-grid img { width: 100%; aspect-ratio: var(--ar, 4 / 3); object-fit: cover; object-position: var(--pos, center); border-radius: 16px; border: 1px solid rgba(255, 255, 255, .08); background: rgba(255, 255, 255, .02) }
+.media-grid figcaption { margin-top: 8px }
+@media (max-width: 900px) { .work { gap: 64px } .media-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
+@media (max-width: 520px) { .media-grid:not(.keep) { grid-template-columns: 1fr } }
+/* hold the frame at the video's shape before it loads, whatever the poster's shape */
+.work-block .video-frame video { aspect-ratio: 16 / 9; object-fit: cover }

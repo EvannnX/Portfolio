@@ -3,22 +3,20 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>ECHOES — Adaptive AR Heritage Docent · Evan Xiao</title>
+  <title>ECHOES · Bang Xiao (Evan)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description"
-    content="ECHOES is an adaptive LLM-powered AR-glasses docent for evidence-grounded urban heritage interpretation on the Bund, Shanghai. Accepted to UbiComp / ISWC 2026." />
+  <meta name="description" content="ECHOES is an adaptive LLM-powered AR glasses docent for evidence-grounded urban heritage interpretation. UbiComp / ISWC 2026." />
   <link rel="icon" type="image/png" href="assets/images/general/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/case.css" />
-  <link rel="stylesheet" href="css/echoes.css" />
   <link rel="stylesheet" href="css/echoes-system.css" />
 </head>
 
 <body>
   <header class="site-header transparent" aria-label="Primary">
-    <a href="index.html" class="logo" aria-label="Home"><img class="logo-img" src="assets/images/general/logo.png" alt="Evan Xiao logo" /></a>
+    <a href="index.html" class="logo" aria-label="Home"><img class="logo-img" src="assets/images/general/logo.png" alt="Bang Xiao (Evan) logo" /></a>
     <nav>
       <a href="projects.html">Projects</a>
       <a href="publications.html">Publications</a>
@@ -27,170 +25,38 @@
     </nav>
   </header>
 
-  <!-- Hero -->
-  <section class="hero-video" aria-label="ECHOES hero video">
-    <video style="object-position:right bottom" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/images/projects/Echoes/web/hero.jpg">
-      <source src="assets/images/projects/Echoes/web/hero.mp4" type="video/mp4" />
-    </video>
+  <section class="hero-video" aria-label="ECHOES">
+    <video style="object-position:right bottom" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="assets/images/projects/Echoes/web/hero.jpg"><source src="assets/images/projects/Echoes/web/hero.mp4" type="video/mp4" /></video>
   </section>
 
-  <!-- Mast -->
   <section class="section pad-top mast" aria-label="Overview">
     <div class="wrap mast-grid reveal">
       <div>
-        <h1>ECHOES</h1>
-        <p class="sub">An adaptive LLM-powered AR glasses docent for evidence-grounded urban heritage interpretation.</p>
+        <h1 class="long">ECHOES: An Adaptive LLM-Powered AR Glasses Docent for Evidence-Grounded Urban Heritage Interpretation</h1>
+        <p class="work-year">2026</p>
         <div class="facts">
           <dl>
-            <dt>Venue</dt><dd>UbiComp / ISWC 2026 · Poster &amp; demo</dd>
-            <dt>Role</dt><dd>Lead author · Research, interaction design, system</dd>
-            <dt>Team</dt><dd>Bang Xiao, Baosheng Jin, Jinhan Niu, Xingchen Zhang, Hua Shen</dd>
-            <dt>Stack</dt><dd>Rokid AR glasses · Doubao multimodal API · LLM agent · Self-built knowledge base</dd>
-            <dt>Site</dt><dd>East Nanjing Road and the Bund, Shanghai</dd>
+            <dt>Created by</dt><dd>Bang Xiao, Baosheng Jin, Jinhan Niu, Xingchen Zhang, Hua Shen</dd>
+            <dt>Publication</dt><dd>UbiComp / ISWC 2026</dd>
+            <dt>Paper</dt><dd><a href="https://arxiv.org/abs/2610.34865" target="_blank" rel="noopener">arXiv:2610.34865 ↗</a> · <a href="https://arxiv.org/pdf/2610.34865" target="_blank" rel="noopener">PDF ↗</a></dd>
           </dl>
         </div>
       </div>
-      <div class="col">
-        <h3>Project</h3>
-        <p>ECHOES is an AR-glasses heritage guide for historical districts. Visitors look at a building and ask questions naturally; the system combines what the glasses see, open-ended dialogue, and a curated historical knowledge base to explain it.</p>
-        <p>Across a visit, ECHOES adapts topic emphasis and explanation depth while keeping that personalization visible and controllable. It only says what its sources support.</p>
-        <div class="links">
-          <a class="pill" href="https://arxiv.org/abs/2610.34865" target="_blank" rel="noopener">Read the paper ↗</a>
-          <a class="pill" href="#watch">Watch the demo</a>
-
-        </div>
+      <div class="col abstract">
+        <p>Urban heritage tours are often delivered through fixed scripts, leaving limited room for visitors' situated questions, language preferences, or requests for evidence. We present ECHOES, an adaptive LLM-powered AR glasses docent for evidence-grounded interpretation of historical buildings. Specifically, the agent adapts along three dimensions: it modifies response structure according to the type of visitor question (identification, architectural detail, evidence-seeking, or route inquiry); it accumulates session-level interest signals from repeated questions and expressed curiosity to shape later explanations; and it tracks language preference and retrieval context across turns to maintain conversational continuity.</p>
+        <p>The core of ECHOES is an LLM agent initialized as a source-aware urban heritage docent that realizes this adaptation through dialogue and preference context maintained across the session. Around this agent, ECHOES integrates visual site grounding, a self-built historical knowledge base supporting retrieval-augmented generation, and concise multilingual AR output designed for glanceable use. Through a working prototype centered on Shanghai's East Nanjing Road and the Bund, we demonstrate how an adaptive LLM-powered AR docent can transform historical tours from scripted narration into situated, question-responsive, and source-aware conversations.</p>
       </div>
     </div>
   </section>
 
-  <!-- Watch -->
-  <section class="video-block" id="watch" aria-label="Watch ECHOES">
-    <div class="video-inner reveal">
-      <span class="eyebrow">Watch</span>
-      <h2>Ask in place, on East Nanjing Road</h2>
-      <p>The UbiComp / ISWC 2026 demo, recorded through the glasses: look at a building, ask, and keep the conversation going as you walk.</p>
-      <div class="video-frame">
-        <video controls playsinline preload="none" poster="assets/images/projects/Echoes/web/demo.jpg">
-          <source src="assets/images/projects/Echoes/web/demo.mp4" type="video/mp4" />
-        </video>
-      </div>
-    </div>
-  </section>
-
-  <main class="rails" aria-label="Case study">
-    <!-- Context -->
-    <section class="stage single reveal" aria-labelledby="h-context">
-      <div class="text">
-        <h2 id="h-context">From the street, you only see the façade</h2>
-        <p class="muted">Who built a building, what it was for and how it changed are recorded elsewhere, in archives, books and local memory. On the Bund, 23 historic buildings stand along about 1.5&nbsp;km of riverfront, a new one every few dozen steps. We mapped how visitors learn about them today on two scales: how freely they can ask, and whether they have to hold something.</p>
-        <div class="gmap" id="gmap" role="group" aria-label="Existing guidance methods mapped by question freedom and hands-free use">
-          <span class="axis ax-y1">Hands-free</span>
-          <span class="axis ax-y0">Device held</span>
-          <span class="axis ax-x0">Fixed content</span>
-          <span class="axis ax-x1">Ask anything</span>
-          <button class="dot" style="--x:.10;--y:.80" data-note="Plays by location. Same script for everyone.">App audio guide</button>
-          <button class="dot" style="--x:.55;--y:.80" data-note="A docent leads a route and answers questions, but on a fixed schedule and in a group.">Human guide</button>
-          <button class="dot" style="--x:.15;--y:.48" data-note="Scan a plaque for text, audio or video. You hold the phone each time.">QR plaque</button>
-          <button class="dot" style="--x:.03;--y:.12" data-note="Fixed text and a map, in your hands the whole way.">Printed guide</button>
-          <button class="dot" style="--x:.27;--y:.12" data-note="Handheld audio playback, rented and returned.">Rented device</button>
-          <button class="dot" style="--x:.56;--y:.12" data-note="You search and you filter, and your eyes leave the building.">Phone search</button>
-          <button class="dot" style="--x:.84;--y:.12" data-note="Point a camera, talk to an AI. Free to ask, but phone in hand and rarely cites a source.">AI video call</button>
-          <button class="dot echoes flip on" style="--x:.9;--y:.92" data-note="Look and ask, hands-free, with answers grounded in a curated knowledge base.">ECHOES</button>
-        </div>
-        <p class="gmap-note" id="gmapNote" aria-live="polite"><strong>ECHOES</strong>: Look and ask, hands-free, with answers grounded in a curated knowledge base.</p>
-        <div class="limits">
-          <div><strong>Prepared content stays at the surface</strong>Signs and audio guides tell everyone the same few facts.</div>
-          <div><strong>Asking takes the visitor's hands</strong>Search and video calls pull eyes off the building.</div>
-          <div><strong>Answers rarely show their sources</strong>Generated replies sound confident with nothing to check.</div>
-        </div>
-      </div>
+  <main class="work" aria-label="The work">
+    <section class="work-block reveal">
+      <span class="work-label">Demo</span>
+      <div class="video-frame"><video controls playsinline preload="none" poster="assets/images/projects/Echoes/web/demo.jpg"><source src="assets/images/projects/Echoes/web/demo.mp4" type="video/mp4" /></video></div>
     </section>
-
-    <!-- Listening -->
-    <section class="stage single reveal" aria-labelledby="h-listen">
-      <div class="text">
-        <h2 id="h-listen">What 19 visitors told us</h2>
-        <p class="muted">Six Shanghai locals, six visitors from elsewhere in China and seven international students talked through recent visits to the Forbidden City, No. 12 the Bund and Hagia Sophia, then imagined ECHOES. Twelve findings across four themes became eight design principles.</p>
-        <div data-tabs>
-          <div class="tabs" role="tablist" aria-label="Themes">
-            <button class="pill" data-key="a">When curiosity happens</button>
-            <button class="pill" data-key="b">What a good answer holds</button>
-            <button class="pill" data-key="c">How the guide should behave</button>
-            <button class="pill" data-key="d">Whether to trust it</button>
-          </div>
-
-          <div class="explorer" data-pane="a">
-            <ul class="bars">
-              <li class="bar" style="--v:52.6%"><span>Questions start on site and fade after leaving</span><b>10/19</b><span class="track"><i></i></span></li>
-              <li class="bar" style="--v:47.4%"><span>Phone lookups pull eyes off the building</span><b>9/19</b><span class="track"><i></i></span></li>
-              <li class="bar" style="--v:36.8%"><span>They want nearby sites, and what to skip</span><b>7/19</b><span class="track"><i></i></span></li>
-            </ul>
-            <div><span class="arrow-label">So we designed:</span>
-              <ul class="dps"><li><strong>Answer what they're looking at, right then</strong>The glasses see it, so visitors just ask "what is this?"</li></ul>
-              <p class="quote" style="margin-top:22px;font-size:clamp(17px,1.8vw,22px)">"My interest was strongest during the visit. Afterward it no longer seemed important."</p>
-              <p class="quote-by">Shanghai local, at Wukang Road</p>
-            </div>
-          </div>
-          <div class="explorer" data-pane="b" hidden>
-            <ul class="bars">
-              <li class="bar" style="--v:63.2%"><span>Signs and audio guides: same for all, few stories</span><b>12/19</b><span class="track"><i></i></span></li>
-              <li class="bar" style="--v:42.1%"><span>First answer: two or three sentences, then more</span><b>8/19</b><span class="track"><i></i></span></li>
-              <li class="bar" style="--v:68.4%"><span>Show how the place changed and what was restored</span><b>13/19</b><span class="track"><i></i></span></li>
-            </ul>
-            <div><span class="arrow-label">So we designed:</span>
-              <ul class="dps">
-                <li><strong>Short first, deeper on request</strong>Two or three sentences; more only when asked.</li>
-                <li><strong>Lead with stories</strong>People, events and change, not dates and sizes.</li>
-              </ul>
-              <p class="quote" style="margin-top:22px;font-size:clamp(17px,1.8vw,22px)">"It doesn't use vivid stories to help me remember. It just gives information … it feels lifeless."</p>
-              <p class="quote-by">Visitor at the Grand Canal Museum</p>
-            </div>
-          </div>
-          <div class="explorer" data-pane="c" hidden>
-            <ul class="bars">
-              <li class="bar" style="--v:47.4%"><span>Text in the lens can block the view</span><b>9/19</b><span class="track"><i></i></span></li>
-              <li class="bar" style="--v:36.8%"><span>Speak up unprompted only when it's worth it</span><b>7/19</b><span class="track"><i></i></span></li>
-              <li class="bar" style="--v:89.5%"><span>Adapt to me, but let me see and change it</span><b>17/19</b><span class="track"><i></i></span></li>
-            </ul>
-            <div><span class="arrow-label">So we designed:</span>
-              <ul class="dps">
-                <li><strong>Keep their eyes on the building</strong>Voice first, little text, quiet unless asked.</li>
-                <li><strong>Adapt where visitors can see it</strong>Asks before changing; reset it by voice.</li>
-              </ul>
-              <p class="quote" style="margin-top:22px;font-size:clamp(17px,1.8vw,22px)">"I don't want too many unsolicited explanations; that would feel like having a task to complete."</p>
-              <p class="quote-by">Visitor at the Summer Palace</p>
-            </div>
-          </div>
-          <div class="explorer" data-pane="d" hidden>
-            <ul class="bars">
-              <li class="bar" style="--v:100%"><span>Accuracy first: say "I don't know" rather than guess</span><b>19/19</b><span class="track"><i></i></span></li>
-              <li class="bar" style="--v:94.7%"><span>Sources add trust, but are rarely opened on site</span><b>18/19</b><span class="track"><i></i></span></li>
-              <li class="bar" style="--v:89.5%"><span>When accounts conflict, show both and who says what</span><b>17/19</b><span class="track"><i></i></span></li>
-            </ul>
-            <div><span class="arrow-label">So we designed:</span>
-              <ul class="dps">
-                <li><strong>Only say what the sources support</strong>If the knowledge base has no answer, it says so.</li>
-                <li><strong>Sources on request</strong>Each answer keeps its source one step away.</li>
-                <li><strong>Show disagreements</strong>Each account and who holds it, no winner picked.</li>
-              </ul>
-              <p class="quote" style="margin-top:22px;font-size:clamp(17px,1.8vw,22px)">"Doubao may say it searched over 40 webpages, but they could all cite one page that was fabricated."</p>
-              <p class="quote-by">Visitor at Hagia Sophia</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- System -->
-  <section class="video-block sys-block" aria-label="System design">
-    <div class="video-inner wide reveal">
-      <span class="eyebrow">System</span>
-      <h2>Look, ask, and get an answer grounded in evidence</h2>
-      <p>LLMs can make up history, so the agent answers only from a knowledge base we built. A context agent runs alongside it, carrying the visit from turn to turn.</p>
-    </div>
-
-    <div class="sysmap reveal" id="sysmap" role="img" aria-label="ECHOES system: AR glasses capture the view and a voice question; Doubao multimodal recognition grounds the building; an adaptive LLM agent retrieves evidence from a self-built historical knowledge base; a concise multilingual answer appears on the AR display. A parallel context agent tracks history, language and interests.">
+    <section class="work-block reveal">
+      <span class="work-label">System</span>
+      <div class="sysmap reveal" id="sysmap" role="img" aria-label="ECHOES system: AR glasses capture the view and a voice question; Doubao multimodal recognition grounds the building; an adaptive LLM agent retrieves evidence from a self-built historical knowledge base; a concise multilingual answer appears on the AR display. A parallel context agent tracks history, language and interests.">
       <!-- Context agent (spans recognition → output) -->
       <div class="ctx">
         <svg class="ctx-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h11a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H9l-4 3v-3H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M19 9h1a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1v3l-4-3h-3"/></svg>
@@ -275,28 +141,13 @@
       <div class="why w3"><b>Doubao agent + Bund-MKG</b><span>A system prompt makes it a heritage docent. Bund-MKG covers the 27 protected buildings of the Bund, with archival records, local memories, folklore and dialect.</span></div>
       <div class="why w4"><b>Custom UI + voice</b><span>Answers short enough to read at a glance, also read aloud with subtitles. Switch language on the AR page, or just by asking.</span></div>
     </div>
-  </section>
-
-  <main class="rails" aria-label="Case study, continued">
-
-    <!-- Publication -->
-    <section class="stage reveal" aria-labelledby="h-pub">
-      <div class="text">
-        <h2 id="h-pub">Presented at UbiComp / ISWC 2026</h2>
-        <p><em>ECHOES: An Adaptive LLM-Powered AR Glasses Docent for Evidence-Grounded Urban Heritage Interpretation.</em> <a class="pill" href="https://arxiv.org/abs/2610.34865" target="_blank" rel="noopener">arXiv:2610.34865 ↗</a></p>
-        <p class="muted">Poster and live demo. The demonstration walks East Nanjing Road and the Bund: activate, ground the site, ask a question, extend the route, and adapt the follow-up.</p>
-        <p class="status">A field study on the Bund is ongoing.</p>
-      </div>
-      <div class="media gallery two" style="grid-template-rows:auto auto">
+    </section>
+    <section class="work-block reveal">
+      <span class="work-label">UbiComp / ISWC 2026</span>
+      <div class="gallery two" style="grid-template-rows:auto auto">
         <figure class="tall"><img loading="lazy" src="assets/images/projects/Echoes/web/poster.jpg" alt="The ECHOES poster" /></figure>
         <figure><img loading="lazy" src="assets/images/projects/Echoes/web/booth-1.jpg" alt="Standing beside the ECHOES poster and demo table" /></figure>
         <figure><img loading="lazy" src="assets/images/projects/Echoes/web/booth-2.jpg" alt="Explaining ECHOES to a visitor" /></figure>
-      </div>
-    </section>
-
-    <section class="stage single reveal" aria-label="Acknowledgements">
-      <div class="text">
-        <p class="muted" style="max-width:72ch">Supported by the Shanghai Pujiang Talents Program (25PJA109), the NYU Shanghai Center for Data Science, Digital Heritage Lab and BiAlign Lab. Thanks to Rokid for hardware support, and to the Huangpu District Government and East Nanjing Road Subdistrict for site access and archives.</p>
       </div>
     </section>
   </main>
@@ -327,11 +178,10 @@
         </div>
       </div>
     </div>
-    <div class="legal">© <span id="year"></span> Evan Xiao</div>
+    <div class="legal">© <span id="year"></span> Bang Xiao (Evan)</div>
   </footer>
 
   <script src="js/case.js"></script>
-  <script src="js/echoes.js"></script>
 </body>
 
 </html>

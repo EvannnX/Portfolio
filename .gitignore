@@ -5,3 +5,9 @@
 .env
 .env.*
 .DS_Store
+
+# Local source material, not part of the site
+Archive.zip
+BangXiao_BaoshengJin_ECHOES.mp4
+IMG_9733*.jpeg
+porfolio最终版_副本/

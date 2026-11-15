@@ -1,128 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
-  <title>2024-2025 VEX High Stakes · Evan Xiao</title>
+  <title>2024-2025 VEX High Stakes · Bang Xiao (Evan)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="NYU Shanghai Robotics Club participation in the 8th China University Intelligent Robot Creative Competition." />
+  <meta name="description" content="NYU Shanghai Robotics Club at the 8th China University Intelligent Robot Creative Competition, VEX High Stakes." />
   <link rel="icon" type="image/png" href="assets/images/general/logo.png" />
-
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --bg:#0b0e11; --text:#e8ecef; --muted:#c8ced4; --brand:#fff;
-      --glass:rgba(10,12,15,.55); --hairline:rgba(255,255,255,.08);
-      --g:28px; --header-h:72px; --header-blur:10px; --maxw:1200px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{ margin:0; background:var(--bg); color:var(--text); font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; -webkit-font-smoothing:antialiased; line-height:1.35; }
-
-    /* Header */
-    .site-header{position:fixed; inset:0 0 auto 0; height:var(--header-h); z-index:50; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:0 24px; background:var(--glass); backdrop-filter:saturate(130%) blur(var(--header-blur)); box-shadow:0 1px 0 rgba(255,255,255,.06) inset; transition:background .25s, box-shadow .25s, backdrop-filter .25s;}
-    .site-header.transparent{ background:transparent; box-shadow:none; backdrop-filter:none; }
-    .logo{display:inline-flex; align-items:center; text-decoration:none}
-    .logo-img{height:30px; width:auto; display:block}
-    nav a{color:#fff;text-decoration:none;opacity:.92;font-weight:800;letter-spacing:.12em;font-size:.78rem;margin:0 12px;text-transform:uppercase}
-    nav a:hover{opacity:1}
-    .btn{appearance:none;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.06);color:#fff;padding:10px 14px;border-radius:999px;font-weight:700;letter-spacing:.02em;text-decoration:none;font-size:calc(1rem * var(--fs))}
-
-    .section{padding:120px 0}
-    .pad-top{padding-top:calc(var(--header-h) + 32px)}
-
-    /* Hero video */
-    .hero-video{position:relative; height:100vh; width:100vw; overflow:hidden}
-    .hero-video img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center;}
-    .hero-video::after{content:""; position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,.15) 0%, rgba(0,0,0,.35) 60%, rgba(11,14,17,1) 100%); pointer-events:none;}
-
-    /* Mast */
-    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-    .mast-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
-    .mast h1{margin:0 0 10px;font-weight:900;letter-spacing:-.01em;font-size:clamp(30px,5vw,58px)}
-    .mast p.sub{margin:0;color:#e9eff6;font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:clamp(16px,1.6vw,22px)}
-    .facts{margin-top:18px;border-top:1px solid var(--hairline);padding-top:14px}
-    .facts dl{margin:0;display:grid;grid-template-columns:120px 1fr;row-gap:10px;column-gap:12px}
-    .facts dt{opacity:.75;font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:.78rem}
-    .facts dd{margin:0}
-    .col h3{margin:0 0 10px;font-weight:900;letter-spacing:-.01em;font-size:clamp(18px,2.4vw,24px)}
-    .col p{margin:0 0 14px}
-
-    /* Rails */
-    .rails{ display:grid; grid-template-columns:1fr 4fr 1fr; width:100vw; }
-    .stage{ grid-column:2; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:var(--g); align-items:center; margin:56px 0; }
-    .stage > .text, .stage > .media{ align-self:center; }
-
-    .text h2{margin:0 0 8px;font-weight:900;letter-spacing:-.01em;font-size:clamp(20px,3vw,34px)}
-    .text p{margin:0 0 12px}
-    .text ul{margin:.2rem 0 0 1.2rem;line-height:1.6}
-    .muted{color:var(--muted)}
-
-    .media{display:block;width:100%}
-    figure.media{margin:0}
-    .media img{display:block;width:100%;max-width:100%;height:auto;border-radius:14px}
-    .media-vertical{display:grid;grid-template-columns:1fr;gap:12px}
-    .media-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .media-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-    .media-grid-4{display:grid;grid-template-columns:1fr 1fr;gap:12px;grid-template-rows:1fr 1fr}
-    .media-item{position:relative;overflow:hidden;border-radius:14px}
-    .media-item img{width:100%;height:100%;object-fit:cover;display:block}
-    .media-item.tall{aspect-ratio:2/3}
-    .media-item.wide{aspect-ratio:3/2}
-    .media-item.square{aspect-ratio:1/1}
-    figcaption{font-size:.9rem;color:var(--muted);margin-top:6px}
-
-    /* Reveal (slow & lift) */
-    .reveal{opacity:0; transform:translateY(40px); filter:blur(6px);
-      transition:opacity 1.2s ease, transform 1.2s cubic-bezier(0.2,0.7,0,1), filter 1.2s ease; will-change:opacity,transform,filter;}
-    .reveal.in{opacity:1; transform:none; filter:none;}
-    .reveal.in .text > *{transition:opacity 1.2s ease .15s, transform 1.2s cubic-bezier(0.2,0.7,0,1) .15s;}
-    .reveal.in .media{transition:opacity 1.2s ease .30s, transform 1.2s cubic-bezier(0.2,0.7,0,1) .30s;}
-    @media (prefers-reduced-motion: reduce){ .reveal, .reveal.in{opacity:1;transform:none;filter:none;transition:none} }
-
-    /* Footer (home style) */
-    .site-footer{margin-top:96px;background:#0b0d0f;border-top:1px solid var(--hairline);position:relative}
-    .site-footer::before{content:""; position:absolute; inset:0 0 auto 0; height:80px; background:radial-gradient(60% 100% at 50% 0%, rgba(255,255,255,.06), rgba(255,255,255,0))}
-    .footer-inner{max-width:var(--maxw); margin:0 auto; padding:36px 24px; display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); align-items:start; gap:36px}
-    .site-footer .logo{color:#fff; gap:.4rem}
-    .site-footer .logo-img{height:44px; width:auto; display:block}
-    .site-footer .logo span{display:none}
-    .cols{display:flex; gap:64px; grid-column:9 / span 4; justify-self:start; align-items:center;}
-    .col-title{font-size:.85rem; font-weight:900; letter-spacing:.08em; text-transform:uppercase; opacity:.8; margin-bottom:10px}
-    .col ul{list-style:none; margin:0; padding:0; display:grid; gap:8px}
-    .col a{color:var(--text); text-decoration:none}
-    .col a:hover{text-decoration:underline}
-    .icons-vert{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
-    .icon-link{display:inline-block}
-    .icon-img{width:40px;height:40px;display:block;opacity:.92}
-    .icon-link:hover .icon-img{opacity:1}
-    .legal{max-width:var(--maxw); margin:0 auto; padding:0 24px 24px; font-size:.85rem; color:var(--muted)}
-
-    @media (max-width:1100px){ .mast-grid{grid-template-columns:1fr} }
-    @media (max-width:900px){
-      nav{display:none}
-      .rails{grid-template-columns:12px 1fr 12px}
-      .stage{grid-template-columns:1fr; align-items:start;}
-      .cols{grid-column:1 / -1; justify-self:start; gap:32px}
-      .media-grid{grid-template-columns:1fr}
-      .media-grid-3{grid-template-columns:1fr}
-      .media-grid-4{grid-template-columns:1fr}
-      .media-item{aspect-ratio:16/9}
-    }
-  </style>
-  <link rel="stylesheet" href="css/site-fixes.css" />
+  <link rel="stylesheet" href="css/case.css" />
 </head>
+
 <body>
-  <!-- Header -->
   <header class="site-header transparent" aria-label="Primary">
-    <a class="logo" href="index.html#top" aria-label="Home">
-      <img class="logo-img" src="assets/images/general/logo.png" alt="Logo" />
-    </a>
-    <nav aria-label="Main">
+    <a href="index.html" class="logo" aria-label="Home"><img class="logo-img" src="assets/images/general/logo.png" alt="Bang Xiao (Evan) logo" /></a>
+    <nav>
       <a href="projects.html">Projects</a>
       <a href="publications.html">Publications</a>
       <a href="about.html">About</a>
@@ -130,151 +24,52 @@
     </nav>
   </header>
 
-  <!-- Hero image -->
-  <section class="hero-video" aria-label="Intro image">
-    <img
-      loading="eager"
-      src="assets/images/projects/2024-2025-VEX-High-Stakes/ccabd7bfb0c7a66e9d214da30a217ee2.jpg"
-      alt="VEX High Stakes robot competition" />
+  <section class="hero-video" aria-label="VEX High Stakes">
+    <img style="object-position:center 40%" src="assets/images/projects/2024-2025-VEX-High-Stakes/ccabd7bfb0c7a66e9d214da30a217ee2.jpg" alt="The NYU Shanghai Robotics Club team at the competition" />
   </section>
 
-  <!-- Mast -->
-  <section class="section pad-top mast">
+  <section class="section pad-top mast" aria-label="Overview">
     <div class="wrap mast-grid reveal">
       <div>
         <h1>2024-2025 VEX High Stakes</h1>
-        <p class="sub">NYU Shanghai Robotics Club at the 8th China University Intelligent Robot Creative Competition.</p>
+        <p class="work-year">2024 to 2025</p>
         <div class="facts">
           <dl>
-            <dt>Context</dt><dd>NYU Shanghai · Robotics Club</dd>
-            <dt>Role</dt><dd>Club president · VEX team lead</dd>
-            <dt>Focus</dt><dd>VEX robotics · Competition · Engineering</dd>
-            <dt>Stack</dt><dd>VEX V5, RobotC, mechanical design</dd>
-            <dt>Year</dt><dd>2024-2025</dd>
+            <dt>Team</dt><dd>NYU Shanghai Robotics Club</dd>
+            <dt>Role</dt><dd>Club founder and president · VEX team lead</dd>
+            <dt>Result</dt><dd>Second Prize</dd>
+            <dt>Built with</dt><dd>VEX V5 · RobotC</dd>
           </dl>
         </div>
       </div>
-      <div class="col">
-        <h3>Case</h3>
-        <p>Compete in the 8th China University Intelligent Robot Creative Competition (第八届中国高校智能机器人创意大赛) with the NYU Shanghai Robotics Club.</p>
-        <h3 style="margin-top:18px">Task</h3>
-        <p>Design, build and program VEX robots for the High Stakes game, for both the autonomous and the driver-controlled periods.</p>
+      <div class="col abstract">
+        <p>The NYU Shanghai Robotics Club's entry in the 8th China University Intelligent Robot Creative Competition (第八届中国高校智能机器人创意大赛), playing the VEX game High Stakes. The robot is built on the VEX V5 platform with high-torque motors, encoders, a gyroscope and vision sensors, and a modular build for quick changes between matches. The team prepared separate strategies for the autonomous and the driver-controlled periods.</p>
       </div>
     </div>
   </section>
 
-  <!-- Content -->
-  <main class="rails">
-    <section class="stage reveal">
-      <div class="text">
-        <h2>The competition</h2>
-        <p>The 8th China University Intelligent Robot Creative Competition (第八届中国高校智能机器人创意大赛) is a national robotics competition for university students. This year's VEX game, High Stakes, combines autonomous and driver-controlled tasks, so it tests both the mechanical design and the code.</p>
-        <p>The NYU Shanghai Robotics Club entered alongside universities from across China.</p>
-      </div>
-      <div class="media">
-        <div class="media-grid">
-          <div class="media-item square">
-            <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9254.JPG" alt="VEX robot design overview" />
-          </div>
-          <div class="media-item square">
-            <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9255.JPG" alt="Robot mechanical components" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="stage reveal">
-      <div class="text">
-        <h2>NYU Shanghai Robotics Club</h2>
-        <p>The team draws students from engineering, computer science, mathematics and design.</p>
-        <p>What we worked on:</p>
-        <ul>
-          <li>Autonomous programming and sensor integration</li>
-          <li>Mechanical design tuned for match performance</li>
-          <li>Team coordination and project management</li>
-          <li>Game analysis, and adapting the robot between matches</li>
-        </ul>
-      </div>
-      <div class="media">
-        <div class="media-grid">
-          <div class="media-item square">
-            <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9256.JPG" alt="Robot assembly process" />
-          </div>
-          <div class="media-item square">
-            <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9257.JPG" alt="Robot control system" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="stage reveal">
-      <div class="text">
-        <h2>The robot</h2>
-        <p>The robot is built on the VEX V5 platform. It was designed to handle several game elements and to stay reliable under competition pressure.</p>
-        <p>Hardware:</p>
-        <ul>
-          <li>VEX V5 Brain for autonomous and driver control</li>
-          <li>High-torque motors for movement and manipulation</li>
-          <li>Encoders, a gyroscope and vision sensors</li>
-          <li>A modular build for quick changes between matches</li>
-        </ul>
-      </div>
-      <div class="media">
-        <div class="media-vertical">
-          <figure style="margin:0">
-            <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9274.jpeg" alt="Robot in action during competition" />
-          </figure>
-          <figure style="margin:0">
-            <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9312.JPG" alt="Team collaboration and testing" />
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <section class="stage reveal">
-      <div class="text">
-        <h2>Strategy</h2>
-        <p>High Stakes asks robots to manipulate objects, navigate the field and hold positions. We prepared separate strategies for the autonomous and the driver-controlled periods.</p>
-        <p>We tested and revised the robot against different game scenarios until it ran consistently.</p>
-      </div>
-      <div class="media">
-        <div class="media-grid">
-          <div class="media-item square">
-            <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9334.JPG" alt="Final robot design" />
-          </div>
-          <div class="media-item square">
-            <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9335.JPG" alt="Competition preparation" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="stage reveal">
-      <div class="text">
-        <h2>Team</h2>
-        <p>The robot took months of work across the club, with members covering mechanical design, programming, strategy and project management.</p>
-        <p>What we learned:</p>
-        <ul>
-          <li>Robot programming and control</li>
-          <li>Mechanical design and optimization</li>
-          <li>Building a competition strategy and adapting it</li>
-          <li>Running a project as a team</li>
-        </ul>
-      </div>
-      <div class="media">
-        <figure class="media">
-          <img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/ccabd7bfb0c7a66e9d214da30a217ee2.jpg" alt="Team collaboration and final project showcase" />
-        </figure>
+  <main class="work" aria-label="The work">
+    <section class="work-block reveal">
+      <div class="media-grid" style="--cols:2;--ar:4 / 3">
+        <figure><img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9334.JPG" alt="The robot at the competition" /></figure>
+        <figure><img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9335.JPG" alt="The robot on the field" /></figure>
+        <figure><img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9312.JPG" alt="Working on the robot between matches" /></figure>
+        <figure><img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9274.jpeg" alt="Robots before a match" /></figure>
+        <figure><img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9254.JPG" alt="Robot, view one" /></figure>
+        <figure><img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9255.JPG" alt="Robot, view two" /></figure>
+        <figure><img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9256.JPG" alt="Robot, view three" /></figure>
+        <figure><img loading="lazy" src="assets/images/projects/2024-2025-VEX-High-Stakes/IMG_9257.JPG" alt="Robot, view four" /></figure>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
+  <div class="next">
+    <a href="Echoes.html"><span><span class="lede">Next project</span><strong>ECHOES</strong></span><span class="arrow" aria-hidden="true">→</span></a>
+  </div>
+
   <footer class="site-footer" aria-label="Footer">
     <div class="footer-inner">
-      <a class="logo" href="index.html#top" aria-label="Home">
-        <img class="logo-img" src="assets/images/general/logo.png" alt="Logo" />
-      </a>
+      <a class="logo" href="index.html#top" aria-label="Home"><img class="logo-img" src="assets/images/general/logo.png" alt="Logo" /></a>
       <div class="cols">
         <div class="col">
           <div class="col-title">Sitemap</div>
@@ -288,39 +83,16 @@
         </div>
         <div class="col social-col">
           <div class="icons-vert">
-            <a class="icon-link" href="https://www.linkedin.com/in/evan-xiao-4a6060309/" aria-label="LinkedIn">
-              <img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/linkedin.png" alt="LinkedIn">
-            </a>
-            <a class="icon-link" href="https://www.instagram.com/evan_nn__" aria-label="Instagram">
-              <img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/instagram-new.png" alt="Instagram">
-            </a>
+            <a class="icon-link" href="https://www.linkedin.com/in/evan-xiao-4a6060309/" aria-label="LinkedIn"><img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/linkedin.png" alt="LinkedIn"></a>
+            <a class="icon-link" href="https://www.instagram.com/evan_nn__" aria-label="Instagram"><img class="icon-img" src="https://img.icons8.com/ios-glyphs/60/ffffff/instagram-new.png" alt="Instagram"></a>
           </div>
         </div>
       </div>
     </div>
-    <div class="legal">© <span id="year"></span> Evan Xiao</div>
+    <div class="legal">© <span id="year"></span> Bang Xiao (Evan)</div>
   </footer>
 
-  <script>
-    // Year
-    const y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
-
-    // Reveal on scroll
-    const reveals=[...document.querySelectorAll('.reveal')];
-    const io=new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
-    reveals.forEach(el=>io.observe(el));
-
-    // Header transparency by hero visibility
-    const header=document.querySelector('.site-header');
-    const hero=document.querySelector('.hero-video');
-    if(header && hero){
-      const heroIO=new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{ if(e.isIntersecting){ header.classList.add('transparent'); } else { header.classList.remove('transparent'); } });
-      }, {threshold:0.35});
-      heroIO.observe(hero);
-    }
-  </script>
+  <script src="js/case.js"></script>
 </body>
+
 </html>

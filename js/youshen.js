@@ -1,15 +1,6 @@
-// Yóushén — compare slider and the live 3D deity viewer.
+// Yóushén: the live 3D deity viewer.
 (function () {
   'use strict';
-
-  // ---------- Compare slider ----------
-  document.querySelectorAll('.compare').forEach((box) => {
-    const input = box.querySelector('input[type="range"]');
-    if (!input) return;
-    const set = () => box.style.setProperty('--pos', input.value + '%');
-    input.addEventListener('input', set);
-    set();
-  });
 
   // ---------- 3D viewer ----------
   // Models are served (with CORS) by the live Yóushén site.
